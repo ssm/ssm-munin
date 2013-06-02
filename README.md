@@ -2,13 +2,17 @@
 
 Control munin master, munin node, and munin plugins.
 
-This module uses "storeconfigs", but can be used without.
+Munin nodes are automatically configured on the master. (Requires
+puppetdb)
 
 # Munin master
 
 Typical usage:
 
   include munin::master
+
+Installs a munin master, and automatically collects configuration from
+all munin nodes configured with munin::node.
 
 ## Static node definitions
 
