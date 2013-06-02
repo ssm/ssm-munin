@@ -11,6 +11,7 @@ class munin::node (
   $nodeconfig=[],
   $masterconfig=[],
   $mastergroup='',
+  $plugins={},
 )
 {
 
@@ -49,5 +50,8 @@ class munin::node (
     address => $::fqdn,
     config  => $masterconfig,
   }
+
+  # Generate plugin resources from hiera or class parameter.
+  create_resources(munin::plugin, $plugins, {})
 
 }
