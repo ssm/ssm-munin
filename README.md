@@ -1,4 +1,4 @@
-# Puppet munin module[![Build Status](https://travis-ci.org/ssm/ssm-munin.png?branch=master)](https://travis-ci.org/ssm/ssm-munin)
+# Puppet munin module [![Build Status](https://travis-ci.org/ssm/ssm-munin.png?branch=master)](https://travis-ci.org/ssm/ssm-munin)
 
 Control munin master, munin node, and munin plugins.
 
@@ -22,6 +22,31 @@ The munin master class will collect all
 For extra nodes, you can define them in hiera, and munin::master will
 create them.  Example:
 
+    munin::master::node_definition { 'foo.example.com':
+      address => '192.0.2.1'
+    }
+    munin::master::node_definition { 'bar.example.com':
+      address => '192.0.2.1',
+      config  => [ 'load.graph_future 30',
+                   'load.load.trend yes',
+                   'load.load.predict 86400,12' ],
+    }
+
+### node definitions as class parameter
+
+If you define your nodes as a data structure in a puppet manifest, or from the
+puppet External Node Classifier, you can use a class parameter:
+
+    $nodes = { ... }
+
+    class { 'puppet::master':
+      node_definitions => $nodes,
+    }
+
+### node definitions with hiera
+
+A JSON definition.
+
     {
       "munin::master::node_definitions" : {
         "foo.example.com" : {
@@ -38,6 +63,19 @@ create them.  Example:
       }
     }
 
+
+A YAML definition
+
+    ---
+    munin::master::node_definitions:
+      foo.example.com:
+        address: 192.0.2.1
+      bar.example.com:
+        address: 192.0.2.2
+        config:
+        - load.graph_future 30
+        - load.load.trend yes
+        - load.load.predict 86400,12
 
 # Munin node
 
