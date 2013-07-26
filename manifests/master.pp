@@ -30,6 +30,7 @@ class munin::master ($node_definitions={}) {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    require => Package['munin'],
   }
 
   # Collect all exported node definitions
