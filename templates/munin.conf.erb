@@ -3,8 +3,8 @@
 # This file is handled by puppet, all local modifications will be lost
 
 # Generate web pages on demand
-html_strategy  cgi
-graph_strategy cgi
+html_strategy  <%= @html_strategy %>
+graph_strategy <%= @graph_strategy %>
 
 # Where to look for puppet generated munin master configuration.
 includedir /etc/munin/munin-conf.d
