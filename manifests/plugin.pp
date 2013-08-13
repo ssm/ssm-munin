@@ -17,6 +17,11 @@ define munin::plugin (
 )
 {
 
+  File {
+    require => Package['munin-node'],
+    notify  => Service['munin-node'],
+  }
+
   $conf_dir='/etc/munin/plugin-conf.d'
   $plugin_dir='/etc/munin/plugins'
   $plugin_share_dir='/usr/share/munin/plugins'
@@ -46,8 +51,6 @@ define munin::plugin (
       source  => $plugin_source,
       target  => $plugin_target,
       mode    => '0755',
-      notify  => Service['munin-node'],
-      require => Class['Munin::Plugins'],
     }
   }
 
@@ -56,7 +59,6 @@ define munin::plugin (
     file{"${conf_dir}/${name}.conf":
       ensure  => $config_ensure,
       content => template('munin/plugin_conf.erb'),
-      notify  => Service['munin-node'],
     }
   }
 }
