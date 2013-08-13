@@ -11,8 +11,7 @@ describe 'munin::plugin', :type => 'define' do
         should contain_file('/etc/munin/plugins/testplugin')
       }.to raise_error("expected that the catalogue would contain File[/etc/munin/plugins/testplugin]")
 
-      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
-        .with_ensure('absent')
+      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf').with_ensure('absent')
     }
   end
 
