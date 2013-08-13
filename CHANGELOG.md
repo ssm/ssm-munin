@@ -1,8 +1,10 @@
 # Changelog
-	
-## 0.0.3 - 2013-08-13
+
+## 0.0.4 - 2013-08-13
 
 Bugfix for the munin::plugin define.
+
+- Bugfix: Ensure that we can run tests on ruby 1.8.
 
 - Bugfix: No longer requires the class `Munin::Plugins`, which does
   not exist in this module.
