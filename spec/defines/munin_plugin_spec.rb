@@ -9,8 +9,6 @@ describe 'munin::plugin', :type => 'define' do
     it {
       expect {
         should contain_file('/etc/munin/plugins/testplugin')
-          .with_ensure('link')
-          .with_target('/usr/share/munin/plugins/testplugin')
       }.to raise_error("expected that the catalogue would contain File[/etc/munin/plugins/testplugin]")
 
       should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
@@ -21,12 +19,9 @@ describe 'munin::plugin', :type => 'define' do
   context 'with ensure=link parameter' do
     let(:params) { { :ensure => 'link' } }
     it {
-      should contain_file('/etc/munin/plugins/testplugin')
-        .with_ensure('link')
-        .with_target('/usr/share/munin/plugins/testplugin')
+      should contain_file('/etc/munin/plugins/testplugin').with_ensure('link').with_target('/usr/share/munin/plugins/testplugin')
 
-      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
-        .with_ensure('absent')
+      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf').with_ensure('absent')
     }
   end
 
@@ -38,12 +33,9 @@ describe 'munin::plugin', :type => 'define' do
     }
 
     it {
-      should contain_file('/etc/munin/plugins/test_foo')
-        .with_ensure('link')
-        .with_target('/usr/share/munin/plugins/test_')
+      should contain_file('/etc/munin/plugins/test_foo').with_ensure('link').with_target('/usr/share/munin/plugins/test_')
 
-      should contain_file('/etc/munin/plugin-conf.d/test_foo.conf')
-        .with_ensure('absent')
+      should contain_file('/etc/munin/plugin-conf.d/test_foo.conf').with_ensure('absent')
     }
   end
 
@@ -56,12 +48,9 @@ describe 'munin::plugin', :type => 'define' do
     it {
 
       expect {
-        should contain_file('/etc/munin/plugins/testplugin')
-          .with_ensure('present')
-          .with_source('puppet:///modules/munin/plugins/testplugin')
+        should contain_file('/etc/munin/plugins/testplugin').with_ensure('present').with_source('puppet:///modules/munin/plugins/testplugin')
       }
-      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
-        .with_ensure('absent')
+      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf').with_ensure('absent')
     }
   end
 
@@ -74,13 +63,9 @@ describe 'munin::plugin', :type => 'define' do
     }
 
     it {
-      should contain_file('/etc/munin/plugins/testplugin')
-        .with_ensure('present')
-        .with_source('puppet:///modules/munin/plugins/testplugin')
+      should contain_file('/etc/munin/plugins/testplugin').with_ensure('present').with_source('puppet:///modules/munin/plugins/testplugin')
 
-      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
-        .with_ensure('present')
-        .with_content(/something wonderful/)
+      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf').with_ensure('present').with_content(/something wonderful/)
     }
   end
 
@@ -93,9 +78,7 @@ describe 'munin::plugin', :type => 'define' do
 
     it {
 
-      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf')
-        .with_ensure('present')
-        .with_content(/env.rootdn/)
+      should contain_file('/etc/munin/plugin-conf.d/testplugin.conf').with_ensure('present').with_content(/env.rootdn/)
 
       expect {
         should contain_file('/etc/munin/plugins/testplugin')
