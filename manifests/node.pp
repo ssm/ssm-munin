@@ -12,6 +12,7 @@ class munin::node (
   $masterconfig=[],
   $mastergroup='',
   $plugins={},
+  $address=$::fqdn,
 )
 {
 
@@ -47,7 +48,7 @@ class munin::node (
 
   # Export a node definition to be collected by the munin master
   @@munin::master::node_definition{ $fqn:
-    address => $::fqdn,
+    address => $address,
     config  => $masterconfig,
   }
 
