@@ -9,7 +9,7 @@ puppetdb)
 
 Typical usage:
 
-  include munin::master
+    include munin::master
 
 Installs a munin master, and automatically collects configuration from
 all munin nodes configured with munin::node.
