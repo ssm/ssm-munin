@@ -17,6 +17,14 @@ class munin::node (
 )
 {
 
+  validate_array($allow)
+  validate_array($nodeconfig)
+  validate_array($masterconfig)
+  validate_string($mastergroup)
+  validate_hash($plugins)
+  validate_string($address)
+  validate_absolute_path($config_root)
+
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
   }

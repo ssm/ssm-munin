@@ -20,6 +20,9 @@ define munin::plugin (
 )
 {
 
+    validate_absolute_path($config_root)
+    validate_absolute_path($plugin_share_dir)
+
     File {
         require => Package['munin-node'],
         notify  => Service['munin-node'],

@@ -23,6 +23,11 @@ class munin::master (
   $config_root = '/etc/munin',
   ) {
 
+  validate_hash($node_definitions)
+  validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
+  validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  validate_absolute_path($config_root)
+
   # The munin package and configuration
   package { 'munin':
     ensure => latest,

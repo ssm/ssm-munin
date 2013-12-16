@@ -17,6 +17,9 @@ define munin::master::node_definition (
   $config=[],
 )
 {
+  validate_string($address)
+  validate_array($config)
+
   $filename=sprintf('/etc/munin/munin-conf.d/node.%s.conf',
                     regsubst($name, '[^[:alnum:]\.]', '_', 'IG'))
 
