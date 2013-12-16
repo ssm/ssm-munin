@@ -1,4 +1,5 @@
 ---
 munin::node::config_root: /etc/munin
+munin::node::service_name: munin-node
 munin::master::config_root: /etc/munin
 munin::plugin::config_root: /etc/munin

@@ -14,6 +14,7 @@ class munin::node (
   $plugins={},
   $address=$::fqdn,
   $config_root='/etc/munin',
+  $service_name='munin-node',
 )
 {
 
@@ -44,7 +45,7 @@ class munin::node (
     ensure => installed,
   }
 
-  service { 'munin-node':
+  service { $service_name:
     enable  => true,
     require => Package['munin-node'],
   }
