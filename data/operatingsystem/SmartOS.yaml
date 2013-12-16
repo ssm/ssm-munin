@@ -1,0 +1,4 @@
+---
+munin::node::config_root: /opt/local/etc/munin
+munin::master::config_root: /opt/local/etc/munin
+munin::plugin::config_root: /opt/local/etc/munin
