@@ -20,6 +20,7 @@ class munin::master (
   $node_definitions={},
   $graph_strategy = 'cgi',
   $html_strategy = 'cgi',
+  $config_root = '/etc/munin',
   ) {
 
   # The munin package and configuration
@@ -27,22 +28,22 @@ class munin::master (
     ensure => latest,
   }
 
-  file { '/etc/munin/munin.conf':
-    content => template('munin/munin.conf.erb'),
-    require => Package['munin'],
+  File {
     owner   => 'root',
-    group   => 'munin',
-    mode    => '0444',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['munin'],
   }
 
-  file { '/etc/munin/munin-conf.d':
+  file { "${config_root}/munin.conf":
+    content => template('munin/munin.conf.erb'),
+  }
+
+  file { "${config_root}/munin-conf.d":
     ensure  => directory,
     recurse => true,
     purge   => true,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    require => Package['munin'],
+    force   => true,
   }
 
   # Collect all exported node definitions

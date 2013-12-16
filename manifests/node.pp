@@ -13,6 +13,7 @@ class munin::node (
   $mastergroup='',
   $plugins={},
   $address=$::fqdn,
+  $config_root='/etc/munin',
 )
 {
 
@@ -40,7 +41,7 @@ class munin::node (
     require => Package['munin-node'],
   }
 
-  file { '/etc/munin/munin-node.conf':
+  file { "${config_root}/munin-node.conf":
     content => template('munin/munin-node.conf.erb'),
     require => Package['munin-node'],
     notify  => Service['munin-node'],
