@@ -14,6 +14,27 @@ Typical usage:
 Installs a munin master, and automatically collects configuration from
 all munin nodes configured with munin::node.
 
+# Munin node definition
+
+    munin::master::node_definition { 'fqn':
+        address => $address,
+        config  => ['additional', 'configuration' 'lines'],
+    }
+
+The resource title is used as the munin FQN, or "fully qualified
+name". This defines the node name and group. It is common to use the
+host's fully qualified domain name, where the domain name will be
+implicitly used as the node group.
+
+The address is the host name, ip address, or alternate transport used
+to contact the node.
+
+To add more configuration, specify it as an array for the "config"
+attribute.
+
+For more information about configuring a munin node definition, see
+http://munin.readthedocs.org/en/latest/reference/munin.conf.html#node-definitions
+
 ## Static node definitions
 
 The munin master class will collect all
