@@ -14,6 +14,7 @@ class munin::node (
   $plugins={},
   $address=$::fqdn,
   $config_root='/etc/munin',
+  $package_name='munin-node',
   $service_name='munin-node',
 )
 {
@@ -25,6 +26,7 @@ class munin::node (
   validate_hash($plugins)
   validate_string($address)
   validate_absolute_path($config_root)
+  validate_string($package_name)
   validate_string($service_name)
 
   if $mastergroup {
@@ -42,18 +44,18 @@ class munin::node (
     mode   => '0444',
   }
 
-  package { 'munin-node':
+  package { $package_name:
     ensure => installed,
   }
 
   service { $service_name:
     enable  => true,
-    require => Package['munin-node'],
+    require => Package[$package_name],
   }
 
   file { "${config_root}/munin-node.conf":
     content => template('munin/munin-node.conf.erb'),
-    require => Package['munin-node'],
+    require => Package[$package_name],
     notify  => Service[$service_name],
   }
 
