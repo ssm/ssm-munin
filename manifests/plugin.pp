@@ -25,7 +25,7 @@ define munin::plugin (
 
     File {
         require => Package['munin-node'],
-        notify  => Service['munin-node'],
+        notify  => Service[$munin::node::service_name],
     }
 
     case $ensure {

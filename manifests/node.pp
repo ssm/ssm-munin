@@ -25,6 +25,7 @@ class munin::node (
   validate_hash($plugins)
   validate_string($address)
   validate_absolute_path($config_root)
+  validate_string($service_name)
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
