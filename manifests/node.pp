@@ -53,7 +53,7 @@ class munin::node (
   file { "${config_root}/munin-node.conf":
     content => template('munin/munin-node.conf.erb'),
     require => Package['munin-node'],
-    notify  => Service['munin-node'],
+    notify  => Service[$service_name],
   }
 
   # Export a node definition to be collected by the munin master
