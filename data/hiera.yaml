@@ -1,4 +1,0 @@
----
-:hierarchy:
-  - operatingsystem/%{::operatingsystem}
-  - common
