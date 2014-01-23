@@ -16,6 +16,7 @@ class munin::node (
   $config_root='/etc/munin',
   $package_name='munin-node',
   $service_name='munin-node',
+  $service_ensure='',
 )
 {
 
@@ -28,6 +29,7 @@ class munin::node (
   validate_absolute_path($config_root)
   validate_string($package_name)
   validate_string($service_name)
+  validate_re($service_ensure, '^(running|stopped)$')
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
@@ -51,6 +53,10 @@ class munin::node (
   service { $service_name:
     enable  => true,
     require => Package[$package_name],
+    ensure  => $service_ensure ? {
+      ''      => undef,
+      default => $service_ensure,
+    }
   }
 
   file { "${config_root}/munin-node.conf":
