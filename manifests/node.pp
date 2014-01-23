@@ -12,6 +12,7 @@ class munin::node (
   $masterconfig=[],
   $mastergroup='',
   $plugins={},
+  $status='running',
   $address=$::fqdn,
   $config_root='/etc/munin',
   $service_name='munin-node',
@@ -48,6 +49,7 @@ class munin::node (
 
   service { $service_name:
     enable  => true,
+    ensure  => $status,
     require => Package['munin-node'],
   }
 
