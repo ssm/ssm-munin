@@ -6,6 +6,8 @@
 # - allow: List of IPv4 and IPv6 addresses and networks to allow to
 #   connect.
 #
+include munin::params
+
 class munin::node (
   $allow=['127.0.0.1'],
   $nodeconfig=[],
@@ -15,6 +17,7 @@ class munin::node (
   $address=$::fqdn,
   $config_root='/etc/munin',
   $service_name='munin-node',
+  $log_file = $munin::params::log_file,
 )
 {
 
@@ -51,6 +54,7 @@ class munin::node (
     require => Package['munin-node'],
   }
 
+  
   file { "${config_root}/munin-node.conf":
     content => template('munin/munin-node.conf.erb'),
     require => Package['munin-node'],
