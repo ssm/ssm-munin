@@ -54,7 +54,6 @@ class munin::node (
     require => Package['munin-node'],
   }
 
-  
   file { "${config_root}/munin-node.conf":
     content => template('munin/munin-node.conf.erb'),
     require => Package['munin-node'],
