@@ -6,8 +6,6 @@
 # - allow: List of IPv4 and IPv6 addresses and networks to allow to
 #   connect.
 #
-include munin::params
-
 class munin::node (
   $allow=['127.0.0.1'],
   $nodeconfig=[],
@@ -17,9 +15,9 @@ class munin::node (
   $address=$::fqdn,
   $config_root='/etc/munin',
   $service_name='munin-node',
-  $log_file = $munin::params::log_file,
 )
 {
+  include munin::params
 
   validate_array($allow)
   validate_array($nodeconfig)
@@ -29,6 +27,7 @@ class munin::node (
   validate_string($address)
   validate_absolute_path($config_root)
   validate_string($service_name)
+  $log_dir = $munin::params::log_dir
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
