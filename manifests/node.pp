@@ -17,6 +17,7 @@ class munin::node (
   $service_name='munin-node',
 )
 {
+  include munin::params
 
   validate_array($allow)
   validate_array($nodeconfig)
@@ -26,6 +27,7 @@ class munin::node (
   validate_string($address)
   validate_absolute_path($config_root)
   validate_string($service_name)
+  $log_dir = $munin::params::log_dir
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
