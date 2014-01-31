@@ -3,9 +3,27 @@
 #
 # Parameters:
 #
-# - allow: List of IPv4 and IPv6 addresses and networks to allow to
-#   connect.
+# allow: List of IPv4 and IPv6 addresses and networks to allow to connect.
 #
+# config_root: Root directory for munin configuration.
+#
+# nodeconfig: List of lines to append to the munin node configuration.
+#
+# masterconfig: List of configuration lines to append to the munin
+# master node definitinon
+#
+# plugins: A hash used by create_resources to create munin::plugin
+# instances.
+#
+# address: The address used in the munin master node definition.
+#
+# package_name: The name of the munin node package to install.
+#
+# service_name: The name of the munin node service.
+#
+# service_ensure: Defaults to "". If set to "running" or "stopped", it
+# is used as parameter "ensure" for the munin node service.
+
 class munin::node (
   $allow=['127.0.0.1'],
   $nodeconfig=[],
