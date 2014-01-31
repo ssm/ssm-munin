@@ -19,6 +19,7 @@ class munin::node (
   $service_ensure='',
 )
 {
+  include munin::params
 
   validate_array($allow)
   validate_array($nodeconfig)
@@ -30,6 +31,8 @@ class munin::node (
   validate_string($package_name)
   validate_string($service_name)
   validate_re($service_ensure, '^(|running|stopped)$')
+
+  $log_dir = $munin::params::log_dir
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
