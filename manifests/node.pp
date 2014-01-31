@@ -25,21 +25,18 @@
 # is used as parameter "ensure" for the munin node service.
 
 class munin::node (
-  $allow=['127.0.0.1'],
-  $nodeconfig=[],
-  $masterconfig=[],
-  $mastergroup='',
-  $plugins={},
-  $address=$::fqdn,
-  $config_root='/etc/munin',
-  $package_name='munin-node',
-  $service_name='munin-node',
-  $service_ensure='',
-)
-{
-  include munin::params
-
-  $log_dir = $munin::params::log_dir
+  $address        = $munin::params::node::address,
+  $allow          = $munin::params::node::allow,
+  $config_root    = $munin::params::node::config_root,
+  $log_dir        = $munin::params::node::log_dir,
+  $masterconfig   = $munin::params::node::masterconfig,
+  $mastergroup    = $munin::params::node::mastergroup,
+  $nodeconfig     = $munin::params::node::nodeconfig,
+  $package_name   = $munin::params::node::package_name,
+  $plugins        = $munin::params::node::plugins,
+  $service_ensure = $munin::params::node::service_ensure,
+  $service_name   = $munin::params::node::service_name,
+) inherits munin::params::node {
 
   validate_array($allow)
   validate_array($nodeconfig)
