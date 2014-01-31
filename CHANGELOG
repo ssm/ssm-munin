@@ -1,5 +1,40 @@
 # Changelog
 
+## branch:master
+
+All parameters have trivial validation.
+
+### munin::master
+
+- new parameter "config_root". Defaults should match supported
+  operating systems.
+
+### munin::plugin
+
+- new parameter "config_root". Defaults should match supported
+  operating systems.
+
+### munin::node
+
+- new parameter "address". Default is $::fqdn. This will be used as
+  the "address" when registering with the munin master.
+
+- new parameter "config_root". Defaults should match supported
+  operating systems.
+
+- new parameter "package_name".  Default should match supported
+  operating systems.
+
+- new parameter "service_name".  Default should match supported
+  operating systems.
+
+- new parameter "service_ensure". Default is "". Possible values: "",
+  "running" or "stopped".
+
+### munin::params
+
+- new class
+
 ## 0.0.4 - 2013-08-13
 
 Bugfix for the munin::plugin define.
