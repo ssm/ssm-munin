@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'munin::master', :type => 'class' do
+  include_context :Debian
   it {
     should contain_package('munin')
   }
