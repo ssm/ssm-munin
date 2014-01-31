@@ -1,6 +1,8 @@
 # Class: munin::params
 #
 class munin::params {
+  $message = "Unsupported osfamily: ${::osfamily}"
+
   case $::osfamily {
     RedHat: {
       $log_dir = '/var/log/munin-node'
@@ -8,8 +10,18 @@ class munin::params {
     Debian: {
       $log_dir = '/var/log/munin'
     }
+    Solaris: {
+      case $::operatingsystem {
+        SmartOS: {
+          $log_dir = '/var/opt/log/munin'
+        }
+        default: {
+          fail($message)
+        }
+      }
+    }
     default: {
-      fail("Unsupported osfamily: ${::osfamily} The munin::params module only supports osfamily Debian or RedHat (slaves only).")
+      fail($message)
     }
   }
 }

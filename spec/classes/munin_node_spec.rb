@@ -1,15 +1,25 @@
 require 'spec_helper'
 
 describe 'munin::node', :type => 'class' do
-  context 'default' do
-    let(:facts) do
-      { :fqdn => 'example.com' }
-    end
 
+  [ :Debian, :RedHat, :SmartOS ].each do |sc|
+    context "Check for supported osfamily #{sc}" do
+      include_context sc
+      it { should contain_class('munin::node') }
+      it {
+        should contain_package('munin-node')
+        should contain_service('munin-node')
+        should contain_file('/etc/munin/munin-node.conf')
+      }
+    end
+  end
+
+  context 'unsupported' do
+    include_context :unsupported
     it {
-      should contain_package('munin-node')
-      should contain_service('munin-node')
-      should contain_file('/etc/munin/munin-node.conf')
+      expect {
+        should contain_class('munin::node')
+      }.to raise_error(Puppet::Error, /Unsupported osfamily/)
     }
   end
 end
