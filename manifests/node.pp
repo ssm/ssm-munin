@@ -29,7 +29,7 @@ class munin::node (
   validate_absolute_path($config_root)
   validate_string($package_name)
   validate_string($service_name)
-  validate_re($service_ensure, '^(running|stopped)$')
+  validate_re($service_ensure, '^(|running|stopped)$')
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
