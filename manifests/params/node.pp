@@ -32,7 +32,7 @@ class munin::params::node {
           $package_name = 'munin-node'
         }
         default: {
-          fail($message)
+          fail("Unsupported operatingsystem ${::operatingsystem} for osfamily ${::osfamily}")
         }
       }
     }
