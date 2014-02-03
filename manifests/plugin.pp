@@ -7,7 +7,6 @@
 # - target: when ensure => link, link target
 # - config: array of lines for munin plugin config
 # - config_label: label for munin plugin config
-# - config_root: root directory for munin configuration. Default: /etc/munin
 
 define munin::plugin (
     $ensure=undef,
@@ -15,12 +14,12 @@ define munin::plugin (
     $target=undef,
     $config=undef,
     $config_label=undef,
-    $config_root='/etc/munin',
-    $plugin_share_dir='/usr/share/munin/plugins',
 )
 {
 
-    validate_absolute_path($config_root)
+    include munin::node
+
+    $plugin_share_dir=$munin::node::plugin_share_dir
     validate_absolute_path($plugin_share_dir)
 
     File {
@@ -42,10 +41,10 @@ define munin::plugin (
             $plugin_ensure = link
             case $target {
                 '': {
-                    $plugin_target = "${plugin_share_dir}/${title}"
+                    $plugin_target = "${munin::node::plugin_share_dir}/${title}"
                 }
                 default: {
-                    $plugin_target = "${plugin_share_dir}/${target}"
+                    $plugin_target = "${munin::node::plugin_share_dir}/${target}"
                 }
             }
         }
@@ -67,7 +66,7 @@ define munin::plugin (
 
     if $handle_plugin {
         # Install the plugin
-        file {"${config_root}/plugins/${name}":
+        file {"${munin::node::config_root}/plugins/${name}":
             ensure  => $plugin_ensure,
             source  => $source,
             target  => $plugin_target,
@@ -77,7 +76,7 @@ define munin::plugin (
 
     # Config
 
-    file{ "${config_root}/plugin-conf.d/${name}.conf":
+    file{ "${munin::node::config_root}/plugin-conf.d/${name}.conf":
       ensure  => $config_ensure,
       content => template('munin/plugin_conf.erb'),
     }
