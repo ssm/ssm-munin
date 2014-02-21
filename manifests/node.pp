@@ -12,6 +12,8 @@
 # masterconfig: List of configuration lines to append to the munin
 # master node definitinon
 #
+# mastername: The name of the munin master server which will collect the node definition.
+#
 # plugins: A hash used by create_resources to create munin::plugin
 # instances.
 #
@@ -31,6 +33,7 @@ class munin::node (
   $log_dir        = $munin::params::node::log_dir,
   $masterconfig   = $munin::params::node::masterconfig,
   $mastergroup    = $munin::params::node::mastergroup,
+  $mastername     = $munin::params::node::mastername,
   $nodeconfig     = $munin::params::node::nodeconfig,
   $package_name   = $munin::params::node::package_name,
   $plugins        = $munin::params::node::plugins,
@@ -42,6 +45,7 @@ class munin::node (
   validate_array($nodeconfig)
   validate_array($masterconfig)
   validate_string($mastergroup)
+  validate_string($mastername)
   validate_hash($plugins)
   validate_string($address)
   validate_absolute_path($config_root)
@@ -87,6 +91,7 @@ class munin::node (
   # Export a node definition to be collected by the munin master
   @@munin::master::node_definition{ $fqn:
     address => $address,
+    mastername => $mastername,
     config  => $masterconfig,
   }
 
