@@ -58,7 +58,7 @@ class munin::master (
   }
 
   # Collect all exported node definitions
-  Munin::Master::Node_definition <<| |>>
+  Munin::Master::Node_definition <<| mastername == $fqdn or mastername == '' |>>
 
   # Create static node definitions
   if $node_definitions {
