@@ -39,7 +39,7 @@ If you have multiple munin master servers in your infrastructure and want to ass
 
     munin::master::node_definition { 'fqn':
         address    => $address,
-        mastername => 'name.domain.tld',
+        mastername => 'munin.example.com',
     }
 
 ## Static node definitions
