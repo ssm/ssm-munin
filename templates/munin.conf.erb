@@ -2,8 +2,12 @@
 #
 # This file is handled by puppet, all local modifications will be lost
 
+<% if @html_strategy -%>
 html_strategy  <%= @html_strategy %>
+<% end -%>
+<% if @graph_strategy -%>
 graph_strategy <%= @graph_strategy %>
+<% end -%>
 
 # Where to look for puppet generated munin master configuration.
 includedir /etc/munin/munin-conf.d
