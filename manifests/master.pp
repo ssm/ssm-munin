@@ -30,8 +30,12 @@ class munin::master (
   if $node_definitions {
     validate_hash($node_definitions)
   }
-  validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
-  validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  if $graph_strategy {
+    validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
+  }
+  if $html_strategy {
+    validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  }
   validate_absolute_path($config_root)
 
   # The munin package and configuration
