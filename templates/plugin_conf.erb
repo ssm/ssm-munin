@@ -1,10 +1,10 @@
 <%
 # Select label from either config_label or from the namevar
-if config_label == :undef then
-    label = name
+if @config_label == :undef then
+    label = @name
 else
-    label = config_label
+    label = @config_label
 end
 -%>
 [<%= label %>]
-<%= Array(config).join("\n") %>
+<%= Array(@config).join("\n") %>
