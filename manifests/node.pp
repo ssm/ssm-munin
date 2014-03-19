@@ -25,6 +25,9 @@
 #
 # service_ensure: Defaults to "". If set to "running" or "stopped", it
 # is used as parameter "ensure" for the munin node service.
+#
+# export_node: "enabled" or "disabled". Defaults to "enabled".
+# Causes the node config to be exported to puppetmaster.
 
 class munin::node (
   $address        = $munin::params::node::address,
@@ -39,6 +42,7 @@ class munin::node (
   $plugins        = $munin::params::node::plugins,
   $service_ensure = $munin::params::node::service_ensure,
   $service_name   = $munin::params::node::service_name,
+  $export_node    = $munin::params::node::export_node,
 ) inherits munin::params::node {
 
   validate_array($allow)
@@ -52,6 +56,7 @@ class munin::node (
   validate_string($package_name)
   validate_string($service_name)
   validate_re($service_ensure, '^(|running|stopped)$')
+  validate_re($export_node, '^(enabled|disabled)$')
   validate_absolute_path($log_dir)
 
   if $mastergroup {
@@ -89,10 +94,12 @@ class munin::node (
   }
 
   # Export a node definition to be collected by the munin master
-  @@munin::master::node_definition{ $fqn:
-    address => $address,
-    mastername => $mastername,
-    config  => $masterconfig,
+  if $export_node == 'enabled' {
+    @@munin::master::node_definition{ $fqn:
+      address    => $address,
+      mastername => $mastername,
+      config     => $masterconfig,
+    }
   }
 
   # Generate plugin resources from hiera or class parameter.
