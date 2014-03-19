@@ -10,6 +10,7 @@ class munin::params::node {
   $nodeconfig     = []
   $plugins        = {}
   $service_ensure = ''
+  $export_node    = 'enabled'
 
   case $::osfamily {
     RedHat: {
