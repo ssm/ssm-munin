@@ -35,6 +35,13 @@ attribute.
 For more information about configuring a munin node definition, see
 http://munin.readthedocs.org/en/latest/reference/munin.conf.html#node-definitions
 
+If you have multiple munin master servers in your infrastructure and want to assign different nodes to different masters, you can specify the master's fully qualified domain name on the node's definition:
+
+    munin::master::node_definition { 'fqn':
+        address    => $address,
+        mastername => 'munin.example.com',
+    }
+
 ## Static node definitions
 
 The munin master class will collect all

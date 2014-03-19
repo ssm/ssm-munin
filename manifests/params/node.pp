@@ -6,6 +6,7 @@ class munin::params::node {
   $allow          = []
   $masterconfig   = []
   $mastergroup    = ''
+  $mastername     = ''
   $nodeconfig     = []
   $plugins        = {}
   $service_ensure = ''

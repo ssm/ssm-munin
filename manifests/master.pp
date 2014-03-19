@@ -30,8 +30,12 @@ class munin::master (
   if $node_definitions {
     validate_hash($node_definitions)
   }
-  validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
-  validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  if $graph_strategy {
+    validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
+  }
+  if $html_strategy {
+    validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  }
   validate_absolute_path($config_root)
 
   # The munin package and configuration
@@ -58,7 +62,7 @@ class munin::master (
   }
 
   # Collect all exported node definitions
-  Munin::Master::Node_definition <<| |>>
+  Munin::Master::Node_definition <<| mastername == $fqdn or mastername == '' |>>
 
   # Create static node definitions
   if $node_definitions {
