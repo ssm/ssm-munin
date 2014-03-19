@@ -79,12 +79,12 @@ class munin::node (
   }
 
   service { $service_name:
-    enable  => true,
-    require => Package[$package_name],
     ensure  => $service_ensure ? {
       ''      => undef,
       default => $service_ensure,
-    }
+    },
+    enable  => true,
+    require => Package[$package_name],
   }
 
   file { "${config_root}/munin-node.conf":
