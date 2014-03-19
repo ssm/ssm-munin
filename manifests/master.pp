@@ -19,19 +19,24 @@
 #
 # - config_root: the root directory of the munin master configuration.
 #   Default: /etc/munin on most platforms.
+#
+# - collect_nodes: 'enabled' or 'disabled' default 'enabled'.
+#   Makes puppetmaster collect exported node_definitions.
 
 class munin::master (
   $node_definitions = $munin::params::master::node_defintions,
   $graph_strategy   = $munin::params::master::graph_strategy,
   $html_strategy    = $munin::params::master::html_strategy,
   $config_root      = $munin::params::master::config_root,
+  $collect_nodes    = $munin::params::master::collect_nodes,
   ) inherits munin::params::master {
 
   if $node_definitions {
     validate_hash($node_definitions)
   }
   validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
-  validate_re($html_strategy, [ '^cgi$', '^cron$' ])
+  validate_re($html_strategy,  [ '^cgi$', '^cron$' ])
+  validate_re($collect_nodes,  [ '^enabled$', '^disabled$' ])
   validate_absolute_path($config_root)
 
   # The munin package and configuration
@@ -57,8 +62,10 @@ class munin::master (
     force   => true,
   }
 
-  # Collect all exported node definitions
-  Munin::Master::Node_definition <<| mastername == $fqdn or mastername == '' |>>
+  if $collect_nodes == 'enabled' {
+    # Collect all exported node definitions
+    Munin::Master::Node_definition <<| mastername == $fqdn or mastername == '' |>>
+  }
 
   # Create static node definitions
   if $node_definitions {

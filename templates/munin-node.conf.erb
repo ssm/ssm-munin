@@ -3,9 +3,9 @@
 # This file is handled by puppet, any local changes will be lost
 #
 
-host_name  <%= fqdn %>
+host_name  <%= scope.lookupvar('::fdqn') %>
 log_level  4
-log_file   <%= log_dir %>/munin-node.log
+log_file   <%= @log_dir %>/munin-node.log
 port       4949
 pid_file   /var/run/munin/munin-node.pid
 background 1
@@ -27,7 +27,7 @@ ignore_file \.puppet-bak$
 
 # Hosts to allow
 
-<% Array(allow).flatten.each do |line|                        -%>
+<% Array(@allow).flatten.each do |line|                       -%>
 <%   if line.match(/^\d+\.\d+\.\d+\.\d+$/)                    -%>
 <%=    line.gsub(".", "\\.").sub(/^/, "allow ^").sub(/$/, "$") %>
 <%   elsif line.match(/^\d+\.\d+\.\d+\.\d+\/\d+$/)            -%>
@@ -35,6 +35,6 @@ ignore_file \.puppet-bak$
 <%   end                                                      -%>
 <% end                                                        -%>
 
-<% Array(nodeconfig).each do |line| -%>
+<% Array(@nodeconfig).each do |line| -%>
 <%= line %>
 <% end -%>
