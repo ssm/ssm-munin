@@ -1,8 +1,18 @@
 # Changelog
 
-## branch:master
+## 0.0.5 - 2014-03-19
 
-All parameters have trivial validation.
+* Support multiple masters with different nodes
+  (Thanks: Cristian Gae)
+
+* Support older (1.4.6) munin versions
+  (Thanks: Sergio Oliveira)
+  
+* Update for compatibility with puppet 3.4
+  (Thanks: Harald Skoglund)
+
+* Easier configuration with more parameters. All parameters have
+  trivial validation.
 
 ### munin::master
 
