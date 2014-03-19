@@ -3,7 +3,7 @@
 # This file is handled by puppet, any local changes will be lost
 #
 
-host_name  <%= scope.lookupvar('::fdqn') %>
+host_name  <%= scope.lookupvar('::fqdn') %>
 log_level  4
 log_file   <%= @log_dir %>/munin-node.log
 port       4949
