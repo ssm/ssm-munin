@@ -22,6 +22,8 @@
 #
 # - collect_nodes: 'enabled' or 'disabled' default 'enabled'.
 #   Makes puppetmaster collect exported node_definitions.
+#
+# - extra_config: Extra lines of config to put in munin.conf.
 
 class munin::master (
   $node_definitions = $munin::params::master::node_defintions,
@@ -29,6 +31,7 @@ class munin::master (
   $html_strategy    = $munin::params::master::html_strategy,
   $config_root      = $munin::params::master::config_root,
   $collect_nodes    = $munin::params::master::collect_nodes,
+  $extra_config     = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
   if $node_definitions {
