@@ -8,6 +8,11 @@ html_strategy  <%= @html_strategy %>
 <% if @graph_strategy -%>
 graph_strategy <%= @graph_strategy %>
 <% end -%>
+<% if @extra_config -%>
+
+<% @extra_config.each do |this| -%>
+this
+<% end -%>
 
 # Where to look for puppet generated munin master configuration.
 includedir /etc/munin/munin-conf.d

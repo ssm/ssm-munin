@@ -5,6 +5,7 @@ class munin::params::master {
   $html_strategy      = 'cgi'
   $node_definitions   = ''
   $collect_nodes      = 'enabled'
+  $extra_config       = []
 
   case $::osfamily {
     'Debian',
