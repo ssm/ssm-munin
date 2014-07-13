@@ -19,6 +19,7 @@ class munin::params::node {
       $service_name = 'munin-node'
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/share/munin/plugins'
+      $file_group   = 'root'
     }
     Debian: {
       $config_root  = '/etc/munin'
@@ -26,6 +27,7 @@ class munin::params::node {
       $service_name = 'munin-node'
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/share/munin/plugins'
+      $file_group   = 'root'
     }
     Solaris: {
       case $::operatingsystem {
@@ -35,11 +37,20 @@ class munin::params::node {
           $service_name = 'smf:/munin-node'
           $package_name = 'munin-node'
           $plugin_share_dir = '/opt/local/share/munin/plugins'
+          $file_group   = 'root'
         }
         default: {
           fail("Unsupported operatingsystem ${::operatingsystem} for osfamily ${::osfamily}")
         }
       }
+    }
+    FreeBSD, DragonFly: {
+      $config_root  = '/usr/local/etc/munin'
+      $log_dir      = '/var/log/munin'
+      $service_name = 'munin-node'
+      $package_name = 'munin-node'
+      $plugin_share_dir = '/usr/local/share/munin/plugins'
+      $file_group   = 'wheel'
     }
     default: {
       fail($message)
