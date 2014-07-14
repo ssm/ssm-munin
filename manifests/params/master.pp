@@ -5,10 +5,10 @@ class munin::params::master {
   $html_strategy            = 'cgi'
   $node_definitions         = ''
   $collect_nodes            = 'enabled'
-  $tls                      = undef
+  $tls                      = 'disabled'
   $tls_certificate          = undef
   $tls_private_key          = undef
-  $tls_verify_certificate   = true
+  $tls_verify_certificate   = 'yes'
 
   case $::osfamily {
     'Debian',

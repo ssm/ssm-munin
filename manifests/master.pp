@@ -48,16 +48,11 @@ class munin::master (
   validate_re($collect_nodes,  [ '^enabled$', '^disabled$' ])
   validate_absolute_path($config_root)
 
-  if $tls {
-    validate_re($tls, [ '^enabled$', '^disabled$' ])
-  }
+  validate_re($tls, [ '^enabled$', '^disabled$' ])
 
-  validate_bool($tls_verify_certificate)
-
-  if $tls_private_key {
+  if $tls == 'enabled' {
+    validate_re($tls_verify_certificate, [ '^yes$', '^no$' ])
     validate_absolute_path($tls_private_key)
-  }
-  if $tls_certificate {
     validate_absolute_path($tls_certificate)
   }
 
