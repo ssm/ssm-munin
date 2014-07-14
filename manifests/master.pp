@@ -24,11 +24,16 @@
 #   Makes puppetmaster collect exported node_definitions.
 
 class munin::master (
-  $node_definitions = $munin::params::master::node_defintions,
-  $graph_strategy   = $munin::params::master::graph_strategy,
-  $html_strategy    = $munin::params::master::html_strategy,
-  $config_root      = $munin::params::master::config_root,
-  $collect_nodes    = $munin::params::master::collect_nodes,
+  $node_definitions       = $munin::params::master::node_defintions,
+  $graph_strategy         = $munin::params::master::graph_strategy,
+  $html_strategy          = $munin::params::master::html_strategy,
+  $config_root            = $munin::params::master::config_root,
+  $collect_nodes          = $munin::params::master::collect_nodes,
+  $tls                    = $munin::params::master::tls,
+  $tls_certificate        = $munin::params::master::tls_certificate,
+  $tls_private_key        = $munin::params::master::tls_private_key,
+  $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
+
   ) inherits munin::params::master {
 
   if $node_definitions {
@@ -42,6 +47,19 @@ class munin::master (
   }
   validate_re($collect_nodes,  [ '^enabled$', '^disabled$' ])
   validate_absolute_path($config_root)
+
+  if $tls {
+    validate_re($tls, [ '^enabled$', '^disabled$' ])
+  }
+
+  validate_bool($tls_verify_certificate)
+
+  if $tls_private_key {
+    validate_absolute_path($tls_private_key)
+  }
+  if $tls_certificate {
+    validate_absolute_path($tls_certificate)
+  }
 
   # The munin package and configuration
   package { 'munin':
