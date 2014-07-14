@@ -8,7 +8,7 @@ class munin::params::master {
   $tls                      = undef
   $tls_certificate          = undef
   $tls_private_key          = undef
-  $tls_validate_certificate = undef
+  $tls_verify_certificate   = true
 
   case $::osfamily {
     'Debian',
