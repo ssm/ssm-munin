@@ -6,7 +6,7 @@ describe 'munin::master', :type => 'class' do
     it { should compile }
     it {
       should contain_package('munin')
-      should contain_file('/etc/munin/munin.conf')\
+      should contain_file('/etc/munin/munin.conf')
         .with_content(/^graph_strategy cgi$/)
     }
   end
