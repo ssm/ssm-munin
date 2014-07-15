@@ -28,6 +28,9 @@
 #
 # export_node: "enabled" or "disabled". Defaults to "enabled".
 # Causes the node config to be exported to puppetmaster.
+#
+# file_group: The UNIX group name owning the configuration files,
+# log files, etc.
 
 class munin::node (
   $address        = $munin::params::node::address,
@@ -43,6 +46,7 @@ class munin::node (
   $service_ensure = $munin::params::node::service_ensure,
   $service_name   = $munin::params::node::service_name,
   $export_node    = $munin::params::node::export_node,
+  $file_group     = $munin::params::node::file_group,
 ) inherits munin::params::node {
 
   validate_array($allow)
@@ -58,6 +62,7 @@ class munin::node (
   validate_re($service_ensure, '^(|running|stopped)$')
   validate_re($export_node, '^(enabled|disabled)$')
   validate_absolute_path($log_dir)
+  validate_string($file_group)
 
   if $mastergroup {
     $fqn = "${mastergroup};${::fqdn}"
@@ -70,7 +75,7 @@ class munin::node (
   File {
     ensure => present,
     owner  => 'root',
-    group  => 'root',
+    group  => $file_group,
     mode   => '0444',
   }
 
