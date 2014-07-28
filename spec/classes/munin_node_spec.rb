@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-describe 'munin::node', :type => 'class' do
+describe 'munin::node' do
 
-  [ :Debian, :RedHat ].each do |sc|
-    context "Check for supported osfamily #{sc}" do
+  [ :CentOS, :Debian, :RedHat, :Ubuntu ].each do |sc|
+    context "Check for supported operatingsystem #{sc}" do
       include_context sc
+      it { should compile }
       it { should contain_class('munin::node') }
       it {
         should contain_package('munin-node')
@@ -13,9 +14,11 @@ describe 'munin::node', :type => 'class' do
       }
     end
   end
+
   [ :SmartOS ].each do |sc|
-    context "Check for supported osfamily #{sc}" do
+    context "Check for supported operatingsystem #{sc}" do
       include_context sc
+      it { should compile }
       it { should contain_class('munin::node') }
       it {
         should contain_package('munin-node')
