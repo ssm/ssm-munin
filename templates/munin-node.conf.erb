@@ -32,9 +32,8 @@ ignore_file \.puppet-bak$
 <%=    line.gsub(".", "\\.").sub(/^/, "allow ^").sub(/$/, "$") %>
 <%   elsif line.match(/^\d+\.\d+\.\d+\.\d+\/\d+$/)            -%>
 <%=    line.sub(/^/, "cidr_allow ")                            %>
-<%   elsif line.match(/(\d+|:{1,2})\/\d+$/)                   -%>
+<%   elsif line.match(/([0-9a-fA-F]{1,4}|:{1,2})\/\d+$/)      -%>
 <%=    line.sub(/^/, "cidr_allow ")                            %>
-<%   elsif line.match(/(\d+|:{1,2})\/\d+$/)                   -%>
 <%   else                                                     -%>
 <%=    line.sub(/^/, "allow ^").sub(/$/, "$")                  %>
 <%   end                                                      -%>
