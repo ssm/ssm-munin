@@ -91,4 +91,18 @@ describe 'munin::plugin', :type => 'define' do
     }
   end
 
+  context 'with absolute target' do
+    include_context :Debian
+
+    let(:params) do
+      { ensure: 'link',
+        target: '/full/path/to/testplugin' }
+    end
+
+    it do
+      should contain_file('/etc/munin/plugins/testplugin')
+        .with_ensure('link')
+        .with_target('/full/path/to/testplugin')
+    end
+  end
 end
