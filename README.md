@@ -134,13 +134,21 @@ Here, we activate an already installed plugin.
 The use of "ensure => link" creates an implicit "target =>
 /usr/share/munin/plugins/$title".
 
+The "target" parameter can be set to an absolute path (starting with a
+"/"), or a relative path (anything else). If relative,
+$munin::params::node::plugin_share_dir is prepended to the path.
+
     munin::plugin {
       'apt':
         ensure => link;
+      'something':
+        ensure => link,
+        target => '/usr/local/share/munin/plugins/something';
       'ip_eth0':
         ensure => link,
-        target => 'ip_'; # look in /usr/share/munin/plugins or similar
+        target => 'ip_'; # becomes $munin::params::node::plugin_share_dir/ip_
     }
+
 
 ### Install and activate a plugin
 
