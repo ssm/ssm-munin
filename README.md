@@ -109,10 +109,23 @@ A YAML definition
 
 Typical usage:
 
-    include munin::node
+    class { 'munin::node':
+        allow => [ '192.0.2.0/24', '2001:db8::/64' ]
+    }
+
+or in hiera:
+
+    ---
+    munin::node::allow:
+      - 192.0.2.0/24
+      - 2001:db8::/64
 
 Installs munin-node, and exports a munin::master::node_definition
-which munin::master will collect.
+which munin::master will collect, and allows munin masters on
+specified networks to connect.
+
+The munin::node class does take more parameters, see the
+'manifests/node.pp' file for complete documentation.
 
 # Munin plugins
 
