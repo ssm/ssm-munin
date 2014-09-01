@@ -43,6 +43,9 @@ define munin::plugin (
                 '': {
                     $plugin_target = "${munin::node::plugin_share_dir}/${title}"
                 }
+                /^\//: {
+                    $plugin_target = $target
+                }
                 default: {
                     $plugin_target = "${munin::node::plugin_share_dir}/${target}"
                 }
