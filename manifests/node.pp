@@ -36,6 +36,7 @@ class munin::node (
   $address        = $munin::params::node::address,
   $allow          = $munin::params::node::allow,
   $config_root    = $munin::params::node::config_root,
+  $host_name      = $munin::params::node::host_name,
   $log_dir        = $munin::params::node::log_dir,
   $masterconfig   = $munin::params::node::masterconfig,
   $mastergroup    = $munin::params::node::mastergroup,
@@ -65,10 +66,10 @@ class munin::node (
   validate_string($file_group)
 
   if $mastergroup {
-    $fqn = "${mastergroup};${::fqdn}"
+    $fqn = "${mastergroup};${host_name}"
   }
   else {
-    $fqn = $::fqdn
+    $fqn = $host_name
   }
 
   # Defaults
