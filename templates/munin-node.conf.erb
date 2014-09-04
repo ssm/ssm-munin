@@ -2,6 +2,25 @@
 #
 # This file is handled by puppet, any local changes will be lost
 #
+<%
+  require 'ipaddr'
+
+  addresses = []
+  unrecognized = []
+
+  Array(@allow).flatten.each do |line|
+    begin
+      a = IPAddr.new(line)
+      if a.ipv4? or a.ipv6?
+        addresses << line
+      end
+    rescue IPAddr::InvalidAddressError
+      # Treat invalid addresses as "allow" arguments, as they can be
+      # regular expressions.
+      unrecognized << line
+    end
+  end
+-%>
 
 host_name  <%= scope.lookupvar('::fqdn') %>
 log_level  4
@@ -26,18 +45,16 @@ ignore_file \.rpm(save|new)$
 ignore_file \.puppet-bak$
 
 # Hosts to allow
-
-<% Array(@allow).flatten.each do |line|                       -%>
-<%   if line.match(/^\d+\.\d+\.\d+\.\d+$/)                    -%>
-<%=    line.gsub(".", "\\.").sub(/^/, "allow ^").sub(/$/, "$") %>
-<%   elsif line.match(/^\d+\.\d+\.\d+\.\d+\/\d+$/)            -%>
-<%=    line.sub(/^/, "cidr_allow ")                            %>
-<%   elsif line.match(/^[0-9a-f:]+$/i)                        -%>
-<%=    line.sub(/^/, "allow ^").sub(/$/, "$")                  %>
-<%   elsif line.match(/^[0-9a-f:]+\/\d+$/i)                   -%>
-<%=    line.sub(/^/, "cidr_allow ")                            %>
-<%   end                                                      -%>
-<% end                                                        -%>
+<% addresses.each do |line| -%>
+<%   if line.match(/\//) -%>
+cidr_allow <%= line %>
+<%   else -%>
+allow ^<%= Regexp.quote(line) %>$
+<%   end -%>
+<% end -%>
+<% unrecognized.each do |line| -%>
+allow <%= line %>
+<% end -%>
 
 <% Array(@nodeconfig).each do |line| -%>
 <%= line %>
