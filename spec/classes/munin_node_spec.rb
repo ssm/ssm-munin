@@ -40,13 +40,19 @@ describe 'munin::node' do
   context 'acl with ipv4 and ipv6 addresses' do
     include_context :Debian
     let(:params) do
-      { allow: ['2001:db8:1::', '2001:db8:2::/64', '192.0.2.129', '192.0.2.0/25'] }
+      { allow: ['2001:db8:1::',
+                '2001:db8:2::/64',
+                '192.0.2.129',
+                '192.0.2.0/25',
+                '192\.0\.2']
+      }
     end
     it do
       should contain_file('/etc/munin/munin-node.conf')
         .with_content(/^cidr_allow 192.0.2.0\/25$/)
         .with_content(/^cidr_allow 2001:db8:2::\/64$/)
         .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
+        .with_content(/^allow 192\\.0\\.2$/)
         .with_content(/^allow \^2001:db8:1::\$$/)
     end
   end
