@@ -18,7 +18,7 @@ shared_context :Debian do
 end
 
 shared_context :Ubuntu do
-  let(:facts) { { :Operatingsystem => 'Ubuntu', } }
+  let(:facts) { { :operatingsystem => 'Ubuntu', } }
 end
 
 shared_context :CentOS do
