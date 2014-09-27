@@ -5,6 +5,10 @@ class munin::params::master {
   $html_strategy            = 'cgi'
   $node_definitions         = ''
   $collect_nodes            = 'enabled'
+  $dbdir                    = undef
+  $htmldir                  = undef
+  $logdir                   = undef
+  $rundir                   = undef
   $tls                      = 'disabled'
   $tls_certificate          = undef
   $tls_private_key          = undef

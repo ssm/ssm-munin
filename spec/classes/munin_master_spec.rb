@@ -54,6 +54,38 @@ describe 'munin::master' do
     }
   end
 
+  context 'with dbdir => /var/lib/munin' do
+    let (:params) { { :dbdir => '/var/lib/munin' } }
+    it {
+      should contain_file('/etc/munin/munin.conf')
+        .with_content(/dbdir\s+\/var\/lib\/munin/)
+    }
+  end
+
+  context 'with htmldir => /var/www/munin' do
+    let (:params) { { :htmldir => '/var/www/munin' } }
+    it {
+      should contain_file('/etc/munin/munin.conf')
+        .with_content(/htmldir\s+\/var\/www\/munin/)
+    }
+  end
+
+  context 'with logdir => /var/log/munin' do
+    let (:params) { { :dbdir => '/var/log/munin' } }
+    it {
+      should contain_file('/etc/munin/munin.conf')
+        .with_content(/dbdir\s+\/var\/log\/munin/)
+    }
+  end
+
+  context 'with rudir => /var/run/munin' do
+    let (:params) { { :dbdir => '/var/run/munin' } }
+    it {
+      should contain_file('/etc/munin/munin.conf')
+        .with_content(/dbdir\s+\/var\/run\/munin/)
+    }
+  end
+
   context 'with tls => enabled' do
     let(:params) {
       {
