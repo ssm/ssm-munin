@@ -2,6 +2,18 @@
 #
 # This file is handled by puppet, all local modifications will be lost
 
+<% if @dbdir -%>
+dbdir <%= @dbdir %>
+<% end -%>
+<% if @htmldir -%>
+htmldir <%= @htmldir %>
+<% end -%>
+<% if @logdir -%>
+logdir <%= @logdir %>
+<% end -%>
+<% if @rundir -%>
+rundir <%= @rundir %>
+<% end -%>
 <% if @html_strategy -%>
 html_strategy  <%= @html_strategy %>
 <% end -%>
