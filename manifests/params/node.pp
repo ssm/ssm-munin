@@ -52,6 +52,14 @@ class munin::params::node {
       $plugin_share_dir = '/usr/local/share/munin/plugins'
       $file_group   = 'wheel'
     }
+    OpenBSD: {
+      $config_root  = '/etc/munin'
+      $log_dir      = '/var/log/munin'
+      $service_name = 'munin_node'
+      $package_name = 'munin-node'
+      $plugin_share_dir = '/usr/local/libexec/munin/plugins'
+      $file_group   = 'wheel'
+    }
     default: {
       fail($message)
     }
