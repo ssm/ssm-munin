@@ -14,7 +14,7 @@
       if a.ipv4? or a.ipv6?
         addresses << line
       end
-    rescue IPAddr::InvalidAddressError
+    rescue ArgumentError, IPAddr::InvalidAddressError
       # Treat invalid addresses as "allow" arguments, as they can be
       # regular expressions.
       unrecognized << line
