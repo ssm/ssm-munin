@@ -169,7 +169,7 @@ The use of "ensure => present" creates a file in /etc/munin/plugins
 
     munin::plugin { 'somedaemon':
         ensure => present,
-        source => 'puppet:///munin/plugins/somedaemon',
+        source => 'puppet:///modules/munin/plugins/somedaemon',
     }
 
 ### Activate wildcard plugin
@@ -181,11 +181,11 @@ as "wildcard" plugins)
       'foo_bar':
         ensure => present,
         target => 'foo_',
-        source => 'puppet:///munin/plugins/foo_';
+        source => 'puppet:///modules/munin/plugins/foo_';
       'foo_baz':
         ensure => present,
         target => 'foo_',
-        source => 'puppet:///munin/plugins/foo_';
+        source => 'puppet:///modules/munin/plugins/foo_';
     }
 
 ### Plugin with configuration
@@ -198,7 +198,7 @@ This creates an additional "/etc/munin/plugin-conf.d/${title}.conf"
         config => 'env.database flumpelump';
       'thud':
         ensure => present,
-        source => 'puppet:///munin/plugins/thud',
+        source => 'puppet:///modules/munin/plugins/thud',
         config => ['env.database zotto', 'user root'];
     }
 
