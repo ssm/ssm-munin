@@ -1,42 +1,18 @@
 {
   "name": "ssm/munin",
   "version": "0.0.5",
-  "source": "UNKNOWN",
   "author": "ssm",
   "license": "Apache License, Version 2.0",
   "summary": "Configure munin master, node and plugins",
-  "description": "A module for configuring munin master, node and plugins.\n If puppetdb is used, node definitions are exported by munin::node, and automatically collected by munin::master.\n Hiera can be used to define munin nodes.",
-  "project_page": "UNKNOWN",
+  "source": "https://github.com/ssm/ssm-munin",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 2.3.0"
     }
   ],
-  "types": [
-
-  ],
-  "checksums": {
-    "CHANGELOG": "d26396b76fddd33440773f042a9b07e6",
-    "Gemfile": "6ce44488b00c2048dc62d35ddafb469c",
-    "Modulefile": "61d579669c9ef4c86b61d7ec58107730",
-    "README.md": "77e7962522c109140fef33b8e4dc8c22",
-    "Rakefile": "f867886eba95b4499e33f45d47bd5f48",
-    "manifests/master/node_definition.pp": "3a2d3120c2b0eec1656a01ee16aff8db",
-    "manifests/master.pp": "06db25c44a07da3976e0eb58e02be77d",
-    "manifests/node.pp": "6b24c42e367f669a721814879d30fba5",
-    "manifests/params/master.pp": "6e01da1a6a989662583912d10c65cadd",
-    "manifests/params/node.pp": "726c0854bb828f4f3cd5b141abe14395",
-    "manifests/plugin.pp": "3c32040eb393ed529768b68e0a8a9e06",
-    "spec/classes/munin_master_spec.rb": "6c421f7ad080a5e21ca594711d300e92",
-    "spec/classes/munin_node_spec.rb": "4f07d45733fb9bb0b1d58dc16355e81b",
-    "spec/defines/munin_plugin_spec.rb": "a4cc55424cd905a7dc28705caac9f492",
-    "spec/spec_helper.rb": "b464b19795b877cf0f64622c0fac5b25",
-    "templates/master/node.definition.conf.erb": "b321f84d2118f489b7c2e27518ee51e7",
-    "templates/munin-node.conf.erb": "57c669aa8b4aa15825e8bfe1bae1ce53",
-    "templates/munin.conf.erb": "87a06c1eee3e6c924c6ee7466b1275d7",
-    "templates/plugin_conf.erb": "2bfe6a3d09e26d36df77a68981576f0b"
-  },
+  "project_page": "https://forge.puppetlabs.com/ssm/munin",
+  "issues_url": "https://github.com/ssm/ssm-munin/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS"
@@ -65,5 +41,6 @@
     {
       "operatingsystem": "OpenBSD"
     }
-  ]
+  ],
+  "tags": ["munin", "monitoring", "graphing", "performance", "trending"]
 }
