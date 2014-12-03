@@ -1,1 +1,5 @@
 spec/fixtures
+vendor
+.ruby-version
+.bundle
+Gemfile.lock
