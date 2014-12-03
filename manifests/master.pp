@@ -40,6 +40,8 @@
 #   Required if tls is enabled.
 #
 # - tls_verify_certificate: 'yes' (default) or 'no'.
+#
+# - extra_config: Extra lines of config to put in munin.conf.
 
 class munin::master (
   $node_definitions       = $munin::params::master::node_defintions,
@@ -55,7 +57,7 @@ class munin::master (
   $tls_certificate        = $munin::params::master::tls_certificate,
   $tls_private_key        = $munin::params::master::tls_private_key,
   $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
-
+  $extra_config           = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
   if $node_definitions {
@@ -77,6 +79,8 @@ class munin::master (
     validate_absolute_path($tls_private_key)
     validate_absolute_path($tls_certificate)
   }
+
+  validate_array($extra_config)
 
   # The munin package and configuration
   package { 'munin':

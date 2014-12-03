@@ -13,6 +13,7 @@ class munin::params::master {
   $tls_certificate          = undef
   $tls_private_key          = undef
   $tls_verify_certificate   = 'yes'
+  $extra_config             = []
 
   case $::osfamily {
     'Debian',
