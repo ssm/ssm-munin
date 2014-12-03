@@ -57,4 +57,23 @@ describe 'munin::node' do
     end
   end
 
+  context 'with host_name unset' do
+    include_context :Debian
+    it do
+      should contain_file('/etc/munin/munin-node.conf')
+              .with_content(/host_name\s+testnode.example.com/)
+    end
+  end
+
+  context 'with host_name set' do
+    include_context :Debian
+    let(:params) do
+      { host_name: 'something.example.com' }
+    end
+    it do
+      should contain_file('/etc/munin/munin-node.conf')
+              .with_content(/host_name\s+something.example.com/)
+    end
+  end
+
 end
