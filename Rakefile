@@ -2,6 +2,12 @@ require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 
+# Optional gems, used for development
+begin
+  require 'puppet_blacksmith/rake_tasks'
+rescue LoadError
+end
+
 # workaround for https://github.com/rodjek/puppet-lint/issues/331
 Rake::Task[:lint].clear
 
