@@ -22,6 +22,24 @@
 #
 # - collect_nodes: 'enabled' or 'disabled' default 'enabled'.
 #   Makes puppetmaster collect exported node_definitions.
+#
+# - dbdir: Path to the munin dbdir, where munin stores everything
+#
+# - htmldir: Path to where munin will generate HTML documents and
+#   graphs, used if graph_strategy is cron.
+#
+# - rundir: Path to directory munin uses for pid and lock files.
+#
+# - tls: 'enabled' or 'disabled' (default). Controls the use of TLS
+#   globally for master to node communications.
+#
+# - tls_certificate: Path to a file containing a TLS certificate. No
+#   default. Required if tls is enabled.
+#
+# - tls_private_key: Path to a file containing a TLS key. No default.
+#   Required if tls is enabled.
+#
+# - tls_verify_certificate: 'yes' (default) or 'no'.
 
 class munin::master (
   $node_definitions       = $munin::params::master::node_defintions,
