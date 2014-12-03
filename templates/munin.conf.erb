@@ -26,6 +26,12 @@ tls_certificate = <%= @tls_certificate %>
 tls_private_key = <%= @tls_private_key %>
 tls_verify_certificate = <%= @tls_verify_certificate %>
 <% end -%>
+<% if @extra_config -%>
+
+<% @extra_config.each do |this| -%>
+<%= this %>
+<% end -%>
+<% end -%>
 
 # Where to look for puppet generated munin master configuration.
 includedir /etc/munin/munin-conf.d

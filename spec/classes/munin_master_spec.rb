@@ -106,4 +106,28 @@ describe 'munin::master' do
     }
   end
 
+  context 'with extra_config' do
+    token = '1b7febce-bb2d-4c18-b889-84c73538a900'
+    let(:params) do
+      { :extra_config => [ token ] }
+    end
+    it { should compile }
+    it do
+      should contain_file('/etc/munin/munin.conf')
+              .with_content(/#{token}/)
+    end
+  end
+
+  context 'with extra_config set to a string' do
+    token = '1b7febce-bb2d-4c18-b889-84c73538a900'
+    let(:params) do
+      { :extra_config => token }
+    end
+    it do
+      expect { should compile }
+        .to raise_error(Puppet::Error, /is not an Array/)
+    end
+
+  end
+
 end
