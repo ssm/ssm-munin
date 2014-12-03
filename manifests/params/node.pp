@@ -3,6 +3,7 @@ class munin::params::node {
   $message = "Unsupported osfamily: ${::osfamily}"
 
   $address        = $::fqdn
+  $host_name      = $::fqdn
   $allow          = []
   $masterconfig   = []
   $mastergroup    = ''
