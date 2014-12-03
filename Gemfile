@@ -1,12 +1,17 @@
-source :rubygems
-puppetversion = ENV.key?('PUPPET_VERSION') ? "= #{ENV['PUPPET_VERSION']}" : ['>= 2.7']
- 
-gem 'puppet', puppetversion
- 
+source 'https://rubygems.org'
+
 group :test do
-  gem 'rake', '>= 0.9.0'
-  gem 'rspec', '>= 2.8.0'
-  gem 'rspec-puppet', '>= 0.1.1'
+  gem 'rake'
+  gem 'puppet', ENV['PUPPET_VERSION'] || '~> 3.7.0'
+  gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem 'puppetlabs_spec_helper'
-  gem 'puppet-lint'
+end
+
+group :development do
+  gem 'travis'
+  gem 'travis-lint'
+  gem 'vagrant-wrapper'
+  gem 'puppet-blacksmith'
+  gem 'guard-rake'
+  gem 'metadata-json-lint'
 end
