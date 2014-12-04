@@ -8,6 +8,9 @@
 # - node_definitions: A hash of node definitions used by
 #   create_resources to make static node definitions.
 #
+# - host_name: A host name for this munin master, matched with
+#   munin::node::mastername for collecting nodes. Defaults to $::fqdn
+#
 # - graph_strategy: 'cgi' (default) or 'cron'
 #   Controls if munin-graph graphs all services ('cron') or if graphing is done
 #   by munin-cgi-graph (which must configured seperatly)
@@ -57,6 +60,7 @@ class munin::master (
   $tls_certificate        = $munin::params::master::tls_certificate,
   $tls_private_key        = $munin::params::master::tls_private_key,
   $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
+  $host_name              = $munin::params::master::host_name,
   $extra_config           = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
@@ -69,7 +73,8 @@ class munin::master (
   if $html_strategy {
     validate_re($html_strategy, [ '^cgi$', '^cron$' ])
   }
-  validate_re($collect_nodes,  [ '^enabled$', '^disabled$' ])
+  validate_re($collect_nodes, [ '^enabled$', '^disabled$', '^mine$',
+                                '^unclaimed$' ])
   validate_absolute_path($config_root)
 
   validate_re($tls, [ '^enabled$', '^disabled$' ])
