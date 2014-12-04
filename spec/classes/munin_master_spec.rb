@@ -146,4 +146,20 @@ describe 'munin::master' do
     end
   end
 
+  %w( enabled disabled mine unclaimed invalid ).each do |param|
+    context "with collect_nodes => #{param}" do
+      let(:params) do
+        { :collect_nodes => param }
+      end
+      if param == 'invalid'
+        it do
+          expect { should compile }
+            .to raise_error(Puppet::Error, /validate_re/)
+        end
+      else
+        it { should compile }
+      end
+    end
+  end
+
 end

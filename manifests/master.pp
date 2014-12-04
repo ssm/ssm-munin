@@ -23,8 +23,12 @@
 # - config_root: the root directory of the munin master configuration.
 #   Default: /etc/munin on most platforms.
 #
-# - collect_nodes: 'enabled' or 'disabled' default 'enabled'.
-#   Makes puppetmaster collect exported node_definitions.
+# - collect_nodes: 'enabled' (default), 'disabled', 'mine' or
+#   'unclaimed'. 'enabled' makes the munin master collect all exported
+#   node_definitions. 'disabled' disables it. 'mine' makes the munin
+#   master collect nodes matching $munin::master::host_name, while
+#   'unclaimed' makes the munin master collect nodes not tagged with a
+#   host name.
 #
 # - dbdir: Path to the munin dbdir, where munin stores everything
 #
@@ -85,6 +89,13 @@ class munin::master (
     validate_absolute_path($tls_certificate)
   }
 
+  if $host_name {
+    validate_string($host_name)
+    if ! is_domain_name($host_name) {
+      fail('host_name should be a valid domain name')
+    }
+  }
+
   validate_array($extra_config)
 
   # The munin package and configuration
@@ -110,9 +121,23 @@ class munin::master (
     force   => true,
   }
 
-  if $collect_nodes == 'enabled' {
-    # Collect all exported node definitions
-    Munin::Master::Node_definition <<| mastername == $::fqdn or mastername == '' |>>
+  case $collect_nodes {
+    'enabled': {
+      Munin::Master::Node_definition <<| |>>
+    }
+    'mine': {
+      # Collect nodes explicitly tagged with this master
+      Munin::Master::Node_definition <<| tag == "munin::master::${host_name}" |>>
+    }
+    'unclaimed': {
+      # Collect all exported node definitions, except the ones tagged
+      # for a specific master
+      Munin::Master::Node_definition <<| tag == 'munin::master::' |>>
+    }
+    'disabled',
+    default: {
+      # do nothing
+    }
   }
 
   # Create static node definitions

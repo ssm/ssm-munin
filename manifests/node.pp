@@ -117,6 +117,7 @@ class munin::node (
       address    => $address,
       mastername => $mastername,
       config     => $masterconfig,
+      tag        => [ "munin::master::${mastername}" ]
     }
   }
 
