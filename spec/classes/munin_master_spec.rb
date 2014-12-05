@@ -106,4 +106,50 @@ describe 'munin::master' do
     }
   end
 
+  context 'with extra_config' do
+    token = '1b7febce-bb2d-4c18-b889-84c73538a900'
+    let(:params) do
+      { :extra_config => [ token ] }
+    end
+    it { should compile }
+    it do
+      should contain_file('/etc/munin/munin.conf')
+              .with_content(/#{token}/)
+    end
+  end
+
+  context 'with extra_config set to a string' do
+    token = '1b7febce-bb2d-4c18-b889-84c73538a900'
+    let(:params) do
+      { :extra_config => token }
+    end
+    it { should raise_error(Puppet::Error, /is not an Array/) }
+  end
+
+  ['test.example.com', 'invalid/hostname.example.com'].each do |param|
+    context "with host_name => #{param}" do
+      let(:params) do
+        { :host_name => param }
+      end
+      if param =~ /invalid/
+        it { should raise_error(Puppet::Error, /valid domain name/) }
+      else
+        it { should compile }
+      end
+    end
+  end
+
+  %w( enabled disabled mine unclaimed invalid ).each do |param|
+    context "with collect_nodes => #{param}" do
+      let(:params) do
+        { :collect_nodes => param }
+      end
+      if param == 'invalid'
+        it { should raise_error(Puppet::Error, /validate_re/) }
+      else
+        it { should compile }
+      end
+    end
+  end
+
 end
