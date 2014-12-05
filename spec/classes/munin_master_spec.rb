@@ -130,4 +130,36 @@ describe 'munin::master' do
 
   end
 
+  ['test.example.com', 'invalid/hostname.example.com'].each do |param|
+    context "with host_name => #{param}" do
+      let(:params) do
+        { :host_name => param }
+      end
+      if param =~ /invalid/
+        it do
+          expect { should compile }
+            .to raise_error(Puppet::Error, /valid domain name/)
+        end
+      else
+        it { should compile }
+      end
+    end
+  end
+
+  %w( enabled disabled mine unclaimed invalid ).each do |param|
+    context "with collect_nodes => #{param}" do
+      let(:params) do
+        { :collect_nodes => param }
+      end
+      if param == 'invalid'
+        it do
+          expect { should compile }
+            .to raise_error(Puppet::Error, /validate_re/)
+        end
+      else
+        it { should compile }
+      end
+    end
+  end
+
 end
