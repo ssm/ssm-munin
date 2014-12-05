@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.6 - 2014-12-05
+## 0.0.7 - 2014-12-05
 
 This release adds support for DragonFly BSD, FreeBSD, OpenBSD.
 
@@ -37,6 +37,10 @@ Wiesinger, Stig Sandbeck Mathisen
 ### munin::plugin
 
 * Support absolute paths as target for a plugin.
+
+## 0.0.6 - 2014-12-05
+
+* Retracted, had a breaking bug on older (3.4.x) puppet versions.
 
 ## 0.0.5 - 2014-03-19
 
