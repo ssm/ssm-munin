@@ -1,6 +1,6 @@
 {
   "name": "ssm/munin",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "ssm",
   "license": "Apache License, Version 2.0",
   "summary": "Configure munin master, node and plugins",
@@ -42,5 +42,11 @@
       "operatingsystem": "OpenBSD"
     }
   ],
-  "tags": ["munin", "monitoring", "graphing", "performance", "trending"]
+  "tags": [
+    "munin",
+    "monitoring",
+    "graphing",
+    "performance",
+    "trending"
+  ]
 }
