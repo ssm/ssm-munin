@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.0.6 - 2014-12-05
+
+This release adds support for DragonFly BSD, FreeBSD, OpenBSD.
+
+Other changes listed below, per component.
+
+Contributors to this release: Alex Hornung, Chris Roddy, Frank
+Groeneveld, Fredrik Thulin, Julien Pivotto, Martin Jackson, Sebastian
+Wiesinger, Stig Sandbeck Mathisen
+
+### munin::node
+
+* Add "host_name" parameter to override the host name of the munin
+  node.
+
+* Add "file_group" parameter, used for configuration and log files.
+
+* Add "log_dir" parameter.
+
+* Improved handling of "allow" ACL parameter.
+
+### munin::master
+
+* Improved collection logic. Set "collect_nodes" to "mine" to collect
+  nodes which are targeted for this master, or "unclaimed" to pick up
+  nodes not aimed a specific master.
+
+* Add global tls_* parameters for connecting to nodes.
+
+* Add "dbdir", "htmldir", "rundir" parameters.
+
+* Add "extra_config" parameter, which takes an array of extra
+  configuration lines for munin.conf.
+
+### munin::plugin
+
+* Support absolute paths as target for a plugin.
+
 ## 0.0.5 - 2014-03-19
 
 * Support multiple masters with different nodes
