@@ -123,11 +123,7 @@ describe 'munin::master' do
     let(:params) do
       { :extra_config => token }
     end
-    it do
-      expect { should compile }
-        .to raise_error(Puppet::Error, /is not an Array/)
-    end
-
+    it { should raise_error(Puppet::Error, /is not an Array/) }
   end
 
   ['test.example.com', 'invalid/hostname.example.com'].each do |param|
@@ -136,10 +132,7 @@ describe 'munin::master' do
         { :host_name => param }
       end
       if param =~ /invalid/
-        it do
-          expect { should compile }
-            .to raise_error(Puppet::Error, /valid domain name/)
-        end
+        it { should raise_error(Puppet::Error, /valid domain name/) }
       else
         it { should compile }
       end
@@ -152,10 +145,7 @@ describe 'munin::master' do
         { :collect_nodes => param }
       end
       if param == 'invalid'
-        it do
-          expect { should compile }
-            .to raise_error(Puppet::Error, /validate_re/)
-        end
+        it { should raise_error(Puppet::Error, /validate_re/) }
       else
         it { should compile }
       end
