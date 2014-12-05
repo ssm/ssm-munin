@@ -7,7 +7,7 @@
 
 * Support older (1.4.6) munin versions
   (Thanks: Sergio Oliveira)
-  
+
 * Update for compatibility with puppet 3.4
   (Thanks: Harald Skoglund)
 
