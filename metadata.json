@@ -2,7 +2,7 @@
   "name": "ssm/munin",
   "version": "0.0.7",
   "author": "ssm",
-  "license": "Apache License, Version 2.0",
+  "license": "Apache-2.0",
   "summary": "Configure munin master, node and plugins",
   "source": "https://github.com/ssm/ssm-munin",
   "dependencies": [
