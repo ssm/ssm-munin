@@ -10,7 +10,6 @@ end
 
 group :development do
   gem 'travis'
-  gem 'travis-lint'
   gem 'vagrant-wrapper'
   gem 'guard-rake'
 end
