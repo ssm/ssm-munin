@@ -5,6 +5,7 @@ group :test do
   gem 'puppet', ENV['PUPPET_VERSION'] || '~> 3.7.0'
   gem 'rspec-puppet', :git => 'git@github.com:ssm/rspec-puppet.git', :ref => 'feature/rspec3'
   gem 'puppetlabs_spec_helper'
+  gem 'metadata-json-lint'
 end
 
 group :development do
@@ -13,5 +14,4 @@ group :development do
   gem 'vagrant-wrapper'
   gem 'puppet-blacksmith'
   gem 'guard-rake'
-  gem 'metadata-json-lint'
 end
