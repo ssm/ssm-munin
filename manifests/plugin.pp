@@ -70,10 +70,10 @@ define munin::plugin (
     if $handle_plugin {
         # Install the plugin
         file {"${munin::node::config_root}/plugins/${name}":
-            ensure  => $plugin_ensure,
-            source  => $source,
-            target  => $plugin_target,
-            mode    => '0755',
+            ensure => $plugin_ensure,
+            source => $source,
+            target => $plugin_target,
+            mode   => '0755',
         }
     }
 
