@@ -15,6 +15,19 @@
 # log_dir: The log directory for the munin node process. Defaults
 # change according to osfamily, see munin::params::node for details.
 #
+# log_file: Appended to "log_dir". Defaults to "munin-node.log".
+#
+# log_destination: "file" or "syslog".  Defaults to "file".  If log_destination
+# is "syslog", the "log_file" and "log_dir" parameters are ignored, and the
+# "syslog_*" parameters are used if set.
+#
+# syslog_ident: Defaults to undef, which makes munin-node use its
+# default of "munin-node".
+#
+# syslog_facility: Defaults to undef, which makes munin-node use the
+# perl Net::Server module default of "daemon". Possible values are any
+# syslog facility by number, or lowercase name.
+#
 # masterconfig: List of configuration lines to append to the munin
 # master node definitinon
 #
@@ -45,21 +58,25 @@
 # log files, etc.
 
 class munin::node (
-  $address        = $munin::params::node::address,
-  $allow          = $munin::params::node::allow,
-  $config_root    = $munin::params::node::config_root,
-  $host_name      = $munin::params::node::host_name,
-  $log_dir        = $munin::params::node::log_dir,
-  $masterconfig   = $munin::params::node::masterconfig,
-  $mastergroup    = $munin::params::node::mastergroup,
-  $mastername     = $munin::params::node::mastername,
-  $nodeconfig     = $munin::params::node::nodeconfig,
-  $package_name   = $munin::params::node::package_name,
-  $plugins        = $munin::params::node::plugins,
-  $service_ensure = $munin::params::node::service_ensure,
-  $service_name   = $munin::params::node::service_name,
-  $export_node    = $munin::params::node::export_node,
-  $file_group     = $munin::params::node::file_group,
+  $address         = $munin::params::node::address,
+  $allow           = $munin::params::node::allow,
+  $config_root     = $munin::params::node::config_root,
+  $host_name       = $munin::params::node::host_name,
+  $log_dir         = $munin::params::node::log_dir,
+  $log_file        = $munin::params::node::log_file,
+  $masterconfig    = $munin::params::node::masterconfig,
+  $mastergroup     = $munin::params::node::mastergroup,
+  $mastername      = $munin::params::node::mastername,
+  $nodeconfig      = $munin::params::node::nodeconfig,
+  $package_name    = $munin::params::node::package_name,
+  $plugins         = $munin::params::node::plugins,
+  $service_ensure  = $munin::params::node::service_ensure,
+  $service_name    = $munin::params::node::service_name,
+  $export_node     = $munin::params::node::export_node,
+  $file_group      = $munin::params::node::file_group,
+  $log_destination = $munin::params::node::log_destination,
+  $syslog_ident    = $munin::params::node::syslog_ident,
+  $syslog_facility = $munin::params::node::syslog_facility,
 ) inherits munin::params::node {
 
   validate_array($allow)
@@ -75,7 +92,28 @@ class munin::node (
   if $service_ensure { validate_re($service_ensure, '^(running|stopped)$') }
   validate_re($export_node, '^(enabled|disabled)$')
   validate_absolute_path($log_dir)
+  validate_re($log_destination, '^(?:file|syslog)$')
+  validate_string($log_file)
   validate_string($file_group)
+
+  case $log_destination {
+    'file': {
+      $_log_file = "${log_dir}/${log_file}"
+      validate_absolute_path($_log_file)
+    }
+    'syslog': {
+      $_log_file = 'Sys::Syslog'
+      if $syslog_ident { validate_string($syslog_ident) }
+      if $syslog_facility {
+        validate_string($syslog_facility)
+        validate_re($syslog_facility,
+                    '^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$')
+      }
+    }
+    default: {
+      fail('log_destination is not set')
+    }
+  }
 
   if $mastergroup {
     $fqn = "${mastergroup};${host_name}"

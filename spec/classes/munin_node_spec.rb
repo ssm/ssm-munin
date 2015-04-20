@@ -24,18 +24,28 @@ describe 'munin::node' do
         munin_node_conf = '/etc/munin/munin-node.conf'
       end
 
+      case facts[:osfamily]
+      when 'Solaris'
+        log_dir = '/var/opt/log/munin'
+      when 'RedHat'
+        log_dir = '/var/log/munin-node'
+      else
+        log_dir = '/var/log/munin'
+      end
+
       it { should contain_service(munin_node_service) }
       it { should contain_file(munin_node_conf) }
 
       context 'with no parameters' do
         it { should compile.with_all_deps }
         it do
-          should contain_service('munin-node')
-            .with_ensure(nil)
+          should contain_service(munin_node_service)
+                  .without_ensure()
         end
         it do
-          should contain_file('/etc/munin/munin-node.conf')
-            .with_content(/host_name\s+foo.example.com/)
+          should contain_file(munin_node_conf)
+                  .with_content(/host_name\s+foo.example.com/)
+                  .with_content(/log_file\s+#{log_dir}\/munin-node.log/)
         end
       end
 
@@ -81,6 +91,43 @@ describe 'munin::node' do
         end
       end
 
+      context 'logging to syslog' do
+        context 'defaults' do
+          let(:params) do
+            { log_destination: 'syslog' }
+          end
+          it{ should compile.with_all_deps }
+          it do
+            should contain_file(munin_node_conf)
+                    .with_content(/log_file\s+Sys::Syslog/)
+          end
+        end
+
+        context 'with syslog options' do
+          let(:params) do
+            { log_destination: 'syslog',
+              syslog_ident: 'munin-granbusk',
+              syslog_facility: 'local1',
+            }
+          end
+          it{ should compile.with_all_deps }
+          it do
+            should contain_file(munin_node_conf)
+                    .with_content(/log_file\s+Sys::Syslog/)
+                    .with_content(/syslog_ident\s+"munin-granbusk"/)
+                    .with_content(/syslog_facility\s+local1/)
+          end
+        end
+
+        context 'with syslog_facility set to wrong value ' do
+          let(:params) do
+            { log_destination: 'syslog',
+              syslog_facility: 'wrong',
+            }
+          end
+          it { expect { should compile.with_all_deps }.to raise_error(/validate_re/) }
+        end
+      end
     end
   end
 
