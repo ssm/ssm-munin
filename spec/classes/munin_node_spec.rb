@@ -2,29 +2,71 @@ require 'spec_helper'
 
 describe 'munin::node' do
 
-  [ :CentOS, :Debian, :RedHat, :Ubuntu ].each do |sc|
-    context "Check for supported operatingsystem #{sc}" do
-      include_context sc
-      it { should compile }
-      it { should contain_class('munin::node') }
-      it {
-        should contain_package('munin-node')
-        should contain_service('munin-node')
-        should contain_file('/etc/munin/munin-node.conf')
-      }
-    end
-  end
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
 
-  [ :SmartOS ].each do |sc|
-    context "Check for supported operatingsystem #{sc}" do
-      include_context sc
-      it { should compile }
-      it { should contain_class('munin::node') }
-      it {
-        should contain_package('munin-node')
-        should contain_service('smf:/munin-node')
-        should contain_file('/opt/local/etc/munin/munin-node.conf')
-      }
+      it { should compile.with_all_deps }
+
+      it { should contain_package('munin-node') }
+
+      case facts[:osfamily]
+      when 'Solaris'
+        munin_node_service = 'smf:/munin-node'
+        munin_node_conf    = '/opt/local/etc/munin/munin-node.conf'
+      when 'FreeBSD'
+        munin_node_conf    = '/usr/local/etc/munin/munin-node.conf'
+        munin_node_service = 'munin-node'
+      else
+        munin_node_service = 'munin-node'
+        munin_node_conf = '/etc/munin/munin-node.conf'
+      end
+
+      it { should contain_service(munin_node_service) }
+      it { should contain_file(munin_node_conf) }
+
+
+      context 'acl with ipv4 and ipv6 addresses' do
+        let(:params) do
+          { allow: ['2001:db8:1::',
+                    '2001:db8:2::/64',
+                    '192.0.2.129',
+                    '192.0.2.0/25',
+                    '192\.0\.2']
+          }
+        end
+        it { should compile.with_all_deps }
+        it do
+          should contain_file('/etc/munin/munin-node.conf')
+                  .with_content(/^cidr_allow 192.0.2.0\/25$/)
+                  .with_content(/^cidr_allow 2001:db8:2::\/64$/)
+                  .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
+                  .with_content(/^allow 192\\.0\\.2$/)
+                  .with_content(/^allow \^2001:db8:1::\$$/)
+        end
+      end
+
+      context 'with host_name unset' do
+        it { should compile.with_all_deps }
+        it do
+          should contain_file('/etc/munin/munin-node.conf')
+                  .with_content(/host_name\s+foo.example.com/)
+        end
+      end
+
+      context 'with host_name set' do
+        let(:params) do
+          { host_name: 'something.example.com' }
+        end
+        it { should compile.with_all_deps }
+        it do
+          should contain_file('/etc/munin/munin-node.conf')
+                  .with_content(/host_name\s+something.example.com/)
+        end
+      end
+
     end
   end
 
@@ -35,45 +77,6 @@ describe 'munin::node' do
         should contain_class('munin::node')
       }.to raise_error(Puppet::Error, /Unsupported osfamily/)
     }
-  end
-
-  context 'acl with ipv4 and ipv6 addresses' do
-    include_context :Debian
-    let(:params) do
-      { allow: ['2001:db8:1::',
-                '2001:db8:2::/64',
-                '192.0.2.129',
-                '192.0.2.0/25',
-                '192\.0\.2']
-      }
-    end
-    it do
-      should contain_file('/etc/munin/munin-node.conf')
-        .with_content(/^cidr_allow 192.0.2.0\/25$/)
-        .with_content(/^cidr_allow 2001:db8:2::\/64$/)
-        .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
-        .with_content(/^allow 192\\.0\\.2$/)
-        .with_content(/^allow \^2001:db8:1::\$$/)
-    end
-  end
-
-  context 'with host_name unset' do
-    include_context :Debian
-    it do
-      should contain_file('/etc/munin/munin-node.conf')
-              .with_content(/host_name\s+testnode.example.com/)
-    end
-  end
-
-  context 'with host_name set' do
-    include_context :Debian
-    let(:params) do
-      { host_name: 'something.example.com' }
-    end
-    it do
-      should contain_file('/etc/munin/munin-node.conf')
-              .with_content(/host_name\s+something.example.com/)
-    end
   end
 
 end
