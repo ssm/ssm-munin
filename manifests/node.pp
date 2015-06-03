@@ -77,7 +77,7 @@ class munin::node (
   validate_absolute_path($log_dir)
   validate_string($file_group)
 
-  if $mastergroup {
+  if $mastergroup and $mastergroup != ''{
     $fqn = "${mastergroup};${host_name}"
   }
   else {

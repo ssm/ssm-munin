@@ -40,6 +40,9 @@ define munin::plugin (
             $handle_plugin = true
             $plugin_ensure = link
             case $target {
+                undef: {
+                    $plugin_target = "${munin::node::plugin_share_dir}/${title}"
+                }
                 '': {
                     $plugin_target = "${munin::node::plugin_share_dir}/${title}"
                 }
