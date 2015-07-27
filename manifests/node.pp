@@ -84,6 +84,9 @@ class munin::node (
     $fqn = $host_name
   }
 
+  if $service_ensure { $_service_ensure = $service_ensure }
+  else { $_service_ensure = undef }
+
   # Defaults
   File {
     ensure => present,
@@ -97,10 +100,7 @@ class munin::node (
   }
 
   service { $service_name:
-    ensure  => $service_ensure ? {
-      ''      => undef,
-      default => $service_ensure,
-    },
+    ensure  => $_service_ensure,
     enable  => true,
     require => Package[$package_name],
   }
