@@ -27,8 +27,19 @@ describe 'munin::node' do
       it { should contain_service(munin_node_service) }
       it { should contain_file(munin_node_conf) }
 
+      context 'with no parameters' do
+        it { should compile.with_all_deps }
+        it do
+          should contain_service('munin-node')
+            .with_ensure(nil)
+        end
+        it do
+          should contain_file('/etc/munin/munin-node.conf')
+            .with_content(/host_name\s+foo.example.com/)
+        end
+      end
 
-      context 'acl with ipv4 and ipv6 addresses' do
+      context 'with parameter allow' do
         let(:params) do
           { allow: ['2001:db8:1::',
                     '2001:db8:2::/64',
@@ -48,15 +59,7 @@ describe 'munin::node' do
         end
       end
 
-      context 'with host_name unset' do
-        it { should compile.with_all_deps }
-        it do
-          should contain_file('/etc/munin/munin-node.conf')
-                  .with_content(/host_name\s+foo.example.com/)
-        end
-      end
-
-      context 'with host_name set' do
+      context 'with parameter host_name' do
         let(:params) do
           { host_name: 'something.example.com' }
         end
@@ -64,6 +67,17 @@ describe 'munin::node' do
         it do
           should contain_file('/etc/munin/munin-node.conf')
                   .with_content(/host_name\s+something.example.com/)
+        end
+      end
+
+      context 'with parameter service_ensure' do
+        let(:params) do
+          { service_ensure: 'running' }
+        end
+        it { should compile.with_all_deps }
+        it do
+          should contain_service('munin-node')
+            .with_ensure('running')
         end
       end
 
