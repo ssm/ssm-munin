@@ -136,6 +136,28 @@ describe 'munin::node' do
           it { expect { should compile.with_all_deps }.to raise_error(/validate_re/) }
         end
       end
+
+      context 'purge_configs' do
+        context 'set' do
+          let(:params) { { purge_configs: true } }
+          it { should compile.with_all_deps }
+          it do should contain_file(munin_plugin_dir)
+                        .with_ensure('directory')
+                        .with_recurse(true)
+                        .with_purge(true)
+          end
+          it do should contain_file(munin_plugin_conf_dir)
+                        .with_ensure('directory')
+                        .with_recurse(true)
+                        .with_purge(true)
+          end
+        end
+        context 'unset' do
+          it { should compile.with_all_deps }
+          it { should_not contain_file(munin_plugin_dir) }
+          it { should_not contain_file(munin_plugin_conf_dir) }
+        end
+      end
     end
   end
 

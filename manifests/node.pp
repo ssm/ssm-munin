@@ -21,6 +21,9 @@
 # is "syslog", the "log_file" and "log_dir" parameters are ignored, and the
 # "syslog_*" parameters are used if set.
 #
+# purge_configs: Removes all other munin plugins and munin plugin
+# configuration files.  Boolean, defaults to false.
+#
 # syslog_ident: Defaults to undef, which makes munin-node use its
 # default of "munin-node".
 #
@@ -70,6 +73,7 @@ class munin::node (
   $nodeconfig      = $munin::params::node::nodeconfig,
   $package_name    = $munin::params::node::package_name,
   $plugins         = $munin::params::node::plugins,
+  $purge_configs   = $munin::params::node::purge_configs,
   $service_ensure  = $munin::params::node::service_ensure,
   $service_name    = $munin::params::node::service_name,
   $export_node     = $munin::params::node::export_node,
@@ -95,6 +99,7 @@ class munin::node (
   validate_re($log_destination, '^(?:file|syslog)$')
   validate_string($log_file)
   validate_string($file_group)
+  validate_bool($purge_configs)
 
   case $log_destination {
     'file': {
@@ -161,5 +166,14 @@ class munin::node (
 
   # Generate plugin resources from hiera or class parameter.
   create_resources(munin::plugin, $plugins, {})
+
+  # Purge unmanaged plugins and plugin configuration files.
+  if $purge_configs {
+    file { ["${config_root}/plugins", "${config_root}/plugin-conf.d" ]:
+      ensure  => directory,
+      recurse => true,
+      purge   => true,
+    }
+  }
 
 }
