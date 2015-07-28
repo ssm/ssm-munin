@@ -16,6 +16,7 @@ class munin::params::node {
   $log_destination = 'file'
   $syslog_ident    = undef
   $syslog_facility = undef
+  $purge_configs   = false
 
   case $::osfamily {
     'RedHat': {

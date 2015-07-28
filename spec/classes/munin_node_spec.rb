@@ -14,14 +14,22 @@ describe 'munin::node' do
 
       case facts[:osfamily]
       when 'Solaris'
+        munin_confdir = '/opt/local/etc/munin'
+      when 'FreeBSD', 'DragonFly'
+        munin_confdir = '/usr/local/etc/munin'
+      else
+        munin_confdir = '/etc/munin'
+      end
+
+      munin_node_conf = "#{munin_confdir}/munin-node.conf"
+      munin_plugin_dir = "#{munin_confdir}/plugins"
+      munin_plugin_conf_dir = "#{munin_confdir}/plugin-conf.d"
+
+      case facts[:osfamily]
+      when 'Solaris'
         munin_node_service = 'smf:/munin-node'
-        munin_node_conf    = '/opt/local/etc/munin/munin-node.conf'
-      when 'FreeBSD'
-        munin_node_conf    = '/usr/local/etc/munin/munin-node.conf'
-        munin_node_service = 'munin-node'
       else
         munin_node_service = 'munin-node'
-        munin_node_conf = '/etc/munin/munin-node.conf'
       end
 
       case facts[:osfamily]
@@ -126,6 +134,28 @@ describe 'munin::node' do
             }
           end
           it { expect { should compile.with_all_deps }.to raise_error(/validate_re/) }
+        end
+      end
+
+      context 'purge_configs' do
+        context 'set' do
+          let(:params) { { purge_configs: true } }
+          it { should compile.with_all_deps }
+          it do should contain_file(munin_plugin_dir)
+                        .with_ensure('directory')
+                        .with_recurse(true)
+                        .with_purge(true)
+          end
+          it do should contain_file(munin_plugin_conf_dir)
+                        .with_ensure('directory')
+                        .with_recurse(true)
+                        .with_purge(true)
+          end
+        end
+        context 'unset' do
+          it { should compile.with_all_deps }
+          it { should_not contain_file(munin_plugin_dir) }
+          it { should_not contain_file(munin_plugin_conf_dir) }
         end
       end
     end
