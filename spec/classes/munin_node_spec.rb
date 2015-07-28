@@ -1,8 +1,22 @@
 require 'spec_helper'
 
+_conf_dir = {}
+_conf_dir.default = '/etc/munin'
+_conf_dir['DragonFly'] = '/usr/local/etc/munin'
+_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+_conf_dir['Solaris'] = '/opt/local/etc/munin'
+
 describe 'munin::node' do
 
   on_supported_os.each do |os, facts|
+
+    # Avoid testing on distributions similar to RedHat and Debian
+    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+
+    # No need to test all os versions as long as os version is not
+    # used in the params class
+    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+
     context "on #{os}" do
       let(:facts) do
         facts
@@ -12,14 +26,7 @@ describe 'munin::node' do
 
       it { should contain_package('munin-node') }
 
-      case facts[:osfamily]
-      when 'Solaris'
-        munin_confdir = '/opt/local/etc/munin'
-      when 'FreeBSD', 'DragonFly'
-        munin_confdir = '/usr/local/etc/munin'
-      else
-        munin_confdir = '/etc/munin'
-      end
+      munin_confdir = _conf_dir[facts[:osfamily]]
 
       munin_node_conf = "#{munin_confdir}/munin-node.conf"
       munin_plugin_dir = "#{munin_confdir}/plugins"
@@ -68,7 +75,7 @@ describe 'munin::node' do
         end
         it { should compile.with_all_deps }
         it do
-          should contain_file('/etc/munin/munin-node.conf')
+          should contain_file(munin_node_conf)
                   .with_content(/^cidr_allow 192.0.2.0\/25$/)
                   .with_content(/^cidr_allow 2001:db8:2::\/64$/)
                   .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
@@ -83,7 +90,7 @@ describe 'munin::node' do
         end
         it { should compile.with_all_deps }
         it do
-          should contain_file('/etc/munin/munin-node.conf')
+          should contain_file(munin_node_conf)
                   .with_content(/host_name\s+something.example.com/)
         end
       end

@@ -1,21 +1,27 @@
 require 'spec_helper'
 
+_conf_dir = {}
+_conf_dir.default = '/etc/munin'
+_conf_dir['Solaris'] = '/opt/local/etc/munin'
+_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+
 describe 'munin::master' do
 
   on_supported_os.each do |os, facts|
+
+    # Avoid testing on distributions similar to RedHat and Debian
+    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+
+    # No need to test all os versions as long as os version is not
+    # used in the params class
+    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+
     context "on #{os}" do
       let(:facts) do
         facts
       end
 
-      case facts[:osfamily]
-      when 'Solaris'
-        conf_dir = '/opt/local/etc/munin'
-      when 'FreeBSD'
-        conf_dir = '/usr/local/etc/munin'
-      else
-        conf_dir = '/etc/munin'
-      end
+      conf_dir = _conf_dir[facts[:osfamily]]
 
       it { should compile.with_all_deps }
 

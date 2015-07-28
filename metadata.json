@@ -42,7 +42,8 @@
       "operatingsystemrelease": [ "10.04", "12.04", "14.04" ]
     },
     {
-      "operatingsystem": "FreeBSD"
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [ "9", "10" ]
     },
     {
       "operatingsystem": "DragonFly"
