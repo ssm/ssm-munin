@@ -15,6 +15,14 @@ describe 'munin::plugin', :type => 'define' do
   let(:title) { 'testplugin' }
 
   on_supported_os.each do |os, facts|
+
+    # Avoid testing on distributions similar to RedHat and Debian
+    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+
+    # No need to test all os versions as long as os version is not
+    # used in the params class
+    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+
     context "on #{os}" do
       let(:facts) do
         facts
