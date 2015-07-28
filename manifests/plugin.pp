@@ -2,14 +2,15 @@
 #
 # Parameters:
 #
-# - ensure: link, present, absent
+# - ensure: "link", "present", "absent" or "". Default is "". The
+#   ensure parameter is mandatory for installing a plugin.
 # - source: when ensure => present, source file
 # - target: when ensure => link, link target
 # - config: array of lines for munin plugin config
 # - config_label: label for munin plugin config
 
 define munin::plugin (
-    $ensure=undef,
+    $ensure='',
     $source=undef,
     $target=undef,
     $config=undef,
@@ -27,20 +28,21 @@ define munin::plugin (
         notify  => Service[$munin::node::service_name],
     }
 
+    validate_re($ensure, '^(|link|present|absent)$')
     case $ensure {
-        present: {
+        'present': {
             $handle_plugin = true
-            $plugin_ensure = present
+            $plugin_ensure = 'present'
         }
-        absent: {
+        'absent': {
             $handle_plugin = true
-            $plugin_ensure = absent
+            $plugin_ensure = 'absent'
         }
-        link: {
+        'link': {
             $handle_plugin = true
-            $plugin_ensure = link
+            $plugin_ensure = 'link'
             case $target {
-                '': {
+                undef: {
                     $plugin_target = "${munin::node::plugin_share_dir}/${title}"
                 }
                 /^\//: {
