@@ -3,5 +3,5 @@ require 'rspec-puppet-facts'
 include RspecPuppetFacts
 
 shared_context :unsupported do
-  let(:facts) { { :osfamily => 'Unsupported', } }
+  let(:facts) { { osfamily: 'Unsupported' } }
 end
