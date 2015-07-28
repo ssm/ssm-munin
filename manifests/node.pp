@@ -15,6 +15,9 @@
 # log_dir: The log directory for the munin node process. Defaults
 # change according to osfamily, see munin::params::node for details.
 #
+# usesyslog : Boolean, specify if you want to log using a syslog (true)
+# or to file (false, it will log to $log_dir)
+#
 # masterconfig: List of configuration lines to append to the munin
 # master node definitinon
 #
@@ -50,6 +53,7 @@ class munin::node (
   $config_root    = $munin::params::node::config_root,
   $host_name      = $munin::params::node::host_name,
   $log_dir        = $munin::params::node::log_dir,
+  $usesyslog      = $munin::params::node::usesyslog,
   $masterconfig   = $munin::params::node::masterconfig,
   $mastergroup    = $munin::params::node::mastergroup,
   $mastername     = $munin::params::node::mastername,
@@ -74,6 +78,7 @@ class munin::node (
   validate_string($service_name)
   if $service_ensure { validate_re($service_ensure, '^(running|stopped)$') }
   validate_re($export_node, '^(enabled|disabled)$')
+  validate_bool($usesyslog)
   validate_absolute_path($log_dir)
   validate_string($file_group)
 

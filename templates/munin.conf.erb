@@ -8,8 +8,11 @@ dbdir <%= @dbdir %>
 <% if @htmldir -%>
 htmldir <%= @htmldir %>
 <% end -%>
-<% if @logdir -%>
+<% if @logdir and not @usesyslog -%>
 logdir <%= @logdir %>
+<% end -%>
+<% if @usesyslog -%>
+logfile Sys::Syslog
 <% end -%>
 <% if @rundir -%>
 rundir <%= @rundir %>
