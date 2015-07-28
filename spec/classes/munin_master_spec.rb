@@ -1,5 +1,10 @@
 require 'spec_helper'
 
+_conf_dir = {}
+_conf_dir.default = '/etc/munin'
+_conf_dir['Solaris'] = '/opt/local/etc/munin'
+_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+
 describe 'munin::master' do
 
   on_supported_os.each do |os, facts|
@@ -8,14 +13,7 @@ describe 'munin::master' do
         facts
       end
 
-      case facts[:osfamily]
-      when 'Solaris'
-        conf_dir = '/opt/local/etc/munin'
-      when 'FreeBSD'
-        conf_dir = '/usr/local/etc/munin'
-      else
-        conf_dir = '/etc/munin'
-      end
+      conf_dir = _conf_dir[facts[:osfamily]]
 
       it { should compile.with_all_deps }
 
