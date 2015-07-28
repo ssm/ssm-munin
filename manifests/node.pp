@@ -84,7 +84,7 @@ class munin::node (
     $fqn = $host_name
   }
 
-  if $service_ensure { $_service_ensure = $service_ensure }
+  if $service_ensure != '' { $_service_ensure = $service_ensure }
   else { $_service_ensure = undef }
 
   # Defaults
