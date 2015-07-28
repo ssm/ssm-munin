@@ -5,14 +5,16 @@
 # - ensure: "link", "present", "absent" or "". Default is "". The
 #   ensure parameter is mandatory for installing a plugin.
 # - source: when ensure => present, source file
-# - target: when ensure => link, link target
+# - target: when ensure => link, link target.  If target is an
+#   absolute path (starts with "/") it is used directly.  If target is
+#   a relative path, $munin::node::plugin_share_dir is prepended.
 # - config: array of lines for munin plugin config
 # - config_label: label for munin plugin config
 
 define munin::plugin (
     $ensure='',
     $source=undef,
-    $target=undef,
+    $target='',
     $config=undef,
     $config_label=undef,
 )
@@ -42,7 +44,7 @@ define munin::plugin (
             $handle_plugin = true
             $plugin_ensure = 'link'
             case $target {
-                undef: {
+                '': {
                     $plugin_target = "${munin::node::plugin_share_dir}/${title}"
                 }
                 /^\//: {
@@ -52,6 +54,7 @@ define munin::plugin (
                     $plugin_target = "${munin::node::plugin_share_dir}/${target}"
                 }
             }
+            validate_absolute_path($plugin_target)
         }
         default: {
             $handle_plugin = false
