@@ -6,11 +6,11 @@ class munin::params::node {
   $host_name      = $::fqdn
   $allow          = []
   $masterconfig   = []
-  $mastergroup    = ''
-  $mastername     = ''
+  $mastergroup    = undef
+  $mastername     = undef
   $nodeconfig     = []
   $plugins        = {}
-  $service_ensure = ''
+  $service_ensure = undef
   $export_node    = 'enabled'
 
   case $::osfamily {

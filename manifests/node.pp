@@ -65,14 +65,14 @@ class munin::node (
   validate_array($allow)
   validate_array($nodeconfig)
   validate_array($masterconfig)
-  validate_string($mastergroup)
-  validate_string($mastername)
+  if $mastergroup { validate_string($mastergroup) }
+  if $mastername { validate_string($mastername) }
   validate_hash($plugins)
   validate_string($address)
   validate_absolute_path($config_root)
   validate_string($package_name)
   validate_string($service_name)
-  validate_re($service_ensure, '^(|running|stopped)$')
+  if $service_ensure { validate_re($service_ensure, '^(running|stopped)$') }
   validate_re($export_node, '^(enabled|disabled)$')
   validate_absolute_path($log_dir)
   validate_string($file_group)
@@ -84,7 +84,7 @@ class munin::node (
     $fqn = $host_name
   }
 
-  if $service_ensure != '' { $_service_ensure = $service_ensure }
+  if $service_ensure { $_service_ensure = $service_ensure }
   else { $_service_ensure = undef }
 
   # Defaults
