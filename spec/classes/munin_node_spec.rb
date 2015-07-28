@@ -14,14 +14,22 @@ describe 'munin::node' do
 
       case facts[:osfamily]
       when 'Solaris'
+        munin_confdir = '/opt/local/etc/munin'
+      when 'FreeBSD', 'DragonFly'
+        munin_confdir = '/usr/local/etc/munin'
+      else
+        munin_confdir = '/etc/munin'
+      end
+
+      munin_node_conf = "#{munin_confdir}/munin-node.conf"
+      munin_plugin_dir = "#{munin_confdir}/plugins"
+      munin_plugin_conf_dir = "#{munin_confdir}/plugin-conf.d"
+
+      case facts[:osfamily]
+      when 'Solaris'
         munin_node_service = 'smf:/munin-node'
-        munin_node_conf    = '/opt/local/etc/munin/munin-node.conf'
-      when 'FreeBSD'
-        munin_node_conf    = '/usr/local/etc/munin/munin-node.conf'
-        munin_node_service = 'munin-node'
       else
         munin_node_service = 'munin-node'
-        munin_node_conf = '/etc/munin/munin-node.conf'
       end
 
       case facts[:osfamily]
