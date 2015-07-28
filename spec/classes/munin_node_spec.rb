@@ -158,6 +158,23 @@ describe 'munin::node' do
           it { should_not contain_file(munin_plugin_conf_dir) }
         end
       end
+
+      context 'timeout' do
+        context 'set' do
+          let(:params) { { timeout: 123 } }
+          it { should compile.with_all_deps }
+          it do should contain_file(munin_node_conf)
+                        .with_content(/^timeout 123/)
+          end
+        end
+        context 'unset' do
+          it { should compile.with_all_deps }
+          it do should contain_file(munin_node_conf)
+                        .without_content(/^timeout/)
+          end
+        end
+      end
+
     end
   end
 

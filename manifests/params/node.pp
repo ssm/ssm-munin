@@ -17,6 +17,7 @@ class munin::params::node {
   $syslog_ident    = undef
   $syslog_facility = undef
   $purge_configs   = false
+  $timeout         = undef
 
   case $::osfamily {
     'RedHat': {

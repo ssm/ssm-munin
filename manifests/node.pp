@@ -59,6 +59,10 @@
 #
 # file_group: The UNIX group name owning the configuration files,
 # log files, etc.
+#
+# timeout: Used to set the global plugin runtime timeout for this
+# node. Integer. Defaults to undef, which lets munin-node use its
+# default of 10 seconds.
 
 class munin::node (
   $address         = $munin::params::node::address,
@@ -81,6 +85,7 @@ class munin::node (
   $log_destination = $munin::params::node::log_destination,
   $syslog_ident    = $munin::params::node::syslog_ident,
   $syslog_facility = $munin::params::node::syslog_facility,
+  $timeout         = $munin::params::node::timeout,
 ) inherits munin::params::node {
 
   validate_array($allow)
@@ -100,6 +105,7 @@ class munin::node (
   validate_string($log_file)
   validate_string($file_group)
   validate_bool($purge_configs)
+  if $timeout { validate_integer($timeout) }
 
   case $log_destination {
     'file': {

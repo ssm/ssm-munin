@@ -63,6 +63,9 @@ allow ^<%= Regexp.quote(line) %>$
 <% unrecognized.each do |line| -%>
 allow <%= line %>
 <% end -%>
+<% if @timeout -%>
+timeout <%= @timeout %>
+<% end -%>
 
 <% Array(@nodeconfig).each do |line| -%>
 <%= line %>
