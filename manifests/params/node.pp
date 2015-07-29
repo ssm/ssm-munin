@@ -14,7 +14,6 @@ class munin::params::node {
   $export_node    = 'enabled'
   $log_file       = 'munin-node.log'
   $log_destination = 'file'
-  $syslog_ident    = undef
   $syslog_facility = undef
   $purge_configs   = false
   $timeout         = undef

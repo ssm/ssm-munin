@@ -24,9 +24,6 @@
 # purge_configs: Removes all other munin plugins and munin plugin
 # configuration files.  Boolean, defaults to false.
 #
-# syslog_ident: Defaults to undef, which makes munin-node use its
-# default of "munin-node".
-#
 # syslog_facility: Defaults to undef, which makes munin-node use the
 # perl Net::Server module default of "daemon". Possible values are any
 # syslog facility by number, or lowercase name.
@@ -83,7 +80,6 @@ class munin::node (
   $export_node     = $munin::params::node::export_node,
   $file_group      = $munin::params::node::file_group,
   $log_destination = $munin::params::node::log_destination,
-  $syslog_ident    = $munin::params::node::syslog_ident,
   $syslog_facility = $munin::params::node::syslog_facility,
   $timeout         = $munin::params::node::timeout,
 ) inherits munin::params::node {
@@ -114,7 +110,6 @@ class munin::node (
     }
     'syslog': {
       $_log_file = 'Sys::Syslog'
-      if $syslog_ident { validate_string($syslog_ident) }
       if $syslog_facility {
         validate_string($syslog_facility)
         validate_re($syslog_facility,

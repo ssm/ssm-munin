@@ -121,7 +121,6 @@ describe 'munin::node' do
         context 'with syslog options' do
           let(:params) do
             { log_destination: 'syslog',
-              syslog_ident: 'munin-granbusk',
               syslog_facility: 'local1',
             }
           end
@@ -129,7 +128,6 @@ describe 'munin::node' do
           it do
             should contain_file(munin_node_conf)
                     .with_content(/log_file\s+Sys::Syslog/)
-                    .with_content(/syslog_ident\s+"munin-granbusk"/)
                     .with_content(/syslog_facility\s+local1/)
           end
         end

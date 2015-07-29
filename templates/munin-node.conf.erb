@@ -26,9 +26,6 @@ host_name  <%= @host_name %>
 log_level  4
 log_file   <%= @_log_file %>
 <% if @log_destination == 'syslog' -%>
-<%     if @syslog_ident -%>
-syslog_ident "<%= @syslog_ident %>"
-<%     end -%>
 <%     if @syslog_facility -%>
 syslog_facility <%= @syslog_facility %>
 <%     end -%>
