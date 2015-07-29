@@ -24,6 +24,9 @@ class munin::params::master {
     'Solaris': {
       $config_root = '/opt/local/etc/munin'
     }
+    'FreeBSD': {
+      $config_root = '/usr/local/etc/munin'
+    }
     default: {
       fail($message)
     }

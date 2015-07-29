@@ -6,12 +6,17 @@ class munin::params::node {
   $host_name      = $::fqdn
   $allow          = []
   $masterconfig   = []
-  $mastergroup    = ''
-  $mastername     = ''
+  $mastergroup    = undef
+  $mastername     = undef
   $nodeconfig     = []
   $plugins        = {}
-  $service_ensure = ''
+  $service_ensure = undef
   $export_node    = 'enabled'
+  $log_file       = 'munin-node.log'
+  $log_destination = 'file'
+  $syslog_facility = undef
+  $purge_configs   = false
+  $timeout         = undef
 
   case $::osfamily {
     'RedHat': {

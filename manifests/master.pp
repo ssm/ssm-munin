@@ -121,22 +121,10 @@ class munin::master (
     force   => true,
   }
 
-  case $collect_nodes {
-    'enabled': {
-      Munin::Master::Node_definition <<| |>>
-    }
-    'mine': {
-      # Collect nodes explicitly tagged with this master
-      Munin::Master::Node_definition <<| tag == "munin::master::${host_name}" |>>
-    }
-    'unclaimed': {
-      # Collect all exported node definitions, except the ones tagged
-      # for a specific master
-      Munin::Master::Node_definition <<| tag == 'munin::master::' |>>
-    }
-    'disabled',
-    default: {
-      # do nothing
+  if $collect_nodes != 'disabled' {
+    class { 'munin::master::collect':
+      collect_nodes => $collect_nodes,
+      host_name     => $host_name,
     }
   }
 

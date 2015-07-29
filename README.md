@@ -1,4 +1,16 @@
-# Puppet munin module [![Build Status](https://travis-ci.org/ssm/ssm-munin.png?branch=master)](https://travis-ci.org/ssm/ssm-munin)
+# Puppet munin module
+
+[![Puppet Forge](http://img.shields.io/puppetforge/v/ssm/munin.svg)](https://forge.puppetlabs.com/ssm/munin)
+[![Build Status](https://travis-ci.org/ssm/ssm-munin.png?branch=master)](https://travis-ci.org/ssm/ssm-munin)
+
+# Table of contents
+
+1. [Overview](#overview)
+2. [Munin Master](#munin-master)
+3. [Munin Node](#munin-node)
+4. [Munin Plugins](#munin-plugins)
+
+# Overview
 
 Control munin master, munin node, and munin plugins.
 

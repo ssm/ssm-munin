@@ -1,6 +1,6 @@
 {
   "name": "ssm/munin",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "ssm",
   "license": "Apache-2.0",
   "summary": "Configure munin master, node and plugins",
@@ -16,7 +16,7 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+      "operatingsystemrelease": [ "5", "6", "7" ]
     },
     {
       "operatingsystem": "Debian",
@@ -24,15 +24,15 @@
     },
     {
       "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+      "operatingsystemrelease": [ "5", "6", "7" ]
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+      "operatingsystemrelease": [ "5", "6", "7" ]
     },
     {
       "operatingsystem": "Scientific",
-      "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+      "operatingsystemrelease": [ "5", "6", "7" ]
     },
     {
       "operatingsystem": "SmartOS"
@@ -42,7 +42,8 @@
       "operatingsystemrelease": [ "10.04", "12.04", "14.04" ]
     },
     {
-      "operatingsystem": "FreeBSD"
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [ "9", "10" ]
     },
     {
       "operatingsystem": "DragonFly"
