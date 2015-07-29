@@ -155,13 +155,15 @@ class munin::node (
     notify  => Service[$service_name],
   }
 
-  # Export a node definition to be collected by the munin master
+  # Export a node definition to be collected by the munin master.
+  # (Separated into its own class to prevent warnings about "missing
+  # storeconfigs", even if $export_node is not enabled)
   if $export_node == 'enabled' {
-    @@munin::master::node_definition{ $fqn:
-      address    => $address,
-      mastername => $mastername,
-      config     => $masterconfig,
-      tag        => [ "munin::master::${mastername}" ]
+    class { 'munin::node::export':
+      address      => $address,
+      fqn          => $fqn,
+      mastername   => $mastername,
+      masterconfig => $masterconfig,
     }
   }
 
