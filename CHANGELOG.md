@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.10 - 2015-08-01
+
+* Bugfix: Add missing dependency for the "munin-node" package when
+  $munin::node::purge_configs is true.
+  ([#34](https://github.com/ssm/ssm-munin/pull/34))
+
+Contributors to this release: Martin Meinhold
+
 ## 0.0.9 - 2015-07-29
 
 * Bugfix: The mastergroup, if used in the node's FQN (Fully Qualified
