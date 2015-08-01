@@ -176,6 +176,7 @@ class munin::node (
       ensure  => directory,
       recurse => true,
       purge   => true,
+      require => Package[$package_name],
       notify  => Service[$service_name],
     }
   }
