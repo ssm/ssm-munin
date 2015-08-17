@@ -4,6 +4,8 @@ class munin::params::node {
 
   $address        = $::fqdn
   $host_name      = $::fqdn
+  $bind_address   = '*'
+  $bind_port      = 4949
   $allow          = []
   $masterconfig   = []
   $mastergroup    = undef

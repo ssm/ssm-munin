@@ -44,6 +44,10 @@
 #
 # address: The address used in the munin master node definition.
 #
+# bind_address: The IP address the munin-node process listens on. Defaults: *.
+#
+# bind_port: The port number the munin-node process listens on.
+#
 # package_name: The name of the munin node package to install.
 #
 # service_name: The name of the munin node service.
@@ -64,6 +68,8 @@
 class munin::node (
   $address         = $munin::params::node::address,
   $allow           = $munin::params::node::allow,
+  $bind_address    = $munin::params::node::bind_address,
+  $bind_port       = $munin::params::node::bind_port,
   $config_root     = $munin::params::node::config_root,
   $host_name       = $munin::params::node::host_name,
   $log_dir         = $munin::params::node::log_dir,
