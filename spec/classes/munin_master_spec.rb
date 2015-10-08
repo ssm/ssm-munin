@@ -43,75 +43,75 @@ describe 'munin::master' do
       context 'with html_strategy => cron' do
         let (:params) { { :html_strategy => 'cron' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/html_strategy\s+cron/)
-        }
+        end
       end
 
       context 'with graph_strategy => cron' do
         let (:params) { { :graph_strategy => 'cron' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/graph_strategy\s+cron/)
-        }
+        end
       end
 
       context 'with dbdir => /var/lib/munin' do
         let (:params) { { :dbdir => '/var/lib/munin' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/dbdir\s+\/var\/lib\/munin/)
-        }
+        end
       end
 
       context 'with htmldir => /var/www/munin' do
         let (:params) { { :htmldir => '/var/www/munin' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/htmldir\s+\/var\/www\/munin/)
-        }
+        end
       end
 
       context 'with logdir => /var/log/munin' do
         let (:params) { { :dbdir => '/var/log/munin' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/dbdir\s+\/var\/log\/munin/)
-        }
+        end
       end
 
       context 'with rundir => /var/run/munin' do
         let (:params) { { :dbdir => '/var/run/munin' } }
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/dbdir\s+\/var\/run\/munin/)
-        }
+        end
       end
 
       context 'with tls => enabled' do
-        let(:params) {
+        let(:params) do
           {
             :tls => 'enabled',
             :tls_certificate => '/path/to/certificate.pem',
             :tls_private_key => '/path/to/key.pem',
             :tls_verify_certificate => 'yes',
           }
-        }
+        end
 
         it { should compile.with_all_deps }
-        it {
+        it do
           should contain_file("#{conf_dir}/munin.conf")
                   .with_content(/tls = enabled/)
                   .with_content(/tls_certificate = \/path\/to\/certificate\.pem/)
                   .with_content(/tls_private_key = \/path\/to\/key\.pem/)
                   .with_content(/tls_verify_certificate = yes/)
-        }
+        end
       end
 
 
