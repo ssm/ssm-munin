@@ -91,7 +91,7 @@ class munin::master (
 
   if $host_name {
     validate_string($host_name)
-    if ! is_domain_name("${host_name}") {
+    if ! is_domain_name($host_name) {
       fail('host_name should be a valid domain name')
     }
   }
@@ -122,7 +122,7 @@ class munin::master (
   }
 
   if $collect_nodes != 'disabled' {
-    class { 'munin::master::collect':
+    class { '::munin::master::collect':
       collect_nodes => $collect_nodes,
       host_name     => $host_name,
     }

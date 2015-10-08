@@ -159,7 +159,7 @@ class munin::node (
   # (Separated into its own class to prevent warnings about "missing
   # storeconfigs", even if $export_node is not enabled)
   if $export_node == 'enabled' {
-    class { 'munin::node::export':
+    class { '::munin::node::export':
       address      => $address,
       fqn          => $fqn,
       mastername   => $mastername,

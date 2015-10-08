@@ -1,3 +1,5 @@
+# Parameters for the munin::master class. Add support for new OS
+# families here.
 class munin::params::master {
   $message = "Unsupported osfamily ${::osfamily}"
 

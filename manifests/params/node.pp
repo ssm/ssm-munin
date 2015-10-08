@@ -1,3 +1,5 @@
+# Parameters for the munin::node class. Add support for new OS
+# families here.
 class munin::params::node {
 
   $message = "Unsupported osfamily: ${::osfamily}"
