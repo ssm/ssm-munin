@@ -30,12 +30,14 @@ log_file   <%= @_log_file %>
 syslog_facility <%= @syslog_facility %>
 <%     end -%>
 <% end -%>
-port       4949
 pid_file   /var/run/munin/munin-node.pid
 background 1
 setsid     1
 
-# Which port to bind to;
+# Which port and address to bind to;
+host       <%= @bind_address %>
+port       <%= @bind_port %>
+
 
 user  root
 group <%= @file_group %>
