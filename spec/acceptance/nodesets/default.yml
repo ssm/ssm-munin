@@ -1,9 +1,10 @@
 HOSTS:
-  debian-8-amd64:
+  ubuntu-1404-x64:
     roles:
       - master
-    platform: debian-8-amd64
-    box: debian/jessie64
+    platform: ubuntu-1404-amd64
+    box: puppetlabs/ubuntu-14.04-64-nocm
+    box_url: https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm
     hypervisor: vagrant
 
 CONFIG:
