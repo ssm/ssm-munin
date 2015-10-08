@@ -56,8 +56,8 @@ describe 'munin::plugin', :type => 'define' do
       end
 
       context 'with ensure=link and target parameters' do
-        let (:title) { 'test_foo' }
-        let (:params) do
+        let(:title) { 'test_foo' }
+        let(:params) do
           { :ensure => 'link',
             :target => 'test_' }
         end
@@ -108,7 +108,7 @@ describe 'munin::plugin', :type => 'define' do
       end
 
       context 'only configuration' do
-        let (:params) do
+        let(:params) do
           { :config => ['env.rootdn cn=admin,dc=example,dc=org'],
             :config_label => 'slapd_*',
           }
