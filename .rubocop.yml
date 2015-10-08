@@ -302,6 +302,9 @@ Style/EmptyLines:
 Style/EmptyLinesAroundAccessModifier:
   Enabled: false
 
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
 Style/EmptyLiteral:
   Enabled: false
 
@@ -336,6 +339,9 @@ Style/IfUnlessModifier:
   Enabled: false
 
 Style/MultilineIfThen:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
   Enabled: false
 
 Style/NegatedIf:
