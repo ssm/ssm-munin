@@ -8,13 +8,19 @@
   addresses = []
   unrecognized = []
 
+  rescuable_exceptions = [ ArgumentError ]
+
+  if defined?(IPAddr::InvalidAddressError)
+    rescuable_exceptions << IPAddr::InvalidAddressError
+  end
+
   Array(@allow).flatten.each do |line|
     begin
       a = IPAddr.new(line)
       if a.ipv4? or a.ipv6?
         addresses << line
       end
-    rescue ArgumentError, IPAddr::InvalidAddressError
+    rescue *rescuable_exceptions
       # Treat invalid addresses as "allow" arguments, as they can be
       # regular expressions.
       unrecognized << line
