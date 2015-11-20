@@ -50,6 +50,9 @@
     },
     {
       "operatingsystem": "OpenBSD"
+    },
+    {
+      "operatingsystem": "Archlinux"
     }
   ],
   "tags": [

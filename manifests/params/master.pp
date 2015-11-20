@@ -18,7 +18,8 @@ class munin::params::master {
 
   case $::osfamily {
     'Debian',
-    'RedHat': {
+    'RedHat',
+    'Archlinux': {
       $config_root = '/etc/munin'
     }
     'Solaris': {
