@@ -27,7 +27,8 @@ class munin::params::node {
       $plugin_share_dir = '/usr/share/munin/plugins'
       $file_group   = 'root'
     }
-    'Debian': {
+    'Debian',
+    'Archlinux': {
       $config_root  = '/etc/munin'
       $log_dir      = '/var/log/munin'
       $service_name = 'munin-node'
