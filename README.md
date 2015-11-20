@@ -9,6 +9,7 @@
 2. [Munin Master](#munin-master)
 3. [Munin Node](#munin-node)
 4. [Munin Plugins](#munin-plugins)
+5. [Test](#test)
 
 # Overview
 
@@ -222,3 +223,10 @@ This only adds a plugin configuration file.
       config       => ['env.rootdn cn=admin,dc=example,dc=org'],
       config_label => 'slapd_*',
     }
+
+# Test
+
+Requirements: [Bundler](http://bundler.io/)
+
+    bundle install
+    bundle exec rake test
