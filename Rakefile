@@ -12,7 +12,6 @@ require 'rubocop/rake_task'
 # These gems aren't always present, for instance
 # on Travis with --without development
 begin
-  require 'puppet_blacksmith/rake_tasks'
 rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
 
@@ -24,6 +23,10 @@ exclude_paths = [
   "vendor/**/*",
   "spec/**/*",
 ]
+
+# Coverage from puppetlabs-spec-helper requires rcov which
+# doesn't work in anything since 1.8.7
+Rake::Task[:coverage].clear
 
 Rake::Task[:lint].clear
 
