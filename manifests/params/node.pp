@@ -23,6 +23,7 @@ class munin::params::node {
   $timeout         = undef
 
   case $::osfamily {
+    'Archlinux',
     'RedHat': {
       $config_root  = '/etc/munin'
       $log_dir      = '/var/log/munin-node'

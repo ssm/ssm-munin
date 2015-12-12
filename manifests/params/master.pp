@@ -19,6 +19,7 @@ class munin::params::master {
   $host_name                = $::fqdn
 
   case $::osfamily {
+    'Archlinux',
     'Debian',
     'RedHat': {
       $config_root = '/etc/munin'

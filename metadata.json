@@ -15,6 +15,10 @@
   "issues_url": "https://github.com/ssm/ssm-munin/issues",
   "operatingsystem_support": [
     {
+      "operatingsystem": "Archlinux",
+      "operatingsystemrelease": [ "4" ]
+    },
+    {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [ "5", "6", "7" ]
     },
