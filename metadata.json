@@ -1,6 +1,6 @@
 {
-  "name": "ssm/munin",
-  "version": "0.0.10",
+  "name": "ssm-munin",
+  "version": "0.1.0",
   "author": "ssm",
   "license": "Apache-2.0",
   "summary": "Configure munin master, node and plugins",
@@ -14,6 +14,10 @@
   "project_page": "https://github.com/ssm/ssm-munin",
   "issues_url": "https://github.com/ssm/ssm-munin/issues",
   "operatingsystem_support": [
+    {
+      "operatingsystem": "Archlinux",
+      "operatingsystemrelease": [ "4" ]
+    },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [ "5", "6", "7" ]

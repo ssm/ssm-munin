@@ -1,3 +1,5 @@
+# Parameters for the munin::master class. Add support for new OS
+# families here.
 class munin::params::master {
   $message = "Unsupported osfamily ${::osfamily}"
 
@@ -17,6 +19,7 @@ class munin::params::master {
   $host_name                = $::fqdn
 
   case $::osfamily {
+    'Archlinux',
     'Debian',
     'RedHat': {
       $config_root = '/etc/munin'

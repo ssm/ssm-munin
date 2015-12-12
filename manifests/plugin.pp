@@ -20,7 +20,7 @@ define munin::plugin (
 )
 {
 
-    include munin::node
+    include ::munin::node
 
     $plugin_share_dir=$munin::node::plugin_share_dir
     validate_absolute_path($plugin_share_dir)
@@ -63,7 +63,7 @@ define munin::plugin (
 
     if $config {
         $config_ensure = $ensure ? {
-            absent  => absent,
+            'absent'=> absent,
             default => present,
         }
     }
