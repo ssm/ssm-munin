@@ -1,6 +1,6 @@
 {
   "name": "ssm-munin",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "author": "ssm",
   "license": "Apache-2.0",
   "summary": "Configure munin master, node and plugins",
