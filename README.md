@@ -10,6 +10,8 @@
 - [Overview](#overview)
 - [Module Description](#module-description)
 - [Setup](#setup)
+    - [Setup requirements](#setup-requirements)
+- [Usage](#usage)
     - [munin::node](#muninnode)
     - [munin::master](#muninmaster)
     - [munin::master::node_definition](#muninmasternodedefinition)
@@ -263,17 +265,30 @@ Typical usage:
 
 Parameters:
 
-* **ensure**: "link", "present", "absent" or "". Default is "". The
-ensure parameter is mandatory for installing a plugin.  source: when
-ensure => present, source file
+* **ensure**: "link", "present", "absent" or "". (optional, default is
+""). The ensure parameter is mandatory for installing a plugin, and
+interacts with the **source** and **target** parameters (see below).
+
+* **source**: when ensure => present, source file. (optional)
 
 * **target**: when ensure => link, link target.  If target is an
 absolute path (starts with "/") it is used directly.  If target is a
-relative path, $munin::node::plugin_share_dir is prepended.
+relative path, $munin::node::plugin_share_dir is prepended. (optional)
 
 * **config**: array of lines for munin plugin config
 
 * **config_label**: label for munin plugin config
+
+When using "**ensure** => link", a symlink is created from
+/etc/munin/plugins/$title to what the optional **target** parameter
+contains, or to /usr/share/munin/plugins/$title if that is not set.
+
+When using "**ensure** => present", you need to provide the **source**
+parameter as well.
+
+When **ensure** is not set, a plugin will not be installed, but extra
+plugin configuration can be managed with the **config** and
+**config_label** parameters.
 
 # Examples #
 
