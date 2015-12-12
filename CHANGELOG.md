@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0 - 2015-12-12
+
+* Added support for Archlinux
+  ([#40](https://github.com/ssm/ssm-munin/issues/40))
+* Added acceptance tests
+* Added CONTRIBUTING.md for how to contribute to the module
+  ([#41](https://github.com/ssm/ssm-munin/issues/41))
+* Document all parameters in README.md
+
+### munin::node
+
+* Two new parameters: **bind\_address** and **bind\_port**
+  ([#37](https://github.com/ssm/ssm-munin/pull/37))
+* Bugfix: Rescue InvalidAddressError only if ruby is capable
+  ([#38](https://github.com/ssm/ssm-munin/pull/38))
+
+### contributors
+
+Contributors to this release: David Hayes, Julien Pivotto, Stig
+Sandbeck Mathisen, Victor Engmark
+
 ## 0.0.10 - 2015-08-01
 
 * Bugfix: Add missing dependency for the "munin-node" package when
