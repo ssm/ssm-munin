@@ -51,7 +51,7 @@
 # - extra_config: Extra lines of config to put in munin.conf.
 
 class munin::master (
-  $node_definitions       = $munin::params::master::node_defintions,
+  $node_definitions       = $munin::params::master::node_definitions,
   $graph_strategy         = $munin::params::master::graph_strategy,
   $html_strategy          = $munin::params::master::html_strategy,
   $config_root            = $munin::params::master::config_root,

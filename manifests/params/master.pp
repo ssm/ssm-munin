@@ -5,7 +5,7 @@ class munin::params::master {
 
   $graph_strategy           = 'cgi'
   $html_strategy            = 'cgi'
-  $node_definitions         = ''
+  $node_definitions         = {}
   $collect_nodes            = 'enabled'
   $dbdir                    = undef
   $htmldir                  = undef

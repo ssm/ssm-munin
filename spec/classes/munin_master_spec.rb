@@ -114,6 +114,23 @@ describe 'munin::master' do
         end
       end
 
+      context 'with node_definitions' do
+        let(:params) do
+          {
+            :node_definitions => {
+              'node-a' => {
+                'address' => 'munin://node-a.example.com',
+              },
+              'node-b' => {
+                'address' => 'munin://node-b.example.com',
+              }
+            }
+          }
+        end
+        it { should compile.with_all_deps }
+        it { should contain_munin__master__node_definition('node-a') }
+        it { should contain_munin__master__node_definition('node-b') }
+      end
 
       context 'with extra_config' do
         token = '1b7febce-bb2d-4c18-b889-84c73538a900'
