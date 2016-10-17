@@ -127,7 +127,7 @@ class munin::node (
     }
   }
 
-  if $mastergroup {
+  if $mastergroup and $mastergroup != ''{
     $fqn = "${mastergroup};${host_name}"
   }
   else {
