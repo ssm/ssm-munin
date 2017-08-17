@@ -66,6 +66,7 @@ class munin::master (
   $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
   $host_name              = $munin::params::master::host_name,
   $extra_config           = $munin::params::master::extra_config,
+  $package_install_opt    = $munin::params::master::package_install_opt,
   ) inherits munin::params::master {
 
   if $node_definitions {
@@ -97,10 +98,12 @@ class munin::master (
   }
 
   validate_array($extra_config)
+  validate_array($package_install_opt)
 
   # The munin package and configuration
   package { 'munin':
-    ensure => latest,
+    ensure          => latest,
+    install_options => $package_install_opt
   }
 
   File {

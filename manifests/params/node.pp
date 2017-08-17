@@ -14,6 +14,7 @@ class munin::params::node {
   $export_node    = 'enabled'
   $usesyslog      = false
 
+
   case $::osfamily {
     'RedHat': {
       $config_root  = '/etc/munin'
@@ -22,6 +23,7 @@ class munin::params::node {
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/share/munin/plugins'
       $file_group   = 'root'
+      $package_install_opt = ['--enablerepo epel']
     }
     'Debian': {
       $config_root  = '/etc/munin'
@@ -30,6 +32,7 @@ class munin::params::node {
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/share/munin/plugins'
       $file_group   = 'root'
+      $package_install_opt = []
     }
     'Solaris': {
       case $::operatingsystem {
@@ -40,6 +43,7 @@ class munin::params::node {
           $package_name = 'munin-node'
           $plugin_share_dir = '/opt/local/share/munin/plugins'
           $file_group   = 'root'
+          $package_install_opt = []
         }
         default: {
           fail("Unsupported operatingsystem ${::operatingsystem} for osfamily ${::osfamily}")
@@ -53,6 +57,7 @@ class munin::params::node {
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/local/share/munin/plugins'
       $file_group   = 'wheel'
+      $package_install_opt = []
     }
     'OpenBSD': {
       $config_root  = '/etc/munin'
@@ -61,6 +66,7 @@ class munin::params::node {
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/local/libexec/munin/plugins'
       $file_group   = 'wheel'
+      $package_install_opt = []
     }
     default: {
       fail($message)

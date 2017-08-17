@@ -17,12 +17,17 @@ class munin::params::master {
   $host_name                = $::fqdn
 
   case $::osfamily {
-    'Debian',
+    'Debian': {
+      $package_install_opt = []
+    }
     'RedHat': {
       $config_root = '/etc/munin'
+      $package_install_opt = ['--enablerepo epel']
+
     }
     'Solaris': {
       $config_root = '/opt/local/etc/munin'
+      $package_install_opt = []
     }
     default: {
       fail($message)

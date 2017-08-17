@@ -48,24 +48,24 @@
 # log files, etc.
 
 class munin::node (
-  $address        = $munin::params::node::address,
-  $allow          = $munin::params::node::allow,
-  $config_root    = $munin::params::node::config_root,
-  $host_name      = $munin::params::node::host_name,
-  $log_dir        = $munin::params::node::log_dir,
-  $usesyslog      = $munin::params::node::usesyslog,
-  $masterconfig   = $munin::params::node::masterconfig,
-  $mastergroup    = $munin::params::node::mastergroup,
-  $mastername     = $munin::params::node::mastername,
-  $nodeconfig     = $munin::params::node::nodeconfig,
-  $package_name   = $munin::params::node::package_name,
-  $plugins        = $munin::params::node::plugins,
-  $service_ensure = $munin::params::node::service_ensure,
-  $service_name   = $munin::params::node::service_name,
-  $export_node    = $munin::params::node::export_node,
-  $file_group     = $munin::params::node::file_group,
+  $address             = $munin::params::node::address,
+  $allow               = $munin::params::node::allow,
+  $config_root         = $munin::params::node::config_root,
+  $host_name           = $munin::params::node::host_name,
+  $log_dir             = $munin::params::node::log_dir,
+  $usesyslog           = $munin::params::node::usesyslog,
+  $masterconfig        = $munin::params::node::masterconfig,
+  $mastergroup         = $munin::params::node::mastergroup,
+  $mastername          = $munin::params::node::mastername,
+  $nodeconfig          = $munin::params::node::nodeconfig,
+  $package_name        = $munin::params::node::package_name,
+  $plugins             = $munin::params::node::plugins,
+  $service_ensure      = $munin::params::node::service_ensure,
+  $service_name        = $munin::params::node::service_name,
+  $export_node         = $munin::params::node::export_node,
+  $file_group          = $munin::params::node::file_group,
+  $package_install_opt = $munin::params::node::package_install_opt,
 ) inherits munin::params::node {
-
   validate_array($allow)
   validate_array($nodeconfig)
   validate_array($masterconfig)
@@ -81,6 +81,7 @@ class munin::node (
   validate_bool($usesyslog)
   validate_absolute_path($log_dir)
   validate_string($file_group)
+  validate_array($package_install_opt)
 
   if $mastergroup {
     $fqn = "${mastergroup};${host_name}"
@@ -98,7 +99,8 @@ class munin::node (
   }
 
   package { $package_name:
-    ensure => installed,
+    ensure          => installed,
+    install_options => $package_install_opt
   }
 
   service { $service_name:
