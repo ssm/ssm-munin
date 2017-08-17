@@ -23,7 +23,7 @@ class munin::params::node {
       $package_name = 'munin-node'
       $plugin_share_dir = '/usr/share/munin/plugins'
       $file_group   = 'root'
-      $package_install_opt = ['--enablerepo epel']
+      $package_install_opt = [{'--enablerepo'=> 'epel'},]
     }
     'Debian': {
       $config_root  = '/etc/munin'

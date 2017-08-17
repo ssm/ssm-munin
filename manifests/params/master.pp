@@ -22,8 +22,7 @@ class munin::params::master {
     }
     'RedHat': {
       $config_root = '/etc/munin'
-      $package_install_opt = ['--enablerepo epel']
-
+      $package_install_opt = [{'--enablerepo'=> 'epel'},]
     }
     'Solaris': {
       $config_root = '/opt/local/etc/munin'
