@@ -76,5 +76,3 @@ class munin::params::node {
     }
   }
 }
-
-
