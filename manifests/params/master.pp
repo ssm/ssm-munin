@@ -22,13 +22,19 @@ class munin::params::master {
     'Archlinux',
     'Debian',
     'RedHat': {
-      $config_root = '/etc/munin'
+      $config_root      = '/etc/munin'
+      $file_group       = 'root'
+      $munin_server_pkg = 'munin'
     }
     'Solaris': {
-      $config_root = '/opt/local/etc/munin'
+      $config_root      = '/opt/local/etc/munin'
+      $file_group       = 'root'
+      $munin_server_pkg = 'munin'
     }
-    'FreeBSD': {
-      $config_root = '/usr/local/etc/munin'
+    'DragonFly', 'FreeBSD': {
+      $config_root      = '/usr/local/etc/munin'
+      $file_group       = 'wheel'
+      $munin_server_pkg = 'munin-master'
     }
     default: {
       fail($message)
