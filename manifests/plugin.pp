@@ -74,11 +74,27 @@ define munin::plugin (
 
     if $handle_plugin {
         # Install the plugin
-        file {"${munin::node::config_root}/plugins/${name}":
-            ensure => $plugin_ensure,
-            source => $source,
-            target => $plugin_target,
-            mode   => '0755',
+        case $plugin_ensure {
+            'present': {
+                file {"${munin::node::config_root}/plugins/${name}":
+                    ensure => $plugin_ensure,
+                    source => $source,
+                    mode   => '0755',
+                }
+            }
+            'absent': {
+                file {"${munin::node::config_root}/plugins/${name}":
+                    ensure => $plugin_ensure
+                }
+            }
+            'link': {
+                file {"${munin::node::config_root}/plugins/${name}":
+                    ensure => $plugin_ensure,
+                    source => $source,
+                    target => $plugin_target,
+                    mode   => '0755',
+                }
+            }
         }
     }
 
