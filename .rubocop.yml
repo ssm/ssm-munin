@@ -25,9 +25,6 @@ Lint/EnsureReturn:
 Lint/HandleExceptions:
   Enabled: true
 
-Lint/LiteralInCondition:
-  Enabled: true
-
 Lint/ShadowingOuterLocalVariable:
   Enabled: true
 
@@ -43,7 +40,7 @@ Lint/AmbiguousOperator:
 Lint/AssignmentInCondition:
   Enabled: true
 
-Style/SpaceBeforeComment:
+Layout/SpaceBeforeComment:
   Enabled: true
 
 # DISABLED - not useful
@@ -63,6 +60,9 @@ Style/RedundantSelf:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 # DISABLED - not useful
 Style/WhileUntilModifier:
   Enabled: false
@@ -72,7 +72,7 @@ Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
 # DISABLED
-Lint/Eval:
+Security/Eval:
   Enabled: false
 
 # DISABLED
@@ -120,22 +120,22 @@ Lint/UselessAssignment:
 Lint/Void:
   Enabled: true
 
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 Style/Alias:
   Enabled: false
 
-Style/AlignArray:
+Layout/AlignArray:
   Enabled: false
 
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
 Metrics/BlockNesting:
@@ -153,13 +153,10 @@ Style/BracesAroundHashParameters:
 Style/CaseEquality:
   Enabled: false
 
-Style/CaseIndentation:
+Layout/CaseIndentation:
   Enabled: false
 
 Style/CharacterLiteral:
-  Enabled: false
-
-Style/ClassAndModuleCamelCase:
   Enabled: false
 
 Style/ClassAndModuleChildren:
@@ -187,67 +184,49 @@ Style/WordArray:
 Style/UnneededPercentQ:
   Enabled: false
 
-Style/Tab:
+Layout/Tab:
   Enabled: false
 
-Style/SpaceBeforeSemicolon:
+Layout/SpaceInsideBlockBraces:
   Enabled: false
 
-Style/TrailingBlankLines:
+Layout/SpaceInsideBrackets:
   Enabled: false
 
-Style/SpaceInsideBlockBraces:
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideParens:
   Enabled: false
 
-Style/SpaceInsideHashLiteralBraces:
+Layout/LeadingCommentSpace:
   Enabled: false
 
-Style/SpaceInsideParens:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
 
-Style/LeadingCommentSpace:
+Layout/SpaceAroundKeyword:
   Enabled: false
 
-Style/SingleSpaceBeforeFirstArg:
+Layout/SpaceAfterMethodName:
   Enabled: false
 
-Style/SpaceAfterColon:
+Layout/SpaceAfterSemicolon:
   Enabled: false
 
-Style/SpaceAfterComma:
+Layout/SpaceAroundOperators:
   Enabled: false
 
-Style/SpaceAfterControlKeyword:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
-Style/SpaceAfterMethodName:
-  Enabled: false
-
-Style/SpaceAfterNot:
-  Enabled: false
-
-Style/SpaceAfterSemicolon:
-  Enabled: false
-
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
-Style/SpaceAroundOperators:
-  Enabled: false
-
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-Style/SpaceBeforeComma:
+Layout/SpaceBeforeComma:
   Enabled: false
 
 Style/CollectionMethods:
   Enabled: false
 
-Style/CommentIndentation:
+Layout/CommentIndentation:
   Enabled: false
 
 Style/ColonMethodCall:
@@ -259,7 +238,7 @@ Style/CommentAnnotation:
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-Style/ConstantName:
+Naming/ConstantName:
   Enabled: false
 
 Style/Documentation:
@@ -268,10 +247,10 @@ Style/Documentation:
 Style/DefWithParentheses:
   Enabled: false
 
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Enabled: false
 
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 # DISABLED - used for converting to bool
@@ -281,28 +260,28 @@ Style/DoubleNegation:
 Style/EachWithObject:
   Enabled: false
 
-Style/EmptyLineBetweenDefs:
+Layout/EmptyLineBetweenDefs:
   Enabled: false
 
-Style/IndentArray:
+Layout/IndentArray:
   Enabled: false
 
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
-Style/IndentationConsistency:
+Layout/IndentationConsistency:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
-Style/EmptyLines:
+Layout/EmptyLines:
   Enabled: false
 
-Style/EmptyLinesAroundAccessModifier:
+Layout/EmptyLinesAroundAccessModifier:
   Enabled: false
 
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
 Style/EmptyLiteral:
@@ -311,7 +290,7 @@ Style/EmptyLiteral:
 Metrics/LineLength:
   Enabled: false
 
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Enabled: false
 
 Style/MethodDefParentheses:
@@ -320,13 +299,13 @@ Style/MethodDefParentheses:
 Style/LineEndConcatenation:
   Enabled: false
 
-Style/TrailingWhitespace:
+Layout/TrailingWhitespace:
   Enabled: false
 
 Style/StringLiterals:
   Enabled: false
 
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 Style/GlobalVars:
@@ -341,7 +320,7 @@ Style/IfUnlessModifier:
 Style/MultilineIfThen:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineMethodCallIndentation:
   Enabled: false
 
 Style/NegatedIf:
@@ -371,7 +350,7 @@ Style/UnlessElse:
 Style/VariableInterpolation:
   Enabled: false
 
-Style/VariableName:
+Naming/VariableName:
   Enabled: false
 
 Style/WhileUntilDo:
@@ -380,7 +359,7 @@ Style/WhileUntilDo:
 Style/EvenOdd:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Enabled: false
 
 Style/For:
@@ -389,13 +368,10 @@ Style/For:
 Style/Lambda:
   Enabled: false
 
-Style/MethodName:
+Naming/MethodName:
   Enabled: false
 
 Style/MultilineTernaryOperator:
-  Enabled: false
-
-Style/NestedTernaryOperator:
   Enabled: false
 
 Style/NilComparison:
@@ -405,6 +381,9 @@ Style/FormatString:
   Enabled: false
 
 Style/MultilineBlockChain:
+  Enabled: false
+
+Layout/MultilineHashBraceLayout:
   Enabled: false
 
 Style/Semicolon:
@@ -425,9 +404,6 @@ Style/NumericLiterals:
 Style/OneLineConditional:
   Enabled: false
 
-Style/OpMethod:
-  Enabled: false
-
 Style/ParenthesesAroundCondition:
   Enabled: false
 
@@ -437,7 +413,7 @@ Style/PercentLiteralDelimiters:
 Style/PerlBackrefs:
   Enabled: false
 
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
 Style/RedundantException:
@@ -470,7 +446,7 @@ Metrics/ParameterLists:
 Lint/RequireParentheses:
   Enabled: false
 
-Lint/SpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
 
 Style/ModuleFunction:

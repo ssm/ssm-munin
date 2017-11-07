@@ -11,16 +11,14 @@ describe 'munin::node' do
   on_supported_os.each do |os, facts|
 
     # Avoid testing on distributions similar to RedHat and Debian
-    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
 
     context "on #{os}" do
-      let(:facts) do
-        facts
-      end
+      let(:facts) { facts }
 
       it { should compile.with_all_deps }
 
@@ -32,21 +30,18 @@ describe 'munin::node' do
       munin_plugin_dir = "#{munin_confdir}/plugins"
       munin_plugin_conf_dir = "#{munin_confdir}/plugin-conf.d"
 
-      case facts[:osfamily]
-      when 'Solaris'
-        munin_node_service = 'smf:/munin-node'
-      else
-        munin_node_service = 'munin-node'
-      end
+      munin_node_service =
+        case facts[:osfamily]
+        when 'Solaris' then 'smf:/munin-node'
+        else 'munin-node'
+        end
 
-      case facts[:osfamily]
-      when 'Solaris'
-        log_dir = '/var/opt/log/munin'
-      when 'RedHat'
-        log_dir = '/var/log/munin-node'
-      else
-        log_dir = '/var/log/munin'
-      end
+      log_dir =
+        case facts[:osfamily]
+        when 'Solaris' then '/var/opt/log/munin'
+        when 'RedHat' then '/var/log/munin-node'
+        else '/var/log/munin'
+        end
 
       it { should contain_service(munin_node_service) }
       it { should contain_file(munin_node_conf) }

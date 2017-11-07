@@ -11,16 +11,14 @@ describe 'munin::plugin' do
   on_supported_os.each do |os, facts|
 
     # Avoid testing on distributions similar to RedHat and Debian
-    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
 
     context "on #{os}" do
-      let(:facts) do
-        facts
-      end
+      let(:facts) { facts }
 
       conf_dir = _conf_dir[facts[:osfamily]]
 
@@ -37,16 +35,15 @@ describe 'munin::plugin' do
 
       context 'with config_label set, label should be set to config_label' do
         let(:params) do
-          { config: ['env.foo bar'],
-            config_label: 'foo_' }
+          { config: ['env.foo bar'], config_label: 'foo_' }
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
                   .with_content(/^\[foo_\]$/)
         end
       end
+    end
 
-    end # on os
   end
 
 end
