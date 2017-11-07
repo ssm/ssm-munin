@@ -22,12 +22,10 @@ describe 'munin::node::export' do
   on_supported_os.each do |os, facts|
 
     context "on #{os}" do
-      let(:facts) do facts end
-      let(:params) do _params end
+      let(:facts) { facts }
+      let(:params) { _params }
 
-      it do
-        should compile.with_all_deps
-      end
+      it { should compile.with_all_deps }
 
       it do
         expect(exported_resources).to have_munin__master__node_definition_resource_count(1)
@@ -41,8 +39,8 @@ describe 'munin::node::export' do
     end
 
     context "on #{os} with extra nodes" do
-      let(:facts) do facts end
-      let(:params) do _params.merge({ :node_definitions => _extra_nodes }) end
+      let(:facts) { facts }
+      let(:params) { _params.merge({ :node_definitions => _extra_nodes }) }
 
       it { should compile.with_all_deps }
 
@@ -55,7 +53,7 @@ describe 'munin::node::export' do
                                         .with_mastername(_params[:mastername])
                                         .with_tag("munin::master::#{_params[:mastername]}")
       end
-      _extra_nodes.keys.each do |n|
+      _extra_nodes.each_key do |n|
         it do
           expect(exported_resources).to contain_munin__master__node_definition(n)
                                           .with_address(_extra_nodes[n]['address'])

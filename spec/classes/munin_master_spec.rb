@@ -10,11 +10,11 @@ describe 'munin::master' do
   on_supported_os.each do |os, facts|
 
     # Avoid testing on distributions similar to RedHat and Debian
-    next if /^(ubuntu|centos|scientific|oraclelinux)-/.match(os)
+    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if /^(debian-[67]|redhat-[56]|freebsd-9)-/.match(os)
+    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
 
     context "on #{os}" do
       let(:facts) do
@@ -165,7 +165,7 @@ describe 'munin::master' do
         end
       end
 
-      %w( enabled disabled mine unclaimed invalid ).each do |param|
+      %w(enabled disabled mine unclaimed invalid).each do |param|
         context "with collect_nodes => #{param}" do
           let(:params) do
             { :collect_nodes => param }
@@ -178,7 +178,7 @@ describe 'munin::master' do
         end
       end
 
-    end # on os
+    end
   end
 
 end
