@@ -32,13 +32,10 @@ define munin::plugin (
 
     validate_re($ensure, '^(|link|present|absent)$')
     case $ensure {
-        'present': {
+        'present', 'absent': {
             $handle_plugin = true
-            $plugin_ensure = 'present'
-        }
-        'absent': {
-            $handle_plugin = true
-            $plugin_ensure = 'absent'
+            $plugin_ensure = $ensure
+            $plugin_target = undef
         }
         'link': {
             $handle_plugin = true
