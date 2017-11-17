@@ -24,7 +24,7 @@ define munin::master::node_definition (
 )
 {
 
-  include munin::params::master
+  include ::munin::params::master
 
   $config_root = $munin::params::master::config_root
 
