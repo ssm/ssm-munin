@@ -12,14 +12,14 @@
 #   or a ssh:// uri for munin-async node. Required.
 #
 # - mastername: The name of the munin master server which will collect
-#   the node definition.
+#   the node definition.  Ignored, present for backwards compatibility.
 #
 # - config: An array of configuration lines to be added to the node
 #   definition. Default is an empty array.
 #
 define munin::master::node_definition (
   $address,
-  $mastername='',
+  $mastername=false,
   $config=[],
 )
 {

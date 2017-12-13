@@ -11,7 +11,7 @@ class munin::params::node {
   $allow          = []
   $masterconfig   = []
   $mastergroup    = undef
-  $mastername     = undef
+  $mastername     = false
   $nodeconfig     = []
   $plugins        = {}
   $service_ensure = undef

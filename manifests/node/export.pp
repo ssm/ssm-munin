@@ -11,9 +11,14 @@ class munin::node::export (
   $node_definitions = {},
 )
 {
+  if $mastername {
+    $_tag = "munin::master::${mastername}"
+  } else {
+    $_tag = 'munin::master::'
+  }
   Munin::Master::Node_definition {
     mastername => $mastername,
-    tag        => "munin::master::${mastername}",
+    tag        => $_tag,
   }
   @@munin::master::node_definition{ $fqn:
     address => $address,
