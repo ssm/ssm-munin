@@ -190,16 +190,10 @@ Layout/Tab:
 Layout/SpaceInsideBlockBraces:
   Enabled: false
 
-Layout/SpaceInsideBrackets:
-  Enabled: false
-
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
 Layout/SpaceInsideParens:
-  Enabled: false
-
-Layout/LeadingCommentSpace:
   Enabled: false
 
 Layout/SpaceBeforeFirstArg:
@@ -378,6 +372,9 @@ Style/NilComparison:
   Enabled: false
 
 Style/FormatString:
+  Enabled: false
+
+Style/FormatStringToken:
   Enabled: false
 
 Style/MultilineBlockChain:

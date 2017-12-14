@@ -25,7 +25,12 @@ describe 'munin::master' do
 
       it { should compile.with_all_deps }
 
-      it { should contain_package('munin') }
+      case facts[:osfamily]
+      when 'FreeBSD', 'DragonFly'
+        it { should contain_package('munin-master') }
+      else
+        it { should contain_package('munin') }
+      end
 
       context 'with default params' do
         it do
@@ -135,7 +140,7 @@ describe 'munin::master' do
       context 'with extra_config' do
         token = '1b7febce-bb2d-4c18-b889-84c73538a900'
         let(:params) do
-          { :extra_config => [ token ] }
+          { :extra_config => [token] }
         end
         it { should compile.with_all_deps }
         it do

@@ -92,7 +92,7 @@ describe 'munin::plugin', :type => 'define' do
         let(:params) do
           { :ensure => 'present',
             :source => 'puppet:///modules/munin/plugins/testplugin',
-            :config => [ 'something wonderful' ],
+            :config => ['something wonderful'],
           }
         end
         it do
