@@ -14,7 +14,13 @@ group :test do
   gem "rspec", '~> 3.0' # works with '~> 3.6.0'
   gem "rspec-puppet"
   gem "rspec-puppet-facts"
-  gem 'rubocop' # works with '0.51.0'
+  if RUBY_VERSION.to_f < 2.1
+    # rainbow 3.0+ requires Ruby 2.1
+    gem 'rainbow', '~> 2.0'
+  else
+    # rubocop also requires Ruby 2.1
+    gem 'rubocop' # works with '0.51.0'
+  end
   gem 'simplecov', '>= 0.11.0'
   gem 'simplecov-console'
 end

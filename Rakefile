@@ -9,7 +9,8 @@ require 'puppet-syntax/tasks/puppet-syntax'
 require 'metadata-json-lint/rake_task'
 
 # Puppet 3.x monkey patches safe_yaml so it is incompatible with Rubocop
-unless Puppet.version.to_f < 4.0
+run_rubocop = Puppet.version.to_f >= 4.0 && RUBY_VERSION.to_f >= 2.1
+if run_rubocop
   require 'rubocop/rake_task'
 
   # These gems aren't always present, for instance
@@ -62,7 +63,7 @@ test_tasks = %i[
   lint
   spec
 ]
-test_tasks += [:rubocop] unless Puppet.version.to_f < 4.0
+test_tasks += [:rubocop] if run_rubocop
 
 desc "Run syntax, lint, and spec tests."
 task :test => test_tasks

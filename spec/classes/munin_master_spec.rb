@@ -25,7 +25,12 @@ describe 'munin::master' do
 
       it { should compile.with_all_deps }
 
-      it { should contain_package('munin') }
+      case facts[:osfamily]
+      when 'FreeBSD', 'DragonFly'
+        it { should contain_package('munin-master') }
+      else
+        it { should contain_package('munin') }
+      end
 
       context 'with default params' do
         it do
