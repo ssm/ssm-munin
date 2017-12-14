@@ -87,7 +87,10 @@ Parameters for exporting a munin node definition
   master node definitinon
 
 * **mastername**: The name of the munin master server which will
-  collect the node definition.
+  collect the node definition.  By default this is set to `false`,
+  which means this node will be collected by a master with
+  `collect_nodes` mode "unclaimed", or the (default) "enabled" mode
+  which will collect every node regardless of this setting.
 
 * **mastergroup**: The group used on the master to construct a FQN for
   this node. Defaults to "", which in turn makes munin master use the
