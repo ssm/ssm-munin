@@ -7,15 +7,19 @@ require 'puppet/vendor/semantic/lib/semantic' unless Puppet.version.to_f < 3.6
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'metadata-json-lint/rake_task'
-require 'rubocop/rake_task'
 
-# These gems aren't always present, for instance
-# on Travis with --without development
-begin
-rescue LoadError # rubocop:disable Lint/HandleExceptions
+# Puppet 3.x monkey patches safe_yaml so it is incompatible with Rubocop
+unless Puppet.version.to_f < 4.0
+  require 'rubocop/rake_task'
+
+  # These gems aren't always present, for instance
+  # on Travis with --without development
+  begin
+  rescue LoadError # rubocop:disable Lint/HandleExceptions
+  end
+
+  RuboCop::RakeTask.new
 end
-
-RuboCop::RakeTask.new
 
 exclude_paths = [
   "bundle/**/*",
@@ -52,11 +56,13 @@ task :contributors do
   system("git log --format='%aN' | sort -u > CONTRIBUTORS")
 end
 
-desc "Run syntax, lint, and spec tests."
-task :test => %i[
+test_tasks = %i[
   metadata_lint
   syntax
   lint
-  rubocop
   spec
 ]
+test_tasks += [:rubocop] unless Puppet.version.to_f < 4.0
+
+desc "Run syntax, lint, and spec tests."
+task :test => test_tasks
