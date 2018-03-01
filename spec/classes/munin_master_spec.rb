@@ -5,6 +5,10 @@ _conf_dir.default = '/etc/munin'
 _conf_dir['Solaris'] = '/opt/local/etc/munin'
 _conf_dir['FreeBSD'] = '/usr/local/etc/munin'
 
+_package = {}
+_package.default = 'munin'
+_package['FreeBSD'] = 'munin-master'
+
 describe 'munin::master' do
 
   on_supported_os.each do |os, facts|
@@ -22,10 +26,11 @@ describe 'munin::master' do
       end
 
       conf_dir = _conf_dir[facts[:osfamily]]
+      package = _package[facts[:osfamily]]
 
       it { should compile.with_all_deps }
 
-      it { should contain_package('munin') }
+      it { should contain_package(package) }
 
       context 'with default params' do
         it do
