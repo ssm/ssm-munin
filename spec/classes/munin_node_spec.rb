@@ -181,14 +181,4 @@ describe 'munin::node' do
 
     end
   end
-
-  context 'unsupported' do
-    include_context :unsupported
-    it do
-      expect do
-        should contain_class('munin::node')
-      end.to raise_error(Puppet::Error, /Unsupported osfamily/)
-    end
-  end
-
 end
