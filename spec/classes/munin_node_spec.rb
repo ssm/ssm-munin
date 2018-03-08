@@ -53,7 +53,7 @@ describe 'munin::node' do
         it do
           is_expected.to contain_file(munin_node_conf)
             .with_content(%r{host_name\s+foo.example.com})
-            .with_content(/log_file\s+#{log_dir}\/munin-node.log/)
+            .with_content(%r{log_file\s+#{log_dir}/munin-node.log})
         end
       end
 
@@ -69,9 +69,9 @@ describe 'munin::node' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file(munin_node_conf)
-            .with_content(/^cidr_allow 192.0.2.0\/25$/)
-            .with_content(/^cidr_allow 2001:db8:2::\/64$/)
-            .with_content(%r{^allow \^192\\.0\\.2\\.129\$$})
+            .with_content(%r{^cidr_allow 192\.0\.2\.0/25$})
+            .with_content(%r{^cidr_allow 2001:db8:2::/64$})
+            .with_content(%r{^allow \^192\\\.0\\\.2\\\.129\$$})
             .with_content(%r{^allow 192\\.0\\.2$})
             .with_content(%r{^allow \^2001:db8:1::\$$})
         end

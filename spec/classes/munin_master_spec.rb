@@ -69,7 +69,7 @@ describe 'munin::master' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
-            .with_content(/dbdir\s+\/var\/lib\/munin/)
+            .with_content(%r{dbdir\s+/var/lib/munin})
         end
       end
 
@@ -79,7 +79,7 @@ describe 'munin::master' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
-            .with_content(/htmldir\s+\/var\/www\/munin/)
+            .with_content(%r{htmldir\s+/var/www/munin})
         end
       end
 
@@ -89,7 +89,7 @@ describe 'munin::master' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
-            .with_content(/dbdir\s+\/var\/log\/munin/)
+            .with_content(%r{dbdir\s+/var/log/munin})
         end
       end
 
@@ -99,7 +99,7 @@ describe 'munin::master' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
-            .with_content(/dbdir\s+\/var\/run\/munin/)
+            .with_content(%r{dbdir\s+/var/run/munin})
         end
       end
 
@@ -117,8 +117,8 @@ describe 'munin::master' do
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(%r{tls = enabled})
-            .with_content(/tls_certificate = \/path\/to\/certificate\.pem/)
-            .with_content(/tls_private_key = \/path\/to\/key\.pem/)
+            .with_content(%r{tls_certificate = /path/to/certificate\.pem})
+            .with_content(%r{tls_private_key = /path/to/key\.pem})
             .with_content(%r{tls_verify_certificate = yes})
         end
       end
