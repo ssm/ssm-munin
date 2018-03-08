@@ -27,7 +27,7 @@ describe 'munin::plugin' do
         end
 
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_content(/^\[testplugin\]$/)
         end
       end
@@ -36,8 +36,9 @@ describe 'munin::plugin' do
         let(:params) do
           { config: ['env.foo bar'], config_label: 'foo_' }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_content(/^\[foo_\]$/)
         end
       end

@@ -31,24 +31,25 @@ describe 'munin::plugin', :type => 'define' do
 
       context 'with no parameters' do
         it do
-          expect { should contain_file("#{conf_dir}/plugins/testplugin") }
+          expect { is_expected.to contain_file("#{conf_dir}/plugins/testplugin") }
             .to raise_error("expected that the catalogue would contain File[#{conf_dir}/plugins/testplugin]")
         end
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('absent')
         end
       end
 
       context 'with ensure=link parameter' do
         let(:params) { { :ensure => 'link' } }
+
         it do
-          should contain_file("#{conf_dir}/plugins/testplugin")
+          is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
             .with_ensure('link')
             .with_target("#{plugin_share_dir}/testplugin")
         end
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('absent')
         end
       end
@@ -59,13 +60,14 @@ describe 'munin::plugin', :type => 'define' do
           { :ensure => 'link',
             :target => 'test_' }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugins/test_foo")
+          is_expected.to contain_file("#{conf_dir}/plugins/test_foo")
             .with_ensure('link')
             .with_target("#{plugin_share_dir}/test_")
         end
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/test_foo.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/test_foo.conf")
             .with_ensure('absent')
         end
       end
@@ -75,13 +77,14 @@ describe 'munin::plugin', :type => 'define' do
           { :ensure => 'present',
             :source => 'puppet:///modules/munin/plugins/testplugin' }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugins/testplugin")
+          is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
             .with_ensure('present')
             .with_source('puppet:///modules/munin/plugins/testplugin')
         end
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('absent')
         end
       end
@@ -92,13 +95,14 @@ describe 'munin::plugin', :type => 'define' do
             :source => 'puppet:///modules/munin/plugins/testplugin',
             :config => ['something wonderful'], }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugins/testplugin")
+          is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
             .with_ensure('present')
             .with_source('puppet:///modules/munin/plugins/testplugin')
         end
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('present')
             .with_content(/something wonderful/)
         end
@@ -109,13 +113,14 @@ describe 'munin::plugin', :type => 'define' do
           { :config => ['env.rootdn cn=admin,dc=example,dc=org'],
             :config_label => 'slapd_*', }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('present')
             .with_content(/env.rootdn/)
         end
         it do
-          expect { should contain_file("#{conf_dir}/plugins/testplugin") }
+          expect { is_expected.to contain_file("#{conf_dir}/plugins/testplugin") }
             .to raise_error("expected that the catalogue would contain File[#{conf_dir}/plugins/testplugin]")
         end
       end
@@ -125,8 +130,9 @@ describe 'munin::plugin', :type => 'define' do
           { ensure: 'link',
             target: '/full/path/to/testplugin' }
         end
+
         it do
-          should contain_file("#{conf_dir}/plugins/testplugin")
+          is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
             .with_ensure('link')
             .with_target('/full/path/to/testplugin')
         end

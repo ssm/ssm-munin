@@ -18,9 +18,9 @@ describe 'munin::node' do
     context "on #{os}" do
       let(:facts) { facts }
 
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
 
-      it { should contain_package('munin-node') }
+      it { is_expected.to contain_package('munin-node') }
 
       munin_confdir = _conf_dir[facts[:osfamily]]
 
@@ -41,17 +41,17 @@ describe 'munin::node' do
         else '/var/log/munin'
         end
 
-      it { should contain_service(munin_node_service) }
-      it { should contain_file(munin_node_conf) }
+      it { is_expected.to contain_service(munin_node_service) }
+      it { is_expected.to contain_file(munin_node_conf) }
 
       context 'with no parameters' do
-        it { should compile.with_all_deps }
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_service(munin_node_service)
+          is_expected.to contain_service(munin_node_service)
             .without_ensure()
         end
         it do
-          should contain_file(munin_node_conf)
+          is_expected.to contain_file(munin_node_conf)
             .with_content(/host_name\s+foo.example.com/)
             .with_content(/log_file\s+#{log_dir}\/munin-node.log/)
         end
@@ -65,9 +65,10 @@ describe 'munin::node' do
                     '192.0.2.0/25',
                     '192\.0\.2'] }
         end
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file(munin_node_conf)
+          is_expected.to contain_file(munin_node_conf)
             .with_content(/^cidr_allow 192.0.2.0\/25$/)
             .with_content(/^cidr_allow 2001:db8:2::\/64$/)
             .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
@@ -80,9 +81,10 @@ describe 'munin::node' do
         let(:params) do
           { host_name: 'something.example.com' }
         end
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file(munin_node_conf)
+          is_expected.to contain_file(munin_node_conf)
             .with_content(/host_name\s+something.example.com/)
         end
       end
@@ -91,9 +93,10 @@ describe 'munin::node' do
         let(:params) do
           { service_ensure: 'running' }
         end
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_service('munin-node')
+          is_expected.to contain_service('munin-node')
             .with_ensure('running')
         end
       end
@@ -103,9 +106,10 @@ describe 'munin::node' do
           let(:params) do
             { log_destination: 'syslog' }
           end
-          it { should compile.with_all_deps }
+
+          it { is_expected.to compile.with_all_deps }
           it do
-            should contain_file(munin_node_conf)
+            is_expected.to contain_file(munin_node_conf)
               .with_content(/log_file\s+Sys::Syslog/)
           end
         end
@@ -115,9 +119,10 @@ describe 'munin::node' do
             { log_destination: 'syslog',
               syslog_facility: 'local1', }
           end
-          it { should compile.with_all_deps }
+
+          it { is_expected.to compile.with_all_deps }
           it do
-            should contain_file(munin_node_conf)
+            is_expected.to contain_file(munin_node_conf)
               .with_content(/log_file\s+Sys::Syslog/)
               .with_content(/syslog_facility\s+local1/)
           end
@@ -128,47 +133,50 @@ describe 'munin::node' do
             { log_destination: 'syslog',
               syslog_facility: 'wrong', }
           end
-          it { expect { should compile.with_all_deps }.to raise_error(/validate_re/) }
+
+          it { expect { is_expected.to compile.with_all_deps }.to raise_error(/validate_re/) }
         end
       end
 
       context 'purge_configs' do
         context 'set' do
           let(:params) { { purge_configs: true } }
-          it { should compile.with_all_deps }
+
+          it { is_expected.to compile.with_all_deps }
           it do
-            should contain_file(munin_plugin_dir)
+            is_expected.to contain_file(munin_plugin_dir)
               .with_ensure('directory')
               .with_recurse(true)
               .with_purge(true)
           end
           it do
-            should contain_file(munin_plugin_conf_dir)
+            is_expected.to contain_file(munin_plugin_conf_dir)
               .with_ensure('directory')
               .with_recurse(true)
               .with_purge(true)
           end
         end
         context 'unset' do
-          it { should compile.with_all_deps }
-          it { should_not contain_file(munin_plugin_dir) }
-          it { should_not contain_file(munin_plugin_conf_dir) }
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.not_to contain_file(munin_plugin_dir) }
+          it { is_expected.not_to contain_file(munin_plugin_conf_dir) }
         end
       end
 
       context 'timeout' do
         context 'set' do
           let(:params) { { timeout: 123 } }
-          it { should compile.with_all_deps }
+
+          it { is_expected.to compile.with_all_deps }
           it do
-            should contain_file(munin_node_conf)
+            is_expected.to contain_file(munin_node_conf)
               .with_content(/^timeout 123/)
           end
         end
         context 'unset' do
-          it { should compile.with_all_deps }
+          it { is_expected.to compile.with_all_deps }
           it do
-            should contain_file(munin_node_conf)
+            is_expected.to contain_file(munin_node_conf)
               .without_content(/^timeout/)
           end
         end

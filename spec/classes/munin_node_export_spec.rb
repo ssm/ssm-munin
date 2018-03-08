@@ -23,7 +23,7 @@ describe 'munin::node::export' do
       let(:facts) { facts }
       let(:params) { _params }
 
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
 
       it do
         expect(exported_resources).to have_munin__master__node_definition_resource_count(1)
@@ -40,7 +40,7 @@ describe 'munin::node::export' do
       let(:facts) { facts }
       let(:params) { _params.merge({ :node_definitions => _extra_nodes }) }
 
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
 
       it do
         expect(exported_resources).to have_munin__master__node_definition_resource_count(3)

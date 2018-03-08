@@ -26,73 +26,79 @@ describe 'munin::master' do
       conf_dir = _conf_dir[facts[:osfamily]]
       package = _package[facts[:osfamily]]
 
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
 
-      it { should contain_package(package) }
+      it { is_expected.to contain_package(package) }
 
       context 'with default params' do
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/graph_strategy\s+cgi/)
             .with_content(/html_strategy\s+cgi/)
         end
 
         it do
-          should contain_file("#{conf_dir}/munin-conf.d")
+          is_expected.to contain_file("#{conf_dir}/munin-conf.d")
             .with_ensure('directory')
         end
       end
 
       context 'with html_strategy => cron' do
         let (:params) { { :html_strategy => 'cron' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/html_strategy\s+cron/)
         end
       end
 
       context 'with graph_strategy => cron' do
         let (:params) { { :graph_strategy => 'cron' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/graph_strategy\s+cron/)
         end
       end
 
       context 'with dbdir => /var/lib/munin' do
         let (:params) { { :dbdir => '/var/lib/munin' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/dbdir\s+\/var\/lib\/munin/)
         end
       end
 
       context 'with htmldir => /var/www/munin' do
         let (:params) { { :htmldir => '/var/www/munin' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/htmldir\s+\/var\/www\/munin/)
         end
       end
 
       context 'with logdir => /var/log/munin' do
         let (:params) { { :dbdir => '/var/log/munin' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/dbdir\s+\/var\/log\/munin/)
         end
       end
 
       context 'with rundir => /var/run/munin' do
         let (:params) { { :dbdir => '/var/run/munin' } }
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/dbdir\s+\/var\/run\/munin/)
         end
       end
@@ -107,9 +113,9 @@ describe 'munin::master' do
           }
         end
 
-        it { should compile.with_all_deps }
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/tls = enabled/)
             .with_content(/tls_certificate = \/path\/to\/certificate\.pem/)
             .with_content(/tls_private_key = \/path\/to\/key\.pem/)
@@ -130,9 +136,10 @@ describe 'munin::master' do
             }
           }
         end
-        it { should compile.with_all_deps }
-        it { should contain_munin__master__node_definition('node-a') }
-        it { should contain_munin__master__node_definition('node-b') }
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_munin__master__node_definition('node-a') }
+        it { is_expected.to contain_munin__master__node_definition('node-b') }
       end
 
       context 'with extra_config' do
@@ -140,9 +147,10 @@ describe 'munin::master' do
         let(:params) do
           { :extra_config => [token] }
         end
-        it { should compile.with_all_deps }
+
+        it { is_expected.to compile.with_all_deps }
         it do
-          should contain_file("#{conf_dir}/munin.conf")
+          is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(/#{token}/)
         end
       end
@@ -152,7 +160,8 @@ describe 'munin::master' do
         let(:params) do
           { :extra_config => token }
         end
-        it { should raise_error(Puppet::Error, /is not an Array/) }
+
+        it { is_expected.to raise_error(Puppet::Error, /is not an Array/) }
       end
 
       ['test.example.com', 'invalid/hostname.example.com'].each do |param|
@@ -160,10 +169,11 @@ describe 'munin::master' do
           let(:params) do
             { :host_name => param }
           end
+
           if param =~ /invalid/
-            it { should raise_error(Puppet::Error, /valid domain name/) }
+            it { is_expected.to raise_error(Puppet::Error, /valid domain name/) }
           else
-            it { should compile.with_all_deps }
+            it { is_expected.to compile.with_all_deps }
           end
         end
       end
@@ -173,10 +183,11 @@ describe 'munin::master' do
           let(:params) do
             { :collect_nodes => param }
           end
+
           if param == 'invalid'
-            it { should raise_error(Puppet::Error, /validate_re/) }
+            it { is_expected.to raise_error(Puppet::Error, /validate_re/) }
           else
-            it { should compile.with_all_deps }
+            it { is_expected.to compile.with_all_deps }
           end
         end
       end
