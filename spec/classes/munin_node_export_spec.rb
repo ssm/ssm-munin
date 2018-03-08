@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 _params = {
-  :address => '127.0.0.2',
-  :fqn => 'example;foo.example.com',
-  :masterconfig => [],
-  :mastername => 'munin.example.com'
+  address: '127.0.0.2',
+  fqn: 'example;foo.example.com',
+  masterconfig: [],
+  mastername: 'munin.example.com',
 }
 _extra_nodes = {
   'example;svc10.example.com' => {
@@ -14,7 +14,7 @@ _extra_nodes = {
   'example;svc11.example.com' => {
     'address' => '127.0.0.11',
     'config'  => ['env foo.warn 12'],
-  }
+  },
 }
 
 describe 'munin::node::export' do
@@ -38,7 +38,7 @@ describe 'munin::node::export' do
 
     context "on #{os} with extra nodes" do
       let(:facts) { facts }
-      let(:params) { _params.merge({ :node_definitions => _extra_nodes }) }
+      let(:params) { _params.merge(node_definitions: _extra_nodes) }
 
       it { is_expected.to compile.with_all_deps }
 

@@ -9,11 +9,11 @@ _conf_dir['Solaris'] = '/opt/local/etc/munin'
 describe 'munin::node' do
   on_supported_os.each do |os, facts|
     # Avoid testing on distributions similar to RedHat and Debian
-    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
+    next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
+    next if os =~ %r{^(debian-[67]|redhat-[56]|freebsd-9)-}
 
     context "on #{os}" do
       let(:facts) { facts }
@@ -48,11 +48,11 @@ describe 'munin::node' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_service(munin_node_service)
-            .without_ensure()
+            .without_ensure
         end
         it do
           is_expected.to contain_file(munin_node_conf)
-            .with_content(/host_name\s+foo.example.com/)
+            .with_content(%r{host_name\s+foo.example.com})
             .with_content(/log_file\s+#{log_dir}\/munin-node.log/)
         end
       end
@@ -71,9 +71,9 @@ describe 'munin::node' do
           is_expected.to contain_file(munin_node_conf)
             .with_content(/^cidr_allow 192.0.2.0\/25$/)
             .with_content(/^cidr_allow 2001:db8:2::\/64$/)
-            .with_content(/^allow \^192\\.0\\.2\\.129\$$/)
-            .with_content(/^allow 192\\.0\\.2$/)
-            .with_content(/^allow \^2001:db8:1::\$$/)
+            .with_content(%r{^allow \^192\\.0\\.2\\.129\$$})
+            .with_content(%r{^allow 192\\.0\\.2$})
+            .with_content(%r{^allow \^2001:db8:1::\$$})
         end
       end
 
@@ -85,7 +85,7 @@ describe 'munin::node' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file(munin_node_conf)
-            .with_content(/host_name\s+something.example.com/)
+            .with_content(%r{host_name\s+something.example.com})
         end
       end
 
@@ -110,31 +110,31 @@ describe 'munin::node' do
           it { is_expected.to compile.with_all_deps }
           it do
             is_expected.to contain_file(munin_node_conf)
-              .with_content(/log_file\s+Sys::Syslog/)
+              .with_content(%r{log_file\s+Sys::Syslog})
           end
         end
 
         context 'with syslog options' do
           let(:params) do
             { log_destination: 'syslog',
-              syslog_facility: 'local1', }
+              syslog_facility: 'local1' }
           end
 
           it { is_expected.to compile.with_all_deps }
           it do
             is_expected.to contain_file(munin_node_conf)
-              .with_content(/log_file\s+Sys::Syslog/)
-              .with_content(/syslog_facility\s+local1/)
+              .with_content(%r{log_file\s+Sys::Syslog})
+              .with_content(%r{syslog_facility\s+local1})
           end
         end
 
         context 'with syslog_facility set to wrong value ' do
           let(:params) do
             { log_destination: 'syslog',
-              syslog_facility: 'wrong', }
+              syslog_facility: 'wrong' }
           end
 
-          it { expect { is_expected.to compile.with_all_deps }.to raise_error(/validate_re/) }
+          it { expect { is_expected.to compile.with_all_deps }.to raise_error(%r{validate_re}) }
         end
       end
 
@@ -170,14 +170,14 @@ describe 'munin::node' do
           it { is_expected.to compile.with_all_deps }
           it do
             is_expected.to contain_file(munin_node_conf)
-              .with_content(/^timeout 123/)
+              .with_content(%r{^timeout 123})
           end
         end
         context 'unset' do
           it { is_expected.to compile.with_all_deps }
           it do
             is_expected.to contain_file(munin_node_conf)
-              .without_content(/^timeout/)
+              .without_content(%r{^timeout})
           end
         end
       end

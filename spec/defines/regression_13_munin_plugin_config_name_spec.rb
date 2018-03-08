@@ -10,11 +10,11 @@ describe 'munin::plugin' do
 
   on_supported_os.each do |os, facts|
     # Avoid testing on distributions similar to RedHat and Debian
-    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
+    next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
+    next if os =~ %r{^(debian-[67]|redhat-[56]|freebsd-9)-}
 
     context "on #{os}" do
       let(:facts) { facts }
@@ -28,7 +28,7 @@ describe 'munin::plugin' do
 
         it do
           is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-            .with_content(/^\[testplugin\]$/)
+            .with_content(%r{^\[testplugin\]$})
         end
       end
 
@@ -39,7 +39,7 @@ describe 'munin::plugin' do
 
         it do
           is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-            .with_content(/^\[foo_\]$/)
+            .with_content(%r{^\[foo_\]$})
         end
       end
     end

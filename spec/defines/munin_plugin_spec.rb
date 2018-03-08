@@ -10,16 +10,16 @@ _share_dir.default = '/usr/share/munin'
 _share_dir['Solaris'] = '/opt/local/share/munin'
 _share_dir['FreeBSD'] = '/usr/local/share/munin'
 
-describe 'munin::plugin', :type => 'define' do
+describe 'munin::plugin', type: 'define' do
   let(:title) { 'testplugin' }
 
   on_supported_os.each do |os, facts|
     # Avoid testing on distributions similar to RedHat and Debian
-    next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
+    next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
 
     # No need to test all os versions as long as os version is not
     # used in the params class
-    next if os =~ /^(debian-[67]|redhat-[56]|freebsd-9)-/
+    next if os =~ %r{^(debian-[67]|redhat-[56]|freebsd-9)-}
 
     context "on #{os}" do
       let(:facts) do
@@ -41,7 +41,7 @@ describe 'munin::plugin', :type => 'define' do
       end
 
       context 'with ensure=link parameter' do
-        let(:params) { { :ensure => 'link' } }
+        let(:params) { { ensure: 'link' } }
 
         it do
           is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
@@ -57,8 +57,8 @@ describe 'munin::plugin', :type => 'define' do
       context 'with ensure=link and target parameters' do
         let(:title) { 'test_foo' }
         let(:params) do
-          { :ensure => 'link',
-            :target => 'test_' }
+          { ensure: 'link',
+            target: 'test_' }
         end
 
         it do
@@ -74,8 +74,8 @@ describe 'munin::plugin', :type => 'define' do
 
       context 'with ensure=present and source parameters' do
         let(:params) do
-          { :ensure => 'present',
-            :source => 'puppet:///modules/munin/plugins/testplugin' }
+          { ensure: 'present',
+            source: 'puppet:///modules/munin/plugins/testplugin' }
         end
 
         it do
@@ -91,9 +91,9 @@ describe 'munin::plugin', :type => 'define' do
 
       context 'with ensure=present, source and config parameters' do
         let(:params) do
-          { :ensure => 'present',
-            :source => 'puppet:///modules/munin/plugins/testplugin',
-            :config => ['something wonderful'], }
+          { ensure: 'present',
+            source: 'puppet:///modules/munin/plugins/testplugin',
+            config: ['something wonderful'] }
         end
 
         it do
@@ -104,20 +104,20 @@ describe 'munin::plugin', :type => 'define' do
         it do
           is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('present')
-            .with_content(/something wonderful/)
+            .with_content(%r{something wonderful})
         end
       end
 
       context 'only configuration' do
         let(:params) do
-          { :config => ['env.rootdn cn=admin,dc=example,dc=org'],
-            :config_label => 'slapd_*', }
+          { config: ['env.rootdn cn=admin,dc=example,dc=org'],
+            config_label: 'slapd_*' }
         end
 
         it do
           is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('present')
-            .with_content(/env.rootdn/)
+            .with_content(%r{env.rootdn})
         end
         it do
           expect { is_expected.to contain_file("#{conf_dir}/plugins/testplugin") }
