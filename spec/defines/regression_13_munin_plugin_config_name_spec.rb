@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-_conf_dir = {}
-_conf_dir.default = '/etc/munin'
-_conf_dir['Solaris'] = '/opt/local/etc/munin'
-_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+t_conf_dir = {}
+t_conf_dir.default = '/etc/munin'
+t_conf_dir['Solaris'] = '/opt/local/etc/munin'
+t_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
 
 describe 'munin::plugin' do
   let(:title) { 'testplugin' }
@@ -19,7 +19,7 @@ describe 'munin::plugin' do
     context "on #{os}" do
       let(:facts) { facts }
 
-      conf_dir = _conf_dir[facts[:osfamily]]
+      conf_dir = t_conf_dir[facts[:osfamily]]
 
       context 'with config_label unset, label should be set to title' do
         let(:params) do

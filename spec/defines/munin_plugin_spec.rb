@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-_conf_dir = {}
-_conf_dir.default = '/etc/munin'
-_conf_dir['Solaris'] = '/opt/local/etc/munin'
-_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+t_conf_dir = {}
+t_conf_dir.default = '/etc/munin'
+t_conf_dir['Solaris'] = '/opt/local/etc/munin'
+t_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
 
-_share_dir = {}
-_share_dir.default = '/usr/share/munin'
-_share_dir['Solaris'] = '/opt/local/share/munin'
-_share_dir['FreeBSD'] = '/usr/local/share/munin'
+t_share_dir = {}
+t_share_dir.default = '/usr/share/munin'
+t_share_dir['Solaris'] = '/opt/local/share/munin'
+t_share_dir['FreeBSD'] = '/usr/local/share/munin'
 
 describe 'munin::plugin', type: 'define' do
   let(:title) { 'testplugin' }
@@ -26,8 +26,8 @@ describe 'munin::plugin', type: 'define' do
         facts
       end
 
-      conf_dir = _conf_dir[facts[:osfamily]]
-      plugin_share_dir = "#{_share_dir[facts[:osfamily]]}/plugins"
+      conf_dir = t_conf_dir[facts[:osfamily]]
+      plugin_share_dir = "#{t_share_dir[facts[:osfamily]]}/plugins"
 
       context 'with no parameters' do
         it do

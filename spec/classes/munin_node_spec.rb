@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-_conf_dir = {}
-_conf_dir.default = '/etc/munin'
-_conf_dir['DragonFly'] = '/usr/local/etc/munin'
-_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
-_conf_dir['Solaris'] = '/opt/local/etc/munin'
+t_conf_dir = {}
+t_conf_dir.default = '/etc/munin'
+t_conf_dir['DragonFly'] = '/usr/local/etc/munin'
+t_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+t_conf_dir['Solaris'] = '/opt/local/etc/munin'
 
 describe 'munin::node' do
   on_supported_os.each do |os, facts|
@@ -22,7 +22,7 @@ describe 'munin::node' do
 
       it { is_expected.to contain_package('munin-node') }
 
-      munin_confdir = _conf_dir[facts[:osfamily]]
+      munin_confdir = t_conf_dir[facts[:osfamily]]
 
       munin_node_conf = "#{munin_confdir}/munin-node.conf"
       munin_plugin_dir = "#{munin_confdir}/plugins"

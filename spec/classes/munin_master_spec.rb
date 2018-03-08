@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-_conf_dir = {}
-_conf_dir.default = '/etc/munin'
-_conf_dir['Solaris'] = '/opt/local/etc/munin'
-_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
+t_conf_dir = {}
+t_conf_dir.default = '/etc/munin'
+t_conf_dir['Solaris'] = '/opt/local/etc/munin'
+t_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
 
-_package = {}
-_package.default = 'munin'
-_package['FreeBSD'] = 'munin-master'
+t_package = {}
+t_package.default = 'munin'
+t_package['FreeBSD'] = 'munin-master'
 
 describe 'munin::master' do
   on_supported_os.each do |os, facts|
@@ -23,8 +23,8 @@ describe 'munin::master' do
         facts
       end
 
-      conf_dir = _conf_dir[facts[:osfamily]]
-      package = _package[facts[:osfamily]]
+      conf_dir = t_conf_dir[facts[:osfamily]]
+      package = t_package[facts[:osfamily]]
 
       it { is_expected.to compile.with_all_deps }
 
