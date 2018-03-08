@@ -9,7 +9,6 @@ describe 'munin::plugin' do
   let(:title) { 'testplugin' }
 
   on_supported_os.each do |os, facts|
-
     # Avoid testing on distributions similar to RedHat and Debian
     next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
@@ -29,7 +28,7 @@ describe 'munin::plugin' do
 
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_content(/^\[testplugin\]$/)
+            .with_content(/^\[testplugin\]$/)
         end
       end
 
@@ -39,11 +38,9 @@ describe 'munin::plugin' do
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_content(/^\[foo_\]$/)
+            .with_content(/^\[foo_\]$/)
         end
       end
     end
-
   end
-
 end

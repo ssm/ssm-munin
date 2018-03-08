@@ -11,11 +11,9 @@ _share_dir['Solaris'] = '/opt/local/share/munin'
 _share_dir['FreeBSD'] = '/usr/local/share/munin'
 
 describe 'munin::plugin', :type => 'define' do
-
   let(:title) { 'testplugin' }
 
   on_supported_os.each do |os, facts|
-
     # Avoid testing on distributions similar to RedHat and Debian
     next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
@@ -38,7 +36,7 @@ describe 'munin::plugin', :type => 'define' do
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_ensure('absent')
+            .with_ensure('absent')
         end
       end
 
@@ -46,12 +44,12 @@ describe 'munin::plugin', :type => 'define' do
         let(:params) { { :ensure => 'link' } }
         it do
           should contain_file("#{conf_dir}/plugins/testplugin")
-                  .with_ensure('link')
-                  .with_target("#{plugin_share_dir}/testplugin")
+            .with_ensure('link')
+            .with_target("#{plugin_share_dir}/testplugin")
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_ensure('absent')
+            .with_ensure('absent')
         end
       end
 
@@ -63,12 +61,12 @@ describe 'munin::plugin', :type => 'define' do
         end
         it do
           should contain_file("#{conf_dir}/plugins/test_foo")
-                  .with_ensure('link')
-                  .with_target("#{plugin_share_dir}/test_")
+            .with_ensure('link')
+            .with_target("#{plugin_share_dir}/test_")
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/test_foo.conf")
-                  .with_ensure('absent')
+            .with_ensure('absent')
         end
       end
 
@@ -79,12 +77,12 @@ describe 'munin::plugin', :type => 'define' do
         end
         it do
           should contain_file("#{conf_dir}/plugins/testplugin")
-                    .with_ensure('present')
-                    .with_source('puppet:///modules/munin/plugins/testplugin')
+            .with_ensure('present')
+            .with_source('puppet:///modules/munin/plugins/testplugin')
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_ensure('absent')
+            .with_ensure('absent')
         end
       end
 
@@ -92,32 +90,29 @@ describe 'munin::plugin', :type => 'define' do
         let(:params) do
           { :ensure => 'present',
             :source => 'puppet:///modules/munin/plugins/testplugin',
-            :config => [ 'something wonderful' ],
-          }
+            :config => ['something wonderful'], }
         end
         it do
           should contain_file("#{conf_dir}/plugins/testplugin")
-                  .with_ensure('present')
-                  .with_source('puppet:///modules/munin/plugins/testplugin')
+            .with_ensure('present')
+            .with_source('puppet:///modules/munin/plugins/testplugin')
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_ensure('present')
-                  .with_content(/something wonderful/)
+            .with_ensure('present')
+            .with_content(/something wonderful/)
         end
       end
 
       context 'only configuration' do
         let(:params) do
           { :config => ['env.rootdn cn=admin,dc=example,dc=org'],
-            :config_label => 'slapd_*',
-          }
+            :config_label => 'slapd_*', }
         end
         it do
           should contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
-                  .with_ensure('present')
-                  .with_content(/env.rootdn/)
-
+            .with_ensure('present')
+            .with_content(/env.rootdn/)
         end
         it do
           expect { should contain_file("#{conf_dir}/plugins/testplugin") }
@@ -132,12 +127,10 @@ describe 'munin::plugin', :type => 'define' do
         end
         it do
           should contain_file("#{conf_dir}/plugins/testplugin")
-                  .with_ensure('link')
-                  .with_target('/full/path/to/testplugin')
+            .with_ensure('link')
+            .with_target('/full/path/to/testplugin')
         end
       end
-
     end
   end
-
 end

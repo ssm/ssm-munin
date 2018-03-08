@@ -10,9 +10,7 @@ _package.default = 'munin'
 _package['FreeBSD'] = 'munin-master'
 
 describe 'munin::master' do
-
   on_supported_os.each do |os, facts|
-
     # Avoid testing on distributions similar to RedHat and Debian
     next if os =~ /^(ubuntu|centos|scientific|oraclelinux)-/
 
@@ -35,13 +33,13 @@ describe 'munin::master' do
       context 'with default params' do
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/graph_strategy\s+cgi/)
-                  .with_content(/html_strategy\s+cgi/)
+            .with_content(/graph_strategy\s+cgi/)
+            .with_content(/html_strategy\s+cgi/)
         end
 
         it do
           should contain_file("#{conf_dir}/munin-conf.d")
-                  .with_ensure('directory')
+            .with_ensure('directory')
         end
       end
 
@@ -50,7 +48,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/html_strategy\s+cron/)
+            .with_content(/html_strategy\s+cron/)
         end
       end
 
@@ -59,7 +57,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/graph_strategy\s+cron/)
+            .with_content(/graph_strategy\s+cron/)
         end
       end
 
@@ -68,7 +66,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/dbdir\s+\/var\/lib\/munin/)
+            .with_content(/dbdir\s+\/var\/lib\/munin/)
         end
       end
 
@@ -77,7 +75,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/htmldir\s+\/var\/www\/munin/)
+            .with_content(/htmldir\s+\/var\/www\/munin/)
         end
       end
 
@@ -86,7 +84,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/dbdir\s+\/var\/log\/munin/)
+            .with_content(/dbdir\s+\/var\/log\/munin/)
         end
       end
 
@@ -95,7 +93,7 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/dbdir\s+\/var\/run\/munin/)
+            .with_content(/dbdir\s+\/var\/run\/munin/)
         end
       end
 
@@ -112,10 +110,10 @@ describe 'munin::master' do
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/tls = enabled/)
-                  .with_content(/tls_certificate = \/path\/to\/certificate\.pem/)
-                  .with_content(/tls_private_key = \/path\/to\/key\.pem/)
-                  .with_content(/tls_verify_certificate = yes/)
+            .with_content(/tls = enabled/)
+            .with_content(/tls_certificate = \/path\/to\/certificate\.pem/)
+            .with_content(/tls_private_key = \/path\/to\/key\.pem/)
+            .with_content(/tls_verify_certificate = yes/)
         end
       end
 
@@ -140,12 +138,12 @@ describe 'munin::master' do
       context 'with extra_config' do
         token = '1b7febce-bb2d-4c18-b889-84c73538a900'
         let(:params) do
-          { :extra_config => [ token ] }
+          { :extra_config => [token] }
         end
         it { should compile.with_all_deps }
         it do
           should contain_file("#{conf_dir}/munin.conf")
-                  .with_content(/#{token}/)
+            .with_content(/#{token}/)
         end
       end
 
@@ -182,8 +180,6 @@ describe 'munin::master' do
           end
         end
       end
-
     end
   end
-
 end

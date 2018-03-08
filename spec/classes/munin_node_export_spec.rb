@@ -18,9 +18,7 @@ _extra_nodes = {
 }
 
 describe 'munin::node::export' do
-
   on_supported_os.each do |os, facts|
-
     context "on #{os}" do
       let(:facts) { facts }
       let(:params) { _params }
@@ -32,9 +30,9 @@ describe 'munin::node::export' do
       end
       it do
         expect(exported_resources).to contain_munin__master__node_definition(_params[:fqn])
-                                        .with_address(_params[:address])
-                                        .with_mastername(_params[:mastername])
-                                        .with_tag(["munin::master::#{_params[:mastername]}"])
+          .with_address(_params[:address])
+          .with_mastername(_params[:mastername])
+          .with_tag(["munin::master::#{_params[:mastername]}"])
       end
     end
 
@@ -49,17 +47,17 @@ describe 'munin::node::export' do
       end
       it do
         expect(exported_resources).to contain_munin__master__node_definition(_params[:fqn])
-                                        .with_address(_params[:address])
-                                        .with_mastername(_params[:mastername])
-                                        .with_tag("munin::master::#{_params[:mastername]}")
+          .with_address(_params[:address])
+          .with_mastername(_params[:mastername])
+          .with_tag("munin::master::#{_params[:mastername]}")
       end
       _extra_nodes.each_key do |n|
         it do
           expect(exported_resources).to contain_munin__master__node_definition(n)
-                                          .with_address(_extra_nodes[n]['address'])
-                                          .with_mastername(_params[:mastername])
-                                          .with_config(_extra_nodes[n]['config'])
-                                          .with_tag("munin::master::#{_params[:mastername]}")
+            .with_address(_extra_nodes[n]['address'])
+            .with_mastername(_params[:mastername])
+            .with_config(_extra_nodes[n]['config'])
+            .with_tag("munin::master::#{_params[:mastername]}")
         end
       end
     end
