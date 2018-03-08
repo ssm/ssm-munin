@@ -44,7 +44,7 @@ describe 'munin::master' do
       end
 
       context 'with html_strategy => cron' do
-        let (:params) { { html_strategy: 'cron' } }
+        let(:params) { { html_strategy: 'cron' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
@@ -54,7 +54,7 @@ describe 'munin::master' do
       end
 
       context 'with graph_strategy => cron' do
-        let (:params) { { graph_strategy: 'cron' } }
+        let(:params) { { graph_strategy: 'cron' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
@@ -64,7 +64,7 @@ describe 'munin::master' do
       end
 
       context 'with dbdir => /var/lib/munin' do
-        let (:params) { { dbdir: '/var/lib/munin' } }
+        let(:params) { { dbdir: '/var/lib/munin' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
@@ -74,7 +74,7 @@ describe 'munin::master' do
       end
 
       context 'with htmldir => /var/www/munin' do
-        let (:params) { { htmldir: '/var/www/munin' } }
+        let(:params) { { htmldir: '/var/www/munin' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
@@ -84,7 +84,7 @@ describe 'munin::master' do
       end
 
       context 'with logdir => /var/log/munin' do
-        let (:params) { { dbdir: '/var/log/munin' } }
+        let(:params) { { dbdir: '/var/log/munin' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
@@ -94,7 +94,7 @@ describe 'munin::master' do
       end
 
       context 'with rundir => /var/run/munin' do
-        let (:params) { { dbdir: '/var/run/munin' } }
+        let(:params) { { dbdir: '/var/run/munin' } }
 
         it { is_expected.to compile.with_all_deps }
         it do
