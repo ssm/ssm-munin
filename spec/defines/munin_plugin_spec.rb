@@ -9,6 +9,7 @@ t_share_dir = {}
 t_share_dir.default = '/usr/share/munin'
 t_share_dir['Solaris'] = '/opt/local/share/munin'
 t_share_dir['FreeBSD'] = '/usr/local/share/munin'
+t_share_dir['Archlinux'] = '/usr/lib/munin'
 
 describe 'munin::plugin', type: 'define' do
   let(:title) { 'testplugin' }
