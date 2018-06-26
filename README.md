@@ -79,6 +79,7 @@ classified with the **munin::master** class can collect it.
 Parameters for exporting a munin node definition
 
 * **address**: The address used in the munin master node definition.
+  Defaults to the $::fqdn fact.
 
 * **export_node**: "enabled" or "disabled". Defaults to "enabled".
   Causes the node config to be exported to puppetmaster.
@@ -235,9 +236,9 @@ implicitly used as the node group.
 
 Parameters
 
-* **address**: The address of the munin node. A hostname, an IP
-address, or a ssh:// uri for munin-async node. (**required**, no
-default)
+* **address**: The address of the munin node. A hostname, an IPv4
+address, an IPv6 address in brackets, or a ssh:// uri for munin-async
+node. (**required**, no default)
 
 * **mastername**: The name of the munin master server which will
 collect the node definition. (**optional**, no default)
