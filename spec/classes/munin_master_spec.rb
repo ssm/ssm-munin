@@ -178,7 +178,7 @@ describe 'munin::master' do
         end
       end
 
-      %w[enabled disabled mine unclaimed invalid].each do |param|
+      ['enabled', 'disabled', 'mine', 'unclaimed', 'invalid'].each do |param|
         context "with collect_nodes => #{param}" do
           let(:params) do
             { collect_nodes: param }
