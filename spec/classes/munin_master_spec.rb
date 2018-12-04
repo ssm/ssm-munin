@@ -133,13 +133,30 @@ describe 'munin::master' do
               'node-b' => {
                 'address' => 'munin://node-b.example.com',
               },
+              'virtual' => {
+                'address' => 'unused',
+                'virtual' => true,
+              },
             },
           }
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_munin__master__node_definition('node-a') }
-        it { is_expected.to contain_munin__master__node_definition('node-b') }
+        it do
+          is_expected.to contain_munin__master__node_definition('node-a')
+          is_expected.to contain_file("#{conf_dir}/munin-conf.d/node.node_a.conf")
+            .without_content(%r{update no})
+        end
+        it do
+          is_expected.to contain_munin__master__node_definition('node-b')
+          is_expected.to contain_file("#{conf_dir}/munin-conf.d/node.node_b.conf")
+            .without_content(%r{update no})
+        end
+        it do
+          is_expected.to contain_munin__master__node_definition('virtual')
+          is_expected.to contain_file("#{conf_dir}/munin-conf.d/node.virtual.conf")
+            .with_content(%r{update no})
+        end
       end
 
       context 'with extra_config' do
