@@ -1,9 +1,14 @@
-# Class to collect the exported munin nodes.
+# @summary Helper class to collect the exported munin nodes.
 #
 # This is separated into its own class to avoid warnings about missing
 # storeconfigs.
 #
-
+# @api private
+#
+# @param collect_nodes[Enum['enabled','mine', 'unclaimed','disabled']]
+#
+# @param host_name [String] Host named used for selecting exported
+#   resources to collect.
 class munin::master::collect (
   $collect_nodes,
   $host_name,

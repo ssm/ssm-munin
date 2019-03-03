@@ -1,21 +1,19 @@
-# munin::master::node_definition - A node definition for the munin
-# master.
+# @summary Configure information about a munin node on the munin
+#   master
 #
-# - title: The title of the defined resource should be a munin FQN,
-#   ('hostname', 'group;hostname', 'group;subgroup;hostname'). If a
-#   group is not set, munin will by default use the domain of the node
-#   as a group.
+# The title of the defined resource should be a munin FQN,
+# ('hostname', 'group;hostname', 'group;subgroup;hostname'). If a
+# group is not set, munin will by default use the domain of the node
+# as a group.
 #
-# Parameters
+# @param address [String] The address of the munin node. A hostname,
+#   an IP address, or a ssh:// uri for munin-async node.
 #
-# - address: The address of the munin node. A hostname, an IP address,
-#   or a ssh:// uri for munin-async node. Required.
+# @param mastername [String] The name of the munin master server which
+#   will collect the node definition.
 #
-# - mastername: The name of the munin master server which will collect
-#   the node definition.
-#
-# - config: An array of configuration lines to be added to the node
-#   definition. Default is an empty array.
+# @param config [Array[String]] An array of configuration lines to be
+#   added to the node definition.
 #
 define munin::master::node_definition (
   $address,

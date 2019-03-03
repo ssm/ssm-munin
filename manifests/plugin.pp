@@ -1,16 +1,47 @@
-# munin::plugin
+# @summary Install and configure munin plugins
 #
-# Parameters:
+# @example Activate a packaged plugin
+#   munin::plugin { 'cpu':
+#     ensure => link,
+#   }
 #
-# - ensure: "link", "present", "absent" or "". Default is "". The
-#   ensure parameter is mandatory for installing a plugin.
-# - source: when ensure => present, source file
-# - target: when ensure => link, link target.  If target is an
-#   absolute path (starts with "/") it is used directly.  If target is
-#   a relative path, $munin::node::plugin_share_dir is prepended.
-# - config: array of lines for munin plugin config
-# - config_label: label for munin plugin config
-
+# @example Activate a packaged wildcard plugin
+#   munin::plugin { 'foo_bar':
+#     ensure => link,
+#     target => 'foo_',
+#   }
+#
+# @example Install and activate a plugin
+#   munin::plugin { 'gazonk':
+#     ensure => present,
+#     source => 'puppet:///modules/profile/foo/monitoring/gazonk',
+#   }
+#
+# @example A plugin with configuration
+#   munin::plugin { 'bletch':
+#     ensure => link,
+#     config => ['env.database thing', 'user bletch'],
+#   }
+#
+# @example A plugin configuration file, but no plugin
+#   munin::plugin { 'slapd':
+#     config       => ['env.rootdn cn=admin,dc=example,dc=org'],
+#     config_label => 'slapd_*',
+#   }
+#
+# @param ensure [Enum['link','present','absent','']] The ensure
+#    parameter is mandatory for installing a plugin.
+#
+# @param source [String] when ensure => present, path to a source file
+#
+# @param target [String] when ensure => link, link target.  If target
+#   is an absolute path (starts with "/") it is used directly.  If
+#   target is a relative path, $munin::node::plugin_share_dir is
+#   prepended.
+#
+# @param config [Array[String]] Lines for the munin plugin config.
+#
+# @param config_label [String] Label for munin plugin config
 define munin::plugin (
     $ensure='',
     $source=undef,

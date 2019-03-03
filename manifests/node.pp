@@ -1,70 +1,87 @@
-# munin::node - Configure a munin node, and export configuration a
-# munin master can collect.
+# @summary configure a munin node
 #
-# Parameters:
+# Configure a munin node, and export configuration a munin master can
+# collect.
 #
-# allow: List of IPv4 and IPv6 addresses and networks to allow to connect.
+# @see http://guide.munin-monitoring.org/en/latest/
 #
-# config_root: Root directory for munin configuration.
+# @example Basic usage
+#  include munin::node
 #
-# nodeconfig: List of lines to append to the munin node configuration.
+# @param allow [Array] List of IPv4 and IPv6 addresses and networks to
+#   allow to connect.
 #
-# host_name: The host name munin node identifies as. Defaults to
-# the $::fqdn fact.
+# @param config_root [String] Root directory for munin configuration.
 #
-# log_dir: The log directory for the munin node process. Defaults
-# change according to osfamily, see munin::params::node for details.
+# @param nodeconfig [Array[String]] List of lines to append to the
+#   munin node configuration.
 #
-# log_file: Appended to "log_dir". Defaults to "munin-node.log".
+# @param host_name [String] The host name munin node identifies
+#   as. Defaults to the $::fqdn fact.
 #
-# log_destination: "file" or "syslog".  Defaults to "file".  If log_destination
-# is "syslog", the "log_file" and "log_dir" parameters are ignored, and the
-# "syslog_*" parameters are used if set.
+# @param log_dir [String] The log directory for the munin node
+#   process. Defaults change according to osfamily, see
+#   munin::params::node for details.
 #
-# purge_configs: Removes all other munin plugins and munin plugin
-# configuration files.  Boolean, defaults to false.
+# @param log_file [String] File name for the log file, this is
+#   appended to "log_dir". Defaults to "munin-node.log".
 #
-# syslog_facility: Defaults to undef, which makes munin-node use the
-# perl Net::Server module default of "daemon". Possible values are any
-# syslog facility by number, or lowercase name.
+# @param log_destination [Enum['file','syslog']]: "file" or "syslog".
+#   Defaults to "file".  If log_destination is "syslog", the
+#   "log_file" and "log_dir" parameters are ignored, and the
+#   "syslog_*" parameters are used if set.
 #
-# masterconfig: List of configuration lines to append to the munin
-# master node definitinon
+# @param purge_configs [Boolean] Removes all other munin plugins and
+#   munin plugin configuration files.  Boolean, defaults to false.
 #
-# mastername: The name of the munin master server which will collect
-# the node definition.
+# @param syslog_facility [Optional[String]]: Defaults to undef, which
+#   makes munin-node use the perl Net::Server module default of
+#   "daemon". Possible values are any syslog facility by number, or
+#   lowercase name.
 #
-# mastergroup: The group used on the master to construct a FQN for
-# this node. Defaults to "", which in turn makes munin master use the
-# domain. Note: changing this for a node also means you need to move
-# rrd files on the master, or graph history will be lost.
+# @param masterconfig [Array[String]] List of configuration lines to
+#   append to the munin master node definitinon
 #
-# plugins: A hash used by create_resources to create munin::plugin
-# instances.
+# @param mastername [String] The name of the munin master server which
+#   will collect the node definition.
 #
-# address: The address used in the munin master node definition.
+# @param mastergroup [String] The group used on the master to
+#   construct a FQN for this node. Defaults to "", which in turn makes
+#   munin master use the domain. Note: changing this for a node also
+#   means you need to move rrd files on the master, or graph history
+#   will be lost.
 #
-# bind_address: The IP address the munin-node process listens on. Defaults: *.
+# @param plugins [Hash] A hash used by create_resources to create
+#   munin::plugin instances.
 #
-# bind_port: The port number the munin-node process listens on.
+# @param address [String] The address used in the munin master node
+#   definition.
 #
-# package_name: The name of the munin node package to install.
+# @param bind_address [String] The IP address the munin-node process
+#   listens on. Defaults: *.
 #
-# service_name: The name of the munin node service.
+# @param bind_port [String] The port number the munin-node process
+#   listens on.
 #
-# service_ensure: Defaults to "". If set to "running" or "stopped", it
-# is used as parameter "ensure" for the munin node service.
+# @param package_name [String] The name of the munin node package to
+#   install.
 #
-# export_node: "enabled" or "disabled". Defaults to "enabled".
-# Causes the node config to be exported to puppetmaster.
+# @param service_name [String] The name of the munin node service.
 #
-# file_group: The UNIX group name owning the configuration files,
-# log files, etc.
+# @param service_ensure [Enum['','running','stopped']] Defaults to
+#   "". If set to "running" or "stopped", it is used as parameter
+#   "ensure" for the munin node service.
 #
-# timeout: Used to set the global plugin runtime timeout for this
-# node. Integer. Defaults to undef, which lets munin-node use its
-# default of 10 seconds.
-
+# @param export_node [Enum['enabled','disabled']]: "enabled" or
+#   "disabled". Defaults to "enabled".  Causes the node config to be
+#   exported to puppetmaster.
+#
+# @param file_group [String] The UNIX group name owning the
+#   configuration files, log files, etc.
+#
+# @param timeout [Optional[Integer]] Used to set the global plugin
+#   runtime timeout for this node. Defaults to undef, which lets
+#   munin-node use its default of 10 seconds.
 class munin::node (
   $address         = $munin::params::node::address,
   $allow           = $munin::params::node::allow,
