@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2019-03-03
 ### Added
 - Support for DragonFly BSD ([#46](https://github.com/ssm/ssm-munin/issues/46))
 - Support for FreeBSD as master ([#46](https://github.com/ssm/ssm-munin/issues/46))
@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New parameter `munin::master::config_root`
 
 ### Changed
-- Support puppet 4. ([#49](https://github.com/ssm/ssm-munin/issues/49))
+- Support puppet 4 and newer. ([#49](https://github.com/ssm/ssm-munin/issues/49))
 - Scaffolding updated with PDK 1.9.0
 
 ### Fixed
