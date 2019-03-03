@@ -15,11 +15,9 @@ class munin::node::export (
     mastername => $mastername,
     tag        => "munin::master::${mastername}",
   }
-  if($::settings::storeconfigs == true) {
-    @@munin::master::node_definition{ $fqn:
-      address => $address,
-      config  => $masterconfig,
-    }
+  @@munin::master::node_definition{ $fqn:
+    address => $address,
+    config  => $masterconfig,
   }
   if ! empty($node_definitions) {
     create_resources('@@munin::master::node_definition', $node_definitions)
