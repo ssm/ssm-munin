@@ -6,20 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support for DragonFly BSD (Thanks: Zach Crownover)
-- Support for FreeBSD as master (Thanks: Zach Crownover)
+- Support for DragonFly BSD ([#46](https://github.com/ssm/ssm-munin/issues/46))
+- Support for FreeBSD as master ([#46](https://github.com/ssm/ssm-munin/issues/46))
 - Export additional nodes with `munin::node::export::node_definitions`
-  if `munin::node::export_node` is enabled.  (Thanks: Kjetil Torgrim Homme)
+  if `munin::node::export_node` is enabled.
+  ([#44](https://github.com/ssm/ssm-munin/issues/44))
 - New parameter `munin::master::package_name`
 - New parameter `munin::master::file_group`
 - New parameter `munin::master::config_root`
 
 ### Changed
-- Support puppet 4. (Thanks: Kjetil Torgrim Homme)
+- Support puppet 4. ([#49](https://github.com/ssm/ssm-munin/issues/49))
 - Scaffolding updated with PDK 1.9.0
 
 ### Fixed
-- Support for Arch Linux (Thanks: Kjetil Torgrim Homme)
+- Support for Arch Linux ([#53](https://github.com/ssm/ssm-munin/issues/53))
 - Fixed bug with parameter `munin::master::node_definitions`
 
 ### Deprecated
