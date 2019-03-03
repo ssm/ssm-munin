@@ -51,7 +51,7 @@
 # - extra_config: Extra lines of config to put in munin.conf.
 
 class munin::master (
-  $node_definitions       = $munin::params::master::node_defintions,
+  $node_definitions       = $munin::params::master::node_definitions,
   $graph_strategy         = $munin::params::master::graph_strategy,
   $html_strategy          = $munin::params::master::html_strategy,
   $config_root            = $munin::params::master::config_root,
@@ -65,6 +65,8 @@ class munin::master (
   $tls_private_key        = $munin::params::master::tls_private_key,
   $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
   $host_name              = $munin::params::master::host_name,
+  $file_group             = $munin::params::master::file_group,
+  $package_name           = $munin::params::master::package_name,
   $extra_config           = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
@@ -96,18 +98,22 @@ class munin::master (
     }
   }
 
+  validate_string($file_group)
+
+  validate_string($package_name)
+
   validate_array($extra_config)
 
   # The munin package and configuration
-  package { 'munin':
+  package { $package_name:
     ensure => latest,
   }
 
   File {
     owner   => 'root',
-    group   => 'root',
+    group   => $file_group,
     mode    => '0644',
-    require => Package['munin'],
+    require => Package[$package_name],
   }
 
   file { "${config_root}/munin.conf":

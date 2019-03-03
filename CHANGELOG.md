@@ -1,6 +1,32 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-## 0.1.0 - 2015-12-12
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Added
+- Support for DragonFly BSD (Thanks: Zach Crownover)
+- Support for FreeBSD as master (Thanks: Zach Crownover)
+- Export additional nodes with `munin::node::export::node_definitions`
+  if `munin::node::export_node` is enabled.  (Thanks: Kjetil Torgrim Homme)
+- New parameter `munin::master::package_name`
+- New parameter `munin::master::file_group`
+- New parameter `munin::master::config_root`
+
+### Changed
+- Support puppet 4. (Thanks: Kjetil Torgrim Homme)
+- Scaffolding updated with PDK 1.9.0
+
+### Fixed
+- Support for Arch Linux (Thanks: Kjetil Torgrim Homme)
+- Fixed bug with parameter `munin::master::node_definitions`
+
+### Deprecated
+- Module is no longer tested with Puppet 3.x and 2.x
+- Module is no longer tested on Ruby < 2.1.9
+
+## [0.1.0] - 2015-12-12
 
 * Added support for Archlinux
   ([#40](https://github.com/ssm/ssm-munin/issues/40))
@@ -21,7 +47,7 @@
 Contributors to this release: David Hayes, Julien Pivotto, Stig
 Sandbeck Mathisen, Victor Engmark
 
-## 0.0.10 - 2015-08-01
+## [0.0.10] - 2015-08-01
 
 * Bugfix: Add missing dependency for the "munin-node" package when
   $munin::node::purge_configs is true.
@@ -29,7 +55,7 @@ Sandbeck Mathisen, Victor Engmark
 
 Contributors to this release: Martin Meinhold
 
-## 0.0.9 - 2015-07-29
+## [0.0.9] - 2015-07-29
 
 * Bugfix: The mastergroup, if used in the node's FQN (Fully Qualified
   Name), should no longer be empty on Puppet 4.0.
@@ -61,14 +87,14 @@ Contributors to this release: Martin Meinhold
   ([#28](https://github.com/ssm/ssm-munin/issues/28),
   [#31](https://github.com/ssm/ssm-munin/pull/31))
 
-## 0.0.8 - 2015-02-06
+## [0.0.8] - 2015-02-06
 
 Support the future parser.
 
 Contributors to this release: Rike-Benjamin Schuppner, Stig Sandbeck
 Mathisen
 
-## 0.0.7 - 2014-12-05
+## [0.0.7] - 2014-12-05
 
 This release adds support for DragonFly BSD, FreeBSD, OpenBSD.
 
@@ -106,11 +132,11 @@ Wiesinger, Stig Sandbeck Mathisen
 
 * Support absolute paths as target for a plugin.
 
-## 0.0.6 - 2014-12-05
+## [0.0.6] - 2014-12-05
 
 * Retracted, had a breaking bug on older (3.4.x) puppet versions.
 
-## 0.0.5 - 2014-03-19
+## [0.0.5] - 2014-03-19
 
 * Support multiple masters with different nodes
   (Thanks: Cristian Gae)
@@ -155,7 +181,7 @@ Wiesinger, Stig Sandbeck Mathisen
 
 - new class
 
-## 0.0.4 - 2013-08-13
+## [0.0.4] - 2013-08-13
 
 Bugfix for the munin::plugin define.
 
@@ -172,7 +198,7 @@ Bugfix for the munin::plugin define.
 
 - Improved rspec tests, which now actually match the documentation.
 
-## 0.0.2 - 2013-06-31
+## [0.0.2] - 2013-06-31
 
 A few pull requests
 
@@ -184,6 +210,6 @@ A few pull requests
 
 - Improve documentation
 
-## 0.0.1 - 2013-06-02
+## [0.0.1] - 2013-06-02
 
 Initial release

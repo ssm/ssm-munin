@@ -79,6 +79,7 @@ classified with the **munin::master** class can collect it.
 Parameters for exporting a munin node definition
 
 * **address**: The address used in the munin master node definition.
+  Defaults to the $::fqdn fact.
 
 * **export_node**: "enabled" or "disabled". Defaults to "enabled".
   Causes the node config to be exported to puppetmaster.
@@ -145,6 +146,12 @@ Parameters for the munin node service and configuration
 * **nodeconfig**: Array of extra configuration lines to append to the
   munin node configuration. (optional, no default)
 
+### Export extra nodes ###
+
+If **munin::node::export_node** is enabled, you may export additional
+nodes with the **munin::node::export::node_definitions** hash.  These
+are exported as **munin::master::node_definition** resources.  They will
+be associated with the same mastername as the node itself.
 
 ## munin::master ##
 
@@ -229,9 +236,9 @@ implicitly used as the node group.
 
 Parameters
 
-* **address**: The address of the munin node. A hostname, an IP
-address, or a ssh:// uri for munin-async node. (**required**, no
-default)
+* **address**: The address of the munin node. A hostname, an IPv4
+address, an IPv6 address in brackets, or a ssh:// uri for munin-async
+node. (**required**, no default)
 
 * **mastername**: The name of the munin master server which will
 collect the node definition. (**optional**, no default)
@@ -300,8 +307,8 @@ plugin configuration can be managed with the **config** and
 The munin master class will collect all
 "munin::master::node_definition" exported by "munin::node".
 
-For extra nodes, you can define them in hiera, and munin::master will
-create them.  Example:
+For extra nodes, you can define them in hiera data for the master
+server, and munin::master will create them.  Example:
 
     munin::master::node_definition { 'foo.example.com':
       address => '192.0.2.1'
@@ -313,6 +320,8 @@ create them.  Example:
                    'load.load.predict 86400,12' ],
     }
 
+See also **munin::node::export::node_definitions** for extra nodes
+declared on the clients.
 
 ### node definitions as class parameter ###
 
