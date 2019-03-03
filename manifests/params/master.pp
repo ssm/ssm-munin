@@ -24,17 +24,17 @@ class munin::params::master {
     'RedHat': {
       $config_root      = '/etc/munin'
       $file_group       = 'root'
-      $munin_server_pkg = 'munin'
+      $package_name     = 'munin'
     }
     'Solaris': {
       $config_root      = '/opt/local/etc/munin'
       $file_group       = 'root'
-      $munin_server_pkg = 'munin'
+      $package_name     = 'munin'
     }
     'DragonFly', 'FreeBSD': {
       $config_root      = '/usr/local/etc/munin'
       $file_group       = 'wheel'
-      $munin_server_pkg = 'munin-master'
+      $package_name     = 'munin-master'
     }
     default: {
       fail($message)

@@ -66,7 +66,7 @@ class munin::master (
   $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
   $host_name              = $munin::params::master::host_name,
   $file_group             = $munin::params::master::file_group,
-  $munin_server_pkg       = $munin::params::master::munin_server_pkg,
+  $package_name           = $munin::params::master::package_name,
   $extra_config           = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
@@ -100,12 +100,12 @@ class munin::master (
 
   validate_string($file_group)
 
-  validate_string($munin_server_pkg)
+  validate_string($package_name)
 
   validate_array($extra_config)
 
   # The munin package and configuration
-  package { $munin_server_pkg:
+  package { $package_name:
     ensure => latest,
   }
 
@@ -113,7 +113,7 @@ class munin::master (
     owner   => 'root',
     group   => $file_group,
     mode    => '0644',
-    require => Package[$munin_server_pkg],
+    require => Package[$package_name],
   }
 
   file { "${config_root}/munin.conf":
