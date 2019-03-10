@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Defined Type: munin::plugin
+  
+    &mdash; Documentation by YARD 0.9.18
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "puppet_defined_types::munin::plugin";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_defined_type_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (m)</a> &raquo;
+    <span class='title'><span class='object_link'>Defined Types</span></span>
+     &raquo; 
+    <span class="title">munin::plugin</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="../puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Defined Type: munin::plugin</h1>
+<div class="box_info">
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      manifests/plugin.pp
+    </dd>
+  </dl>
+</div>
+
+  <h2>Summary</h2>
+  Install and configure munin plugins
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    
+  </div>
+</div>
+
+
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Activate a packaged plugin</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::plugin { &#39;cpu&#39;:
+  ensure =&gt; link,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Activate a packaged wildcard plugin</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::plugin { &#39;foo_bar&#39;:
+  ensure =&gt; link,
+  target =&gt; &#39;foo_&#39;,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Install and activate a plugin</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::plugin { &#39;gazonk&#39;:
+  ensure =&gt; present,
+  source =&gt; &#39;puppet:///modules/profile/foo/monitoring/gazonk&#39;,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>A plugin with configuration</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::plugin { &#39;bletch&#39;:
+  ensure =&gt; link,
+  config =&gt; [&#39;env.database thing&#39;, &#39;user bletch&#39;],
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>A plugin configuration file, but no plugin</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::plugin { &#39;slapd&#39;:
+  config       =&gt; [&#39;env.rootdn cn=admin,dc=example,dc=org&#39;],
+  config_label =&gt; &#39;slapd_*&#39;,
+}</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ensure</span>
+      
+      
+        <span class='type'>(<tt>Enum['link','present','absent','']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The ensure parameter is mandatory for installing a plugin.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>when ensure =&gt; present, path to a source file</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>target</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>when ensure =&gt; link, link target. If target is an absolute path (starts
+with “/”) it is used directly. If target is a relative path,
+$munin::node::plugin_share_dir is prepended.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Lines for the munin plugin config.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config_label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Label for munin plugin config</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><div class="method_details_list">
+  <table class="source_code">
+    <tr>
+      <td>
+        <pre class="lines">
+
+
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120</pre>
+      </td>
+      <td>
+        <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 45</span>
+
+define munin::plugin (
+    $ensure=&#39;&#39;,
+    $source=undef,
+    $target=&#39;&#39;,
+    $config=undef,
+    $config_label=undef,
+)
+{
+
+    include ::munin::node
+
+    $plugin_share_dir=$munin::node::plugin_share_dir
+    validate_absolute_path($plugin_share_dir)
+
+    File {
+        require =&gt; Package[$munin::node::package_name],
+        notify  =&gt; Service[$munin::node::service_name],
+    }
+
+    validate_re($ensure, &#39;^(|link|present|absent)$&#39;)
+    case $ensure {
+        &#39;present&#39;, &#39;absent&#39;: {
+            $handle_plugin = true
+            $plugin_ensure = $ensure
+            $plugin_target = undef
+        }
+        &#39;link&#39;: {
+            $handle_plugin = true
+            $plugin_ensure = &#39;link&#39;
+            case $target {
+                &#39;&#39;: {
+                    $plugin_target = &quot;${munin::node::plugin_share_dir}/${title}&quot;
+                }
+                /^\//: {
+                    $plugin_target = $target
+                }
+                default: {
+                    $plugin_target = &quot;${munin::node::plugin_share_dir}/${target}&quot;
+                }
+            }
+            validate_absolute_path($plugin_target)
+        }
+        default: {
+            $handle_plugin = false
+        }
+    }
+
+    if $config {
+        $config_ensure = $ensure ? {
+            &#39;absent&#39;=&gt; absent,
+            default =&gt; present,
+        }
+    }
+    else {
+        $config_ensure = absent
+    }
+
+
+    if $handle_plugin {
+        # Install the plugin
+        file {&quot;${munin::node::config_root}/plugins/${name}&quot;:
+            ensure =&gt; $plugin_ensure,
+            source =&gt; $source,
+            target =&gt; $plugin_target,
+            mode   =&gt; &#39;0755&#39;,
+        }
+    }
+
+    # Config
+
+    file{ &quot;${munin::node::config_root}/plugin-conf.d/${name}.conf&quot;:
+      ensure  =&gt; $config_ensure,
+      content =&gt; template(&#39;munin/plugin_conf.erb&#39;),
+    }
+
+}</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>

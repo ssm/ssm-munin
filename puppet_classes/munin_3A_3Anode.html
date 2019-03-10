@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Puppet Class: munin::node
+  
+    &mdash; Documentation by YARD 0.9.18
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "puppet_classes::munin::node";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (m)</a> &raquo;
+    <span class='title'><span class='object_link'>Puppet Classes</span></span>
+     &raquo; 
+    <span class="title">munin::node</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="../puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Puppet Class: munin::node</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd><span class='object_link'><a href="munin_3A_3Aparams_3A_3Anode.html" title="puppet_classes::munin::params::node (puppet_class)">munin::params::node</a></span></dd>
+  </dl>
+  
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      manifests/node.pp
+    </dd>
+  </dl>
+</div>
+
+  <h2>Summary</h2>
+  configure a munin node
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    
+<p>Configure a munin node, and export configuration a munin master can
+collect.</p>
+
+  </div>
+</div>
+
+
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Basic usage</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_munin'>munin</span><span class='op'>::</span><span class='id identifier rubyid_node'>node</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>allow</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::allow</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>List of IPv4 and IPv6 addresses and networks to allow to connect.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config_root</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::config_root</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Root directory for munin configuration.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>nodeconfig</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::nodeconfig</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>List of lines to append to the munin node configuration.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>host_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::host_name</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The host name munin node identifies as. Defaults to the $::fqdn fact.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>log_dir</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::log_dir</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The log directory for the munin node process. Defaults change according to
+osfamily, see munin::params::node for details.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>log_file</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::log_file</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>File name for the log file, this is appended to “log_dir”. Defaults to
+“munin-node.log”.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>log_destination</span>
+      
+      
+        <span class='type'>(<tt>Enum['file','syslog']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::log_destination</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>: “file” or “syslog”. Defaults to “file”. If log_destination is “syslog”,
+the “log_file” and “log_dir” parameters are ignored, and the “syslog_*”
+parameters are used if set.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>purge_configs</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::purge_configs</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Removes all other munin plugins and munin plugin configuration files.
+Boolean, defaults to false.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>syslog_facility</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::syslog_facility</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>: Defaults to undef, which makes munin-node use the perl Net::Server module
+default of “daemon”. Possible values are any syslog facility by number, or
+lowercase name.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>masterconfig</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::masterconfig</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>List of configuration lines to append to the munin master node definitinon</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>mastername</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::mastername</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the munin master server which will collect the node definition.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>mastergroup</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::mastergroup</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The group used on the master to construct a FQN for this node. Defaults to
+“”, which in turn makes munin master use the domain. Note: changing this
+for a node also means you need to move rrd files on the master, or graph
+history will be lost.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>plugins</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::plugins</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A hash used by create_resources to create munin::plugin instances.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>address</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::address</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The address used in the munin master node definition.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>bind_address</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::bind_address</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The IP address the munin-node process listens on. Defaults: *.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>bind_port</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::bind_port</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The port number the munin-node process listens on.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>package_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::package_name</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the munin node package to install.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::service_name</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the munin node service.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service_ensure</span>
+      
+      
+        <span class='type'>(<tt>Enum['','running','stopped']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::service_ensure</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Defaults to “”. If set to “running” or “stopped”, it is used as parameter
+“ensure” for the munin node service.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>export_node</span>
+      
+      
+        <span class='type'>(<tt>Enum['enabled','disabled']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::export_node</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>: “enabled” or “disabled”. Defaults to “enabled”. Causes the node config to
+be exported to puppetmaster.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file_group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::file_group</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The UNIX group name owning the configuration files, log files, etc.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>timeout</span>
+      
+      
+        <span class='type'>(<tt>Optional[Integer]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$munin::params::node::timeout</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Used to set the global plugin runtime timeout for this node. Defaults to
+undef, which lets munin-node use its default of 10 seconds.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://guide.munin-monitoring.org/en/latest/" target="_parent" title="http://guide.munin-monitoring.org/en/latest/">http://guide.munin-monitoring.org/en/latest/</a></li>
+    
+  </ul>
+
+</div><div class="method_details_list">
+  <table class="source_code">
+    <tr>
+      <td>
+        <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
+      </td>
+      <td>
+        <pre class="code"><span class="info file"># File 'manifests/node.pp', line 85</span>
+
+class munin::node (
+  $address         = $munin::params::node::address,
+  $allow           = $munin::params::node::allow,
+  $bind_address    = $munin::params::node::bind_address,
+  $bind_port       = $munin::params::node::bind_port,
+  $config_root     = $munin::params::node::config_root,
+  $host_name       = $munin::params::node::host_name,
+  $log_dir         = $munin::params::node::log_dir,
+  $log_file        = $munin::params::node::log_file,
+  $masterconfig    = $munin::params::node::masterconfig,
+  $mastergroup     = $munin::params::node::mastergroup,
+  $mastername      = $munin::params::node::mastername,
+  $nodeconfig      = $munin::params::node::nodeconfig,
+  $package_name    = $munin::params::node::package_name,
+  $plugins         = $munin::params::node::plugins,
+  $purge_configs   = $munin::params::node::purge_configs,
+  $service_ensure  = $munin::params::node::service_ensure,
+  $service_name    = $munin::params::node::service_name,
+  $export_node     = $munin::params::node::export_node,
+  $file_group      = $munin::params::node::file_group,
+  $log_destination = $munin::params::node::log_destination,
+  $syslog_facility = $munin::params::node::syslog_facility,
+  $timeout         = $munin::params::node::timeout,
+) inherits munin::params::node {
+
+  validate_array($allow)
+  validate_array($nodeconfig)
+  validate_array($masterconfig)
+  if $mastergroup { validate_string($mastergroup) }
+  if $mastername { validate_string($mastername) }
+  validate_hash($plugins)
+  validate_string($address)
+  validate_absolute_path($config_root)
+  validate_string($package_name)
+  validate_string($service_name)
+  if $service_ensure { validate_re($service_ensure, &#39;^(running|stopped)$&#39;) }
+  validate_re($export_node, &#39;^(enabled|disabled)$&#39;)
+  validate_absolute_path($log_dir)
+  validate_re($log_destination, &#39;^(?:file|syslog)$&#39;)
+  validate_string($log_file)
+  validate_string($file_group)
+  validate_bool($purge_configs)
+  if $timeout { validate_integer($timeout) }
+
+  case $log_destination {
+    &#39;file&#39;: {
+      $_log_file = &quot;${log_dir}/${log_file}&quot;
+      validate_absolute_path($_log_file)
+    }
+    &#39;syslog&#39;: {
+      $_log_file = &#39;Sys::Syslog&#39;
+      if $syslog_facility {
+        validate_string($syslog_facility)
+        validate_re($syslog_facility,
+                    &#39;^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$&#39;)
+      }
+    }
+    default: {
+      fail(&#39;log_destination is not set&#39;)
+    }
+  }
+
+  if $mastergroup {
+    $fqn = &quot;${mastergroup};${host_name}&quot;
+  }
+  else {
+    $fqn = $host_name
+  }
+
+  if $service_ensure { $_service_ensure = $service_ensure }
+  else { $_service_ensure = undef }
+
+  # Defaults
+  File {
+    ensure =&gt; present,
+    owner  =&gt; &#39;root&#39;,
+    group  =&gt; $file_group,
+    mode   =&gt; &#39;0444&#39;,
+  }
+
+  package { $package_name:
+    ensure =&gt; installed,
+  }
+
+  service { $service_name:
+    ensure  =&gt; $_service_ensure,
+    enable  =&gt; true,
+    require =&gt; Package[$package_name],
+  }
+
+  file { &quot;${config_root}/munin-node.conf&quot;:
+    content =&gt; template(&#39;munin/munin-node.conf.erb&#39;),
+    require =&gt; Package[$package_name],
+    notify  =&gt; Service[$service_name],
+  }
+
+  # Export a node definition to be collected by the munin master.
+  # (Separated into its own class to prevent warnings about &quot;missing
+  # storeconfigs&quot;, even if $export_node is not enabled)
+  if $export_node == &#39;enabled&#39; {
+    class { &#39;::munin::node::export&#39;:
+      address      =&gt; $address,
+      fqn          =&gt; $fqn,
+      mastername   =&gt; $mastername,
+      masterconfig =&gt; $masterconfig,
+    }
+  }
+
+  # Generate plugin resources from hiera or class parameter.
+  create_resources(munin::plugin, $plugins, {})
+
+  # Purge unmanaged plugins and plugin configuration files.
+  if $purge_configs {
+    file { [&quot;${config_root}/plugins&quot;, &quot;${config_root}/plugin-conf.d&quot; ]:
+      ensure  =&gt; directory,
+      recurse =&gt; true,
+      purge   =&gt; true,
+      require =&gt; Package[$package_name],
+      notify  =&gt; Service[$service_name],
+    }
+  }
+
+}</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>

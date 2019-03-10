@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.18
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="puppet_class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Puppet+module+ssm-munin">Puppet module ssm-munin</h1>
+
+<p><a href="https://forge.puppetlabs.com/ssm/munin"><img
+src="http://img.shields.io/puppetforge/v/ssm/munin.svg"></a> <a
+href="https://travis-ci.org/ssm/ssm-munin"><img
+src="https://travis-ci.org/ssm/ssm-munin.png?branch=master"></a></p>
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+<p><strong>Table of Contents</strong></p>
+<ul><li>
+<p><a href="#label-Puppet+module+ssm+munin">Puppet module ssm-munin</a></p>
+</li><li>
+<p><a href="#label-Overview">Overview</a></p>
+</li><li>
+<p><a href="#label-Module+description">Module Description</a></p>
+</li><li>
+<p><a href="#label-Setup">Setup</a></p>
+<ul><li>
+<p><a href="#label-Setup+requirements">Setup requirements</a></p>
+</li></ul>
+</li><li>
+<p><a href="#label-Usage">Usage</a></p>
+<ul><li>
+<p><a href="#label-Muninnode">munin::node</a></p>
+</li><li>
+<p><a href="#label-Muninmaster">munin::master</a></p>
+</li><li>
+<p><a href="#label-Muninmasternodedefinition">munin::master::node_definition</a></p>
+</li><li>
+<p><a href="#label-Muninplugin">munin::plugin</a></p>
+</li></ul>
+</li><li>
+<p><a href="#label-Examples">Examples</a></p>
+<ul><li>
+<p><a href="#label-Muninmasternodedefinition">munin::master::node_definition</a></p>
+<ul><li>
+<p><a href="#label-Static+node+definitions">Static node definitions</a></p>
+</li><li>
+<p><a href="#label-Node+definitions+as+class+parameter">node definitions as class
+parameter</a></p>
+</li><li>
+<p><a href="#label-Node+definitions+with+hiera">node definitions with hiera</a></p>
+</li></ul>
+</li><li>
+<p><a href="#label-Muninnode">munin::node</a></p>
+<ul><li>
+<p><a href="#label-Allow+remote+masters+to+connect">Allow remote masters to
+connect</a></p>
+</li></ul>
+</li><li>
+<p><a href="#label-Muninplugin">munin::plugin</a></p>
+<ul><li>
+<p><a href="#label-Activate+a+plugin">Activate a plugin</a></p>
+</li><li>
+<p><a href="#label-Install+and+activate+a+plugin">Install and activate a plugin</a></p>
+</li><li>
+<p><a href="#label-Activate+wildcard+plugin">Activate wildcard plugin</a></p>
+</li><li>
+<p><a href="#label-Plugin+with+configuration">Plugin with configuration</a></p>
+</li><li>
+<p><a href="#label-A+plugin+configuration+file">A plugin configuration file</a></p>
+</li></ul>
+</li></ul>
+</li></ul>
+<!-- markdown-toc end -->
+<h1 id="label-Overview">Overview</h1>
+
+<p>Configure munin master, node and plugins.</p>
+
+<h1 id="label-Module+Description">Module Description</h1>
+
+<p>This module installs the munin master using the
+<strong>munin::master</strong> class, munin node using the
+<strong>munin::node</strong> class, and can install, configure and manage
+munin plugins using the <strong>munin::plugin</strong> defined type.</p>
+
+<p>Munin nodes are automatically exported by the munin nodes, and collected on
+the munin master. (Requires puppetdb)</p>
+
+<h1 id="label-Setup">Setup</h1>
+
+<p>Classify all nodes with <strong>munin::node</strong>, and classify at least
+one node with <strong>munin::master</strong>. Use the
+<strong>munin::plugin</strong> defined type to control plugin installation
+and configuration.</p>
+
+<h2 id="label-Setup+requirements">Setup requirements</h2>
+
+<p>Munin should be available in most distributions. For RedHat OS Family, you
+need to install the EPEL source.</p>
+
+<p>The <strong>munin::master</strong> class does not manage any web server
+configuration. The munin package installed might add some.</p>
+
+<h1 id="label-Usage">Usage</h1>
+
+<h2 id="label-munin-3A-3Anode">munin::node</h2>
+
+<p>Typical usage</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_munin'>munin</span><span class='op'>::</span><span class='id identifier rubyid_node'>node</span>
+</code></pre>
+
+<p>Installs a munin node.</p>
+
+<p>By default, <strong>munin::node</strong> exports a munin node definition so
+a node classified with the <strong>munin::master</strong> class can collect
+it.</p>
+
+<p>Parameters for exporting a munin node definition</p>
+<ul><li>
+<p><strong>address</strong>: The address used in the munin master node
+definition.  Defaults to the $::fqdn fact.</p>
+</li><li>
+<p><strong>export_node</strong>: “enabled” or “disabled”. Defaults to
+“enabled”.  Causes the node config to be exported to puppetmaster.</p>
+</li><li>
+<p><strong>masterconfig</strong>: List of configuration lines to append to the
+munin  master node definitinon</p>
+</li><li>
+<p><strong>mastername</strong>: The name of the munin master server which will
+collect the node definition.</p>
+</li><li>
+<p><strong>mastergroup</strong>: The group used on the master to construct a
+FQN for  this node. Defaults to “”, which in turn makes munin master use
+the  domain. Note: changing this for a node also means you need to move 
+rrd files on the master, or graph history will be lost.</p>
+</li></ul>
+
+<p>Parameters for the munin node service and configuration</p>
+<ul><li>
+<p><strong>allow</strong>: List of IPv4 and IPv6 addresses and networks to
+allow to  connect.</p>
+</li><li>
+<p><strong>bind_address</strong>: The IP address the munin-node process
+listens  on. Defaults: *.</p>
+</li><li>
+<p><strong>bind_port</strong>: The port number the munin-node process listens
+on.</p>
+</li><li>
+<p><strong>config_root</strong>: Root directory for munin configuration.</p>
+</li><li>
+<p><strong>host_name</strong>: The host name munin node identifies as.
+Defaults to  the $::fqdn fact.</p>
+</li><li>
+<p><strong>log_dir</strong>: The log directory for the munin node process.
+Defaults  change according to osfamily, see munin::params::node for
+details.</p>
+</li><li>
+<p><strong>log_file</strong>: Appended to “log_dir”. Defaults to
+“munin-node.log”.</p>
+</li><li>
+<p><strong>log_destination</strong>: “file” or “syslog”. Defaults to “file”.
+If  log_destination is “syslog”, the “log_file” and “log_dir” parameters 
+are ignored, and the “syslog_*” parameters are used if set.</p>
+</li><li>
+<p><strong>purge_configs</strong>: Removes all other munin plugins and munin
+plugin  configuration files. Boolean, defaults to false.</p>
+</li><li>
+<p><strong>syslog_facility</strong>: Defaults to undef, which makes munin-node
+use  the perl Net::Server module default of “daemon”. Possible values are 
+any syslog facility by number, or lowercase name.</p>
+</li><li>
+<p><strong>plugins</strong>: A hash used by create_resources to create
+munin::plugin  instances.</p>
+</li><li>
+<p><strong>package_name</strong>: The name of the munin node package to
+install.</p>
+</li><li>
+<p><strong>service_name</strong>: The name of the munin node service.</p>
+</li><li>
+<p><strong>service_ensure</strong>: Defaults to “”. If set to “running” or 
+“stopped”, it is used as parameter “ensure” for the munin node  service.</p>
+</li><li>
+<p><strong>file_group</strong>: The UNIX group name owning the configuration
+files,  log files, etc.</p>
+</li><li>
+<p><strong>timeout</strong>: Used to set the global plugin runtime timeout for
+this  node. Integer. (optional, no default)</p>
+</li><li>
+<p><strong>nodeconfig</strong>: Array of extra configuration lines to append
+to the  munin node configuration. (optional, no default)</p>
+</li></ul>
+
+<h3 id="label-Export+extra+nodes">Export extra nodes</h3>
+
+<p>If <strong>munin::node::export_node</strong> is enabled, you may export
+additional nodes with the
+<strong>munin::node::export::node_definitions</strong> hash. These are
+exported as <strong>munin::master::node_definition</strong> resources. They
+will be associated with the same mastername as the node itself.</p>
+
+<h2 id="label-munin-3A-3Amaster">munin::master</h2>
+
+<p>Typical usage:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_munin'>munin</span><span class='op'>::</span><span class='id identifier rubyid_master'>master</span>
+</code></pre>
+
+<p>Installs a munin master.</p>
+
+<p>By default, <strong>munin::master</strong> collects all munin node
+definitions exported by nodes classified with <strong>munin::node</strong>/</p>
+
+<p>Parameters for collecting and defining munin nodes</p>
+<ul><li>
+<p><strong>collect_nodes</strong>: &#39;enabled&#39; (default),
+&#39;disabled&#39;, &#39;mine&#39; or &#39;unclaimed&#39;.
+&#39;enabled&#39; makes the munin master collect all exported
+node_definitions. &#39;disabled&#39; disables it. &#39;mine&#39; makes the
+munin master collect nodes matching
+<strong>$munin::master::host_name</strong>, while &#39;unclaimed&#39; makes
+the munin master collect nodes not tagged with a host name.</p>
+</li><li>
+<p><strong>host_name</strong>: A host name for this munin master, matched with
+munin::node::mastername for collecting nodes. Defaults to $::fqdn</p>
+</li><li>
+<p><strong>node_definitions</strong>: A hash of node definitions used by
+create_resources (optional, default: {})</p>
+</li></ul>
+
+<p>Parameters for the munin master configuration</p>
+<ul><li>
+<p><strong>config_root</strong>: the root directory of the munin master
+configuration. (Default is “/etc/munin” on most platforms).</p>
+</li><li>
+<p><strong>dbdir</strong>: Path to the munin dbdir, where munin stores
+everything</p>
+</li><li>
+<p><strong>graph_strategy</strong>: &#39;cgi&#39; (default) or &#39;cron&#39;
+Controls if munin-graph graphs all services (&#39;cron&#39;) or if graphing
+is done by munin-cgi-graph (which must configured seperatly)</p>
+</li><li>
+<p><strong>htmldir</strong>: Path to where munin will generate HTML documents
+and graphs, used if graph_strategy is cron.</p>
+</li><li>
+<p><strong>html_strategy</strong>: &#39;cgi&#39; (default) or &#39;cron&#39;
+Controls if munin-html will recreate all html pages every run interval
+(&#39;cron&#39;) or if html pages are generated by munin-cgi-graph (which
+must configured seperatly)</p>
+</li><li>
+<p><strong>rundir</strong>: Path to directory munin uses for pid and lock
+files.</p>
+</li><li>
+<p><strong>tls</strong>: &#39;enabled&#39; or &#39;disabled&#39; (default).
+Controls the use of TLS globally for master to node communications.</p>
+</li><li>
+<p><strong>tls_certificate</strong>: Path to a file containing a TLS
+certificate. No default. Required if tls is enabled.</p>
+</li><li>
+<p><strong>tls_private_key</strong>: Path to a file containing a TLS key. No
+default. Required if tls is enabled.</p>
+</li><li>
+<p><strong>tls_verify_certificate</strong>: &#39;yes&#39; (default) or
+&#39;no&#39;.</p>
+</li><li>
+<p><strong>extra_config</strong>: Extra lines of config to put in munin.conf.</p>
+</li></ul>
+
+<h2 id="label-munin-3A-3Amaster-3A-3Anode_definition">munin::master::node_definition</h2>
+
+<p>Typical usage:</p>
+
+<pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;fqn&#39;:
+    address =&gt; $address,
+    config  =&gt; [&#39;additional&#39;, &#39;configuration&#39; &#39;lines&#39;],
+}</code></pre>
+
+<p>This will add configuration for the munin master to connect to a munin
+node, and ask for data from its munin plugins.</p>
+
+<p>Note: By default, the node classified with <strong>munin::master</strong>
+will collect all all exported instances of this type from hosts classified
+with <strong>munin::node</strong>.</p>
+
+<p>The resource title is used as the munin FQN, or “fully qualified name”.
+This defines the node name and group. It is common to use the host&#39;s
+fully qualified domain name, where the domain name will be implicitly used
+as the node group.</p>
+
+<p>Parameters</p>
+<ul><li>
+<p><strong>address</strong>: The address of the munin node. A hostname, an
+IPv4 address, an IPv6 address in brackets, or a ssh:// uri for munin-async
+node. (<strong>required</strong>, no default)</p>
+</li><li>
+<p><strong>mastername</strong>: The name of the munin master server which will
+collect the node definition. (<strong>optional</strong>, no default)</p>
+</li><li>
+<p><strong>config</strong>: An array of configuration lines to be added to the
+node definition. (<strong>optional</strong>, no default)</p>
+</li></ul>
+
+<p>For more information about configuring a munin node definition, see <a
+href="http://munin.readthedocs.org/en/latest/reference/munin.conf.html#node-definitions">munin.readthedocs.org/en/latest/reference/munin.conf.html#node-definitions</a></p>
+
+<p>If you have multiple munin master servers in your infrastructure and want
+to assign different nodes to different masters, you can specify the
+master&#39;s fully qualified domain name on the node&#39;s definition:</p>
+
+<pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;fqn&#39;:
+    address    =&gt; $address,
+    mastername =&gt; &#39;munin.example.com&#39;,
+}</code></pre>
+
+<h2 id="label-munin-3A-3Aplugin">munin::plugin</h2>
+
+<p>The defined type munin::plugin is used to control the munin plugins used on
+a munin node.</p>
+
+<p>Typical usage:</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin { &#39;cpu&#39;:
+  ensure =&gt; link,
+}</code></pre>
+
+<p>Parameters:</p>
+<ul><li>
+<p><strong>ensure</strong>: “link”, “present”, “absent” or “”. (optional,
+default is “”). The ensure parameter is mandatory for installing a plugin,
+and interacts with the <strong>source</strong> and <strong>target</strong>
+parameters (see below).</p>
+</li><li>
+<p><strong>source</strong>: when ensure =&gt; present, source file. (optional)</p>
+</li><li>
+<p><strong>target</strong>: when ensure =&gt; link, link target. If target is
+an absolute path (starts with “/”) it is used directly. If target is a
+relative path, $munin::node::plugin_share_dir is prepended. (optional)</p>
+</li><li>
+<p><strong>config</strong>: array of lines for munin plugin config</p>
+</li><li>
+<p><strong>config_label</strong>: label for munin plugin config</p>
+</li></ul>
+
+<p>When using “<strong>ensure</strong> =&gt; link”, a symlink is created from
+/etc/munin/plugins/$title to what the optional <strong>target</strong>
+parameter contains, or to /usr/share/munin/plugins/$title if that is not
+set.</p>
+
+<p>When using “<strong>ensure</strong> =&gt; present”, you need to provide the
+<strong>source</strong> parameter as well.</p>
+
+<p>When <strong>ensure</strong> is not set, a plugin will not be installed,
+but extra plugin configuration can be managed with the
+<strong>config</strong> and <strong>config_label</strong> parameters.</p>
+
+<h1 id="label-Examples">Examples</h1>
+
+<h2 id="label-munin-3A-3Amaster-3A-3Anode_definition">munin::master::node_definition</h2>
+
+<h3 id="label-Static+node+definitions">Static node definitions</h3>
+
+<p>The munin master class will collect all “munin::master::node_definition”
+exported by “munin::node”.</p>
+
+<p>For extra nodes, you can define them in hiera data for the master server,
+and munin::master will create them. Example:</p>
+
+<pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;foo.example.com&#39;:
+  address =&gt; &#39;192.0.2.1&#39;
+}
+munin::master::node_definition { &#39;bar.example.com&#39;:
+  address =&gt; &#39;192.0.2.1&#39;,
+  config  =&gt; [ &#39;load.graph_future 30&#39;,
+               &#39;load.load.trend yes&#39;,
+               &#39;load.load.predict 86400,12&#39; ],
+}</code></pre>
+
+<p>See also <strong>munin::node::export::node_definitions</strong> for extra
+nodes declared on the clients.</p>
+
+<h3 id="label-node+definitions+as+class+parameter">node definitions as class parameter</h3>
+
+<p>If you define your nodes as a data structure in a puppet manifest, or from
+the puppet External Node Classifier, you can use a class parameter:</p>
+
+<pre class="code ruby"><code class="ruby">$nodes = { ... }
+
+class { &#39;puppet::master&#39;:
+  node_definitions =&gt; $nodes,
+}</code></pre>
+
+<h3 id="label-node+definitions+with+hiera">node definitions with hiera</h3>
+
+<p>A JSON definition.</p>
+
+<pre class="code ruby"><code class="ruby">{
+  &quot;munin::master::node_definitions&quot; : {
+    &quot;foo.example.com&quot; : {
+      &quot;address&quot; : &quot;192.0.2.1&quot;
+    },
+    &quot;bar.example.com&quot; : {
+      &quot;address&quot; : &quot;192.0.2.2&quot;,
+      &quot;config&quot; : [
+        &quot;load.graph_future 30&quot;,
+        &quot;load.load.trend yes&quot;,
+        &quot;load.load.predict 86400,12&quot;
+      ]
+    }
+  }
+}</code></pre>
+
+<p>A YAML definition</p>
+
+<pre class="code ruby"><code class="ruby">---
+munin::master::node_definitions:
+  foo.example.com:
+    address: 192.0.2.1
+  bar.example.com:
+    address: 192.0.2.2
+    config:
+    - load.graph_future 30
+    - load.load.trend yes
+    - load.load.predict 86400,12</code></pre>
+
+<h2 id="label-munin-3A-3Anode">munin::node</h2>
+
+<h3 id="label-Allow+remote+masters+to+connect">Allow remote masters to connect</h3>
+
+<p>The <strong>allow</strong> parameter enables the munin master to connect.
+By default, the munin node only permits connections from localhost.</p>
+
+<pre class="code ruby"><code class="ruby">class { &#39;munin::node&#39;:
+    allow =&gt; [ &#39;192.0.2.0/24&#39;, &#39;2001:db8::/64&#39; ]
+}</code></pre>
+
+<p>or in hiera:</p>
+
+<pre class="code ruby"><code class="ruby">---
+munin::node::allow:
+  - 192.0.2.0/24
+  - 2001:db8::/64</code></pre>
+
+<p>Installs munin-node, and exports a munin::master::node_definition which
+munin::master will collect, and allows munin masters on specified networks
+to connect.</p>
+
+<h2 id="label-munin-3A-3Aplugin">munin::plugin</h2>
+
+<h3 id="label-Activate+a+plugin">Activate a plugin</h3>
+
+<p>Here, we activate an already installed plugin.</p>
+
+<p>The use of “ensure =&gt; link” creates an implicit “target =&gt;
+/usr/share/munin/plugins/$title”.</p>
+
+<p>The “target” parameter can be set to an absolute path (starting with a
+“/”), or a relative path (anything else). If relative,
+$munin::params::node::plugin_share_dir is prepended to the path.</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin {
+  &#39;apt&#39;:
+    ensure =&gt; link;
+  &#39;something&#39;:
+    ensure =&gt; link,
+    target =&gt; &#39;/usr/local/share/munin/plugins/something&#39;;
+  &#39;ip_eth0&#39;:
+    ensure =&gt; link,
+    target =&gt; &#39;ip_&#39;; # becomes $munin::params::node::plugin_share_dir/ip_
+}</code></pre>
+
+<h3 id="label-Install+and+activate+a+plugin">Install and activate a plugin</h3>
+
+<p>The use of “ensure =&gt; present” creates a file in /etc/munin/plugins</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin { &#39;somedaemon&#39;:
+    ensure =&gt; present,
+    source =&gt; &#39;puppet:///modules/munin/plugins/somedaemon&#39;,
+}</code></pre>
+
+<h3 id="label-Activate+wildcard+plugin">Activate wildcard plugin</h3>
+
+<p>A pair of plugins we provide, with a _name symlink (This is also known as
+“wildcard” plugins)</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin {
+  &#39;foo_bar&#39;:
+    ensure =&gt; present,
+    target =&gt; &#39;foo_&#39;,
+    source =&gt; &#39;puppet:///modules/munin/plugins/foo_&#39;;
+  &#39;foo_baz&#39;:
+    ensure =&gt; present,
+    target =&gt; &#39;foo_&#39;,
+    source =&gt; &#39;puppet:///modules/munin/plugins/foo_&#39;;
+}</code></pre>
+
+<h3 id="label-Plugin+with+configuration">Plugin with configuration</h3>
+
+<p>This creates an additional “/etc/munin/plugin-conf.d/$title.conf”</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin {
+  &#39;bletch&#39;:
+    ensure =&gt; link,
+    config =&gt; &#39;env.database flumpelump&#39;;
+  &#39;thud&#39;:
+    ensure =&gt; present,
+    source =&gt; &#39;puppet:///modules/munin/plugins/thud&#39;,
+    config =&gt; [&#39;env.database zotto&#39;, &#39;user root&#39;];
+}</code></pre>
+
+<h3 id="label-A+plugin+configuration+file">A plugin configuration file</h3>
+
+<p>This only adds a plugin configuration file.</p>
+
+<pre class="code ruby"><code class="ruby">munin::plugin { &#39;slapd&#39;:
+  config       =&gt; [&#39;env.rootdn cn=admin,dc=example,dc=org&#39;],
+  config_label =&gt; &#39;slapd_*&#39;,
+}</code></pre>
+</div></div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>
