@@ -1,6 +1,6 @@
 # Puppet module ssm-munin #
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/ssm/munin.svg)](https://forge.puppetlabs.com/ssm/munin)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/ssm/munin.svg)](https://forge.puppetlabs.com/ssm/munin)
 [![Build Status](https://travis-ci.org/ssm/ssm-munin.png?branch=master)](https://travis-ci.org/ssm/ssm-munin)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
@@ -247,7 +247,7 @@ collect the node definition. (**optional**, no default)
 definition. (**optional**, no default)
 
 For more information about configuring a munin node definition, see
-http://munin.readthedocs.org/en/latest/reference/munin.conf.html#node-definitions
+https://munin.readthedocs.io/en/latest/reference/munin.conf.html#node-definitions
 
 If you have multiple munin master servers in your infrastructure and
 want to assign different nodes to different masters, you can specify
