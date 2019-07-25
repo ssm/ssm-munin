@@ -16,9 +16,9 @@
 #   added to the node definition.
 #
 define munin::master::node_definition (
-  $address,
-  $mastername='',
-  $config=[],
+  String $address,
+  Optional[String] $mastername = '',
+  Array[String] $config = [],
 )
 {
 
@@ -26,11 +26,7 @@ define munin::master::node_definition (
 
   $config_root = $munin::params::master::config_root
 
-  validate_string($address)
-  validate_array($config)
-  validate_string($config_root)
-
-  $filename=sprintf('%s/munin-conf.d/node.%s.conf',
+  $filename = sprintf('%s/munin-conf.d/node.%s.conf',
                     $config_root,
                     regsubst($name, '[^[:alnum:]\.]', '_', 'IG'))
 

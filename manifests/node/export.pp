@@ -22,11 +22,11 @@
 # @param node_definitions [Hash] A hash of extra
 #   Munin::Master::Node_definitions to export from this node
 class munin::node::export (
-  $address,
-  $fqn,
-  $masterconfig,
-  $mastername,
-  $node_definitions = {},
+  String $address,
+  String $fqn,
+  Array[String] $masterconfig,
+  Optional[String] $mastername,
+  Hash $node_definitions = {},
 )
 {
   Munin::Master::Node_definition {
@@ -37,7 +37,5 @@ class munin::node::export (
     address => $address,
     config  => $masterconfig,
   }
-  if ! empty($node_definitions) {
-    create_resources('@@munin::master::node_definition', $node_definitions)
-  }
+  create_resources('@@munin::master::node_definition', $node_definitions)
 }

@@ -78,58 +78,30 @@
 # @param extra_config [Array] Extra lines of config to put in
 #   munin.conf.
 class munin::master (
-  $node_definitions       = $munin::params::master::node_definitions,
-  $graph_strategy         = $munin::params::master::graph_strategy,
-  $html_strategy          = $munin::params::master::html_strategy,
-  $config_root            = $munin::params::master::config_root,
-  $collect_nodes          = $munin::params::master::collect_nodes,
-  $dbdir                  = $munin::params::master::dbdir,
-  $htmldir                = $munin::params::master::htmldir,
-  $logdir                 = $munin::params::master::logdir,
-  $rundir                 = $munin::params::master::rundir,
-  $tls                    = $munin::params::master::tls,
-  $tls_certificate        = $munin::params::master::tls_certificate,
-  $tls_private_key        = $munin::params::master::tls_private_key,
-  $tls_verify_certificate = $munin::params::master::tls_verify_certificate,
-  $host_name              = $munin::params::master::host_name,
-  $file_group             = $munin::params::master::file_group,
-  $package_name           = $munin::params::master::package_name,
-  $extra_config           = $munin::params::master::extra_config,
+  Hash $node_definitions                                       = $munin::params::master::node_definitions,
+  Enum['cgi','cron'] $graph_strategy                           = $munin::params::master::graph_strategy,
+  Enum['cgi','cron'] $html_strategy                            = $munin::params::master::html_strategy,
+  Stdlib::Absolutepath $config_root                            = $munin::params::master::config_root,
+  Enum['enabled','disabled','mine','unclaimed'] $collect_nodes = $munin::params::master::collect_nodes,
+  Optional[Stdlib::Absolutepath] $dbdir                        = $munin::params::master::dbdir,
+  Optional[Stdlib::Absolutepath] $htmldir                      = $munin::params::master::htmldir,
+  Optional[Stdlib::Absolutepath] $logdir                       = $munin::params::master::logdir,
+  Optional[Stdlib::Absolutepath] $rundir                       = $munin::params::master::rundir,
+  Enum['enabled','disabled'] $tls                              = $munin::params::master::tls,
+  Optional[Stdlib::Absolutepath] $tls_certificate              = $munin::params::master::tls_certificate,
+  Optional[Stdlib::Absolutepath] $tls_private_key              = $munin::params::master::tls_private_key,
+  Enum['yes','no'] $tls_verify_certificate                     = $munin::params::master::tls_verify_certificate,
+  String $host_name                                            = $munin::params::master::host_name,
+  String $file_group                                           = $munin::params::master::file_group,
+  String $package_name                                         = $munin::params::master::package_name,
+  Array $extra_config                                          = $munin::params::master::extra_config,
   ) inherits munin::params::master {
 
-  if $node_definitions {
-    validate_hash($node_definitions)
-  }
-  if $graph_strategy {
-    validate_re($graph_strategy, [ '^cgi$', '^cron$' ])
-  }
-  if $html_strategy {
-    validate_re($html_strategy, [ '^cgi$', '^cron$' ])
-  }
-  validate_re($collect_nodes, [ '^enabled$', '^disabled$', '^mine$',
-                                '^unclaimed$' ])
-  validate_absolute_path($config_root)
-
-  validate_re($tls, [ '^enabled$', '^disabled$' ])
-
-  if $tls == 'enabled' {
-    validate_re($tls_verify_certificate, [ '^yes$', '^no$' ])
-    validate_absolute_path($tls_private_key)
-    validate_absolute_path($tls_certificate)
-  }
-
   if $host_name {
-    validate_string($host_name)
     if ! is_domain_name($host_name) {
       fail('host_name should be a valid domain name')
     }
   }
-
-  validate_string($file_group)
-
-  validate_string($package_name)
-
-  validate_array($extra_config)
 
   # The munin package and configuration
   package { $package_name:
@@ -162,7 +134,5 @@ class munin::master (
   }
 
   # Create static node definitions
-  if $node_definitions {
-    create_resources(munin::master::node_definition, $node_definitions, {})
-  }
+  create_resources(munin::master::node_definition, $node_definitions, {})
 }

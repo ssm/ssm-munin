@@ -83,61 +83,37 @@
 #   runtime timeout for this node. Defaults to undef, which lets
 #   munin-node use its default of 10 seconds.
 class munin::node (
-  $address         = $munin::params::node::address,
-  $allow           = $munin::params::node::allow,
-  $bind_address    = $munin::params::node::bind_address,
-  $bind_port       = $munin::params::node::bind_port,
-  $config_root     = $munin::params::node::config_root,
-  $host_name       = $munin::params::node::host_name,
-  $log_dir         = $munin::params::node::log_dir,
-  $log_file        = $munin::params::node::log_file,
-  $masterconfig    = $munin::params::node::masterconfig,
-  $mastergroup     = $munin::params::node::mastergroup,
-  $mastername      = $munin::params::node::mastername,
-  $nodeconfig      = $munin::params::node::nodeconfig,
-  $package_name    = $munin::params::node::package_name,
-  $plugins         = $munin::params::node::plugins,
-  $purge_configs   = $munin::params::node::purge_configs,
-  $service_ensure  = $munin::params::node::service_ensure,
-  $service_name    = $munin::params::node::service_name,
-  $export_node     = $munin::params::node::export_node,
-  $file_group      = $munin::params::node::file_group,
-  $log_destination = $munin::params::node::log_destination,
-  $syslog_facility = $munin::params::node::syslog_facility,
-  $timeout         = $munin::params::node::timeout,
+  String $address                                     = $munin::params::node::address,
+  Array $allow                                        = $munin::params::node::allow,
+  String $bind_address                                = $munin::params::node::bind_address,
+  Variant[Integer,String] $bind_port                  = $munin::params::node::bind_port,
+  Stdlib::Absolutepath $config_root                   = $munin::params::node::config_root,
+  String $host_name                                   = $munin::params::node::host_name,
+  Stdlib::Absolutepath $log_dir                       = $munin::params::node::log_dir,
+  String $log_file                                    = $munin::params::node::log_file,
+  Array $masterconfig                                 = $munin::params::node::masterconfig,
+  Optional[String] $mastergroup                       = $munin::params::node::mastergroup,
+  Optional[String] $mastername                        = $munin::params::node::mastername,
+  Array $nodeconfig                                   = $munin::params::node::nodeconfig,
+  String $package_name                                = $munin::params::node::package_name,
+  Hash $plugins                                       = $munin::params::node::plugins,
+  Boolean $purge_configs                              = $munin::params::node::purge_configs,
+  Optional[Enum['running','stopped']] $service_ensure = $munin::params::node::service_ensure,
+  String $service_name                                = $munin::params::node::service_name,
+  Enum['enabled','disabled'] $export_node             = $munin::params::node::export_node,
+  String $file_group                                  = $munin::params::node::file_group,
+  Enum['file','syslog'] $log_destination              = $munin::params::node::log_destination,
+  Optional[Pattern[/^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$/]] $syslog_facility = $munin::params::node::syslog_facility,
+  Optional[Integer] $timeout                          = $munin::params::node::timeout,
 ) inherits munin::params::node {
-
-  validate_array($allow)
-  validate_array($nodeconfig)
-  validate_array($masterconfig)
-  if $mastergroup { validate_string($mastergroup) }
-  if $mastername { validate_string($mastername) }
-  validate_hash($plugins)
-  validate_string($address)
-  validate_absolute_path($config_root)
-  validate_string($package_name)
-  validate_string($service_name)
-  if $service_ensure { validate_re($service_ensure, '^(running|stopped)$') }
-  validate_re($export_node, '^(enabled|disabled)$')
-  validate_absolute_path($log_dir)
-  validate_re($log_destination, '^(?:file|syslog)$')
-  validate_string($log_file)
-  validate_string($file_group)
-  validate_bool($purge_configs)
-  if $timeout { validate_integer($timeout) }
 
   case $log_destination {
     'file': {
       $_log_file = "${log_dir}/${log_file}"
-      validate_absolute_path($_log_file)
+      assert_type(Stdlib::Absolutepath, $_log_file)
     }
     'syslog': {
       $_log_file = 'Sys::Syslog'
-      if $syslog_facility {
-        validate_string($syslog_facility)
-        validate_re($syslog_facility,
-                    '^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$')
-      }
     }
     default: {
       fail('log_destination is not set')

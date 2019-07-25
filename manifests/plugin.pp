@@ -43,25 +43,21 @@
 #
 # @param config_label [String] Label for munin plugin config
 define munin::plugin (
-    $ensure='',
-    $source=undef,
-    $target='',
-    $config=undef,
-    $config_label=undef,
+    Enum['present','absent','link',''] $ensure = '',
+    Optional[String] $source                   = undef,
+    String $target                             = '',
+    Optional[Array[String]] $config            = undef,
+    Optional[String] $config_label             = undef,
 )
 {
 
     include ::munin::node
-
-    $plugin_share_dir=$munin::node::plugin_share_dir
-    validate_absolute_path($plugin_share_dir)
 
     File {
         require => Package[$munin::node::package_name],
         notify  => Service[$munin::node::service_name],
     }
 
-    validate_re($ensure, '^(|link|present|absent)$')
     case $ensure {
         'present', 'absent': {
             $handle_plugin = true
@@ -82,7 +78,7 @@ define munin::plugin (
                     $plugin_target = "${munin::node::plugin_share_dir}/${target}"
                 }
             }
-            validate_absolute_path($plugin_target)
+            assert_type(Stdlib::Absolutepath, $plugin_target)
         }
         default: {
             $handle_plugin = false
@@ -112,7 +108,7 @@ define munin::plugin (
 
     # Config
 
-    file{ "${munin::node::config_root}/plugin-conf.d/${name}.conf":
+    file { "${munin::node::config_root}/plugin-conf.d/${name}.conf":
       ensure  => $config_ensure,
       content => template('munin/plugin_conf.erb'),
     }

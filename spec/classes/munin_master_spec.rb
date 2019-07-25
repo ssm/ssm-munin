@@ -161,7 +161,7 @@ describe 'munin::master' do
           { extra_config: token }
         end
 
-        it { is_expected.to raise_error(Puppet::Error, %r{is not an Array}) }
+        it { is_expected.to raise_error(Puppet::PreformattedError, %r{got String}) }
       end
 
       ['test.example.com', 'invalid/hostname.example.com'].each do |param|
@@ -185,7 +185,7 @@ describe 'munin::master' do
           end
 
           if param == 'invalid'
-            it { is_expected.to raise_error(Puppet::Error, %r{validate_re}) }
+            it { is_expected.to raise_error(Puppet::PreformattedError, %r{got 'invalid'}) }
           else
             it { is_expected.to compile.with_all_deps }
           end

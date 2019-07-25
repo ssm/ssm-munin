@@ -134,7 +134,7 @@ describe 'munin::node' do
               syslog_facility: 'wrong' }
           end
 
-          it { expect { is_expected.to compile.with_all_deps }.to raise_error(%r{validate_re}) }
+          it { expect { is_expected.to compile.with_all_deps }.to raise_error(%r{got 'wrong'}) }
         end
       end
 
