@@ -114,7 +114,7 @@ define munin::plugin (
                     $plugin_target = "${plugin_share_dir}/${target}"
                 }
             }
-            validate_absolute_path($plugin_target)
+            assert_type(Stdlib::Absolutepath, $plugin_target)
         }
         default: {
             $handle_plugin = false
