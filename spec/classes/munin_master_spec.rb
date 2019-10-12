@@ -150,43 +150,6 @@ describe 'munin::master' do
             .with_content(%r{#{token}})
         end
       end
-
-      context 'with extra_config set to a string' do
-        token = '1b7febce-bb2d-4c18-b889-84c73538a900'
-        let(:params) do
-          { extra_config: token }
-        end
-
-        it { is_expected.to raise_error(Puppet::Error, %r{is not an Array}) }
-      end
-
-      ['test.example.com', 'invalid/hostname.example.com'].each do |param|
-        context "with host_name => #{param}" do
-          let(:params) do
-            { host_name: param }
-          end
-
-          if param =~ %r{invalid}
-            it { is_expected.to raise_error(Puppet::Error, %r{valid domain name}) }
-          else
-            it { is_expected.to compile.with_all_deps }
-          end
-        end
-      end
-
-      ['enabled', 'disabled', 'mine', 'unclaimed', 'invalid'].each do |param|
-        context "with collect_nodes => #{param}" do
-          let(:params) do
-            { collect_nodes: param }
-          end
-
-          if param == 'invalid'
-            it { is_expected.to raise_error(Puppet::Error, %r{validate_re}) }
-          else
-            it { is_expected.to compile.with_all_deps }
-          end
-        end
-      end
     end
   end
 end

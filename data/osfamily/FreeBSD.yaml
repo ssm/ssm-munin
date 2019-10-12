@@ -1,0 +1,4 @@
+---
+munin::master::config_root: '/usr/local/etc/munin'
+munin::master::file_group: 'wheel'
+munin::master::package_name: 'munin-master'

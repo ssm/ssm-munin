@@ -16,19 +16,13 @@
 #   added to the node definition.
 #
 define munin::master::node_definition (
-  $address,
-  $mastername='',
-  $config=[],
+  String $address,
+  Optional[String] $mastername='',
+  Array[String] $config=[],
 )
 {
 
-  include ::munin::params::master
-
-  $config_root = $munin::params::master::config_root
-
-  validate_string($address)
-  validate_array($config)
-  validate_string($config_root)
+  $config_root = lookup('munin::master::config_root', Stdlib::Absolutepath)
 
   $filename=sprintf('%s/munin-conf.d/node.%s.conf',
                     $config_root,

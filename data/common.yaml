@@ -1,0 +1,25 @@
+---
+# Controlling puppet
+munin::master::collect_nodes: "enabled"
+munin::master::node_definitions: {}
+
+# For munin configuration
+munin::master::host_name: "%{trusted.certname}"
+munin::master::graph_strategy: "cgi"
+munin::master::html_strategy: "cgi"
+munin::master::extra_config: []
+munin::master::tls: "disabled"
+munin::master::tls_certificate: "%{lookup(munin::master::config_root)}/cert.pem"
+munin::master::tls_private_key: "%{lookup(munin::master::config_root)}/key.pem"
+munin::master::tls_verify_certificate: "yes"
+
+munin::master::dbdir: :undef
+munin::master::rundir: :undef
+munin::master::htmldir: :undef
+munin::master::logdir: :undef
+
+# OS support
+munin::master::config_root: "/etc/munin"
+
+munin::master::file_group: "root"
+munin::master::package_name: "munin"

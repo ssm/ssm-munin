@@ -1,0 +1,4 @@
+---
+munin::master::config_root: '/opt/local/etc/munin'
+munin::master::file_group: 'root'
+munin::master::package_name: 'munin'

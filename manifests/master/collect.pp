@@ -7,11 +7,11 @@
 #
 # @param collect_nodes[Enum['enabled','mine', 'unclaimed','disabled']]
 #
-# @param host_name [String] Host named used for selecting exported
+# @param host_name [Stdlib::Host] Host named used for selecting exported
 #   resources to collect.
 class munin::master::collect (
-  $collect_nodes,
-  $host_name,
+  Enum['enabled', 'disabled', 'mine', 'unclaimed'] $collect_nodes,
+  Stdlib::Host $host_name,
 )
 {
   case $collect_nodes {
