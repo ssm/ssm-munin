@@ -10,9 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced function based parameter validation with Puppet Types.
 - Export and collect will now only be enabled if
   `$settings::storeconfigs` is `true` on the Puppet master.
-- Update version dependency for Puppet to allow up to version 7.
-- Update version dependency for module `puppetlabs-stdlib` to allow up
-  to version 7.
+- Require `puppetlabs/stdlib` version `4.25.0` to support the types used.
+- Allow `puppetlabs/stdlib` `< 7.0.0`.
+- Allow Puppet version `< 7.0.0`.
 - Changed parameter `munin::plugin::config` default value from `undef`
   to `[]`.
 - Converted some templates from `erb` to `epp`.
@@ -24,10 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for osfamily RedHat version 8
 - Added Puppet Strings documentation
 
-### Removed
-- Removed support for osfamily RedHat version 5
-- Removed support for osfamily RedHat version 6
-- Removed support for Ubuntu 14.04
+### Deprecated
+- Module is no longer supported on osfamily RedHat version 5
+- Module is no longer supported on osfamily RedHat version 6
+- Module is no longer supported on Ubuntu 14.04
 
 ## [0.2.0] - 2019-03-03
 ### Added
