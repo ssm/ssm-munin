@@ -11,10 +11,6 @@ describe 'munin::node' do
     # Avoid testing on distributions similar to RedHat and Debian
     next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
 
-    # No need to test all os versions as long as os version is not
-    # used in the params class
-    next if os =~ %r{^(debian-[67]|redhat-[56]|freebsd-9)-}
-
     context "on #{os}" do
       let(:facts) { facts }
 
