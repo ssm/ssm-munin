@@ -1,0 +1,6 @@
+<% |
+  String $label,
+  Array[String] $config,
+| -%>
+[<%= $label %>]
+<%= $config.join("\n") %>

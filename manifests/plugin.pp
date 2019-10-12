@@ -46,7 +46,7 @@ define munin::plugin (
     Enum['','present','absent','link'] $ensure = '',
     Optional[String] $source=undef,
     String $target='',
-    Optional[Array[String]] $config = undef,
+    Optional[Array[String]] $config = [],
     String $config_label = $title,
 )
 {
@@ -90,7 +90,7 @@ define munin::plugin (
         }
     }
 
-    if $config {
+    if ! $config.empty {
         $config_ensure = $ensure ? {
             'absent'=> absent,
             default => present,
@@ -115,6 +115,6 @@ define munin::plugin (
 
     file{ "${node_config_root}/plugin-conf.d/${name}.conf":
       ensure  => $config_ensure,
-      content => template('munin/plugin_conf.erb'),
+      content => epp('munin/plugin_conf.epp', { 'label' => $config_label, 'config' => $config }),
     }
 }

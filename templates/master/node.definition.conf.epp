@@ -1,0 +1,14 @@
+<% |
+  String $fqn,
+  String $address,
+  Array[String] $config,
+| -%>
+# Munin master configuration fragment for <%= $fqn %>
+#
+# This file is handled by puppet, all modifications will be lost
+
+[<%= $fqn %>]
+  address <%= $address %>
+<% $config.each |String $line| { -%>
+  <%= $line %>
+<% } -%>
