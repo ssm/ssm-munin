@@ -68,9 +68,8 @@
 #
 # @param service_name [String] The name of the munin node service.
 #
-# @param service_ensure [Enum['','running','stopped']] Defaults to
-#   "". If set to "running" or "stopped", it is used as parameter
-#   "ensure" for the munin node service.
+# @param service_ensure Used as parameter "ensure" for the munin node
+#   service.
 #
 # @param export_node [Enum['enabled','disabled']]: "enabled" or
 #   "disabled". Defaults to "enabled".  Causes the node config to be
@@ -83,48 +82,36 @@
 #   runtime timeout for this node. Defaults to undef, which lets
 #   munin-node use its default of 10 seconds.
 class munin::node (
-  $address         = $munin::params::node::address,
-  $allow           = $munin::params::node::allow,
-  $bind_address    = $munin::params::node::bind_address,
-  $bind_port       = $munin::params::node::bind_port,
-  $config_root     = $munin::params::node::config_root,
-  $host_name       = $munin::params::node::host_name,
-  $log_dir         = $munin::params::node::log_dir,
-  $log_file        = $munin::params::node::log_file,
-  $masterconfig    = $munin::params::node::masterconfig,
-  $mastergroup     = $munin::params::node::mastergroup,
-  $mastername      = $munin::params::node::mastername,
-  $nodeconfig      = $munin::params::node::nodeconfig,
-  $package_name    = $munin::params::node::package_name,
-  $plugins         = $munin::params::node::plugins,
-  $purge_configs   = $munin::params::node::purge_configs,
-  $service_ensure  = $munin::params::node::service_ensure,
-  $service_name    = $munin::params::node::service_name,
-  $export_node     = $munin::params::node::export_node,
-  $file_group      = $munin::params::node::file_group,
-  $log_destination = $munin::params::node::log_destination,
-  $syslog_facility = $munin::params::node::syslog_facility,
-  $timeout         = $munin::params::node::timeout,
-) inherits munin::params::node {
-
-  validate_array($allow)
-  validate_array($nodeconfig)
-  validate_array($masterconfig)
-  if $mastergroup { validate_string($mastergroup) }
-  if $mastername { validate_string($mastername) }
-  validate_hash($plugins)
-  validate_string($address)
-  validate_absolute_path($config_root)
-  validate_string($package_name)
-  validate_string($service_name)
-  if $service_ensure { validate_re($service_ensure, '^(running|stopped)$') }
-  validate_re($export_node, '^(enabled|disabled)$')
-  validate_absolute_path($log_dir)
-  validate_re($log_destination, '^(?:file|syslog)$')
-  validate_string($log_file)
-  validate_string($file_group)
-  validate_bool($purge_configs)
-  if $timeout { validate_integer($timeout) }
+  String                          $address,
+  Array                           $allow           = $munin::params::node::allow,
+  Variant[Enum['*'],Stdlib::Host] $bind_address    = $munin::params::node::bind_address,
+  Stdlib::Port                    $bind_port,
+  Stdlib::Absolutepath            $config_root     = $munin::params::node::config_root,
+  Stdlib::Host                    $host_name,
+  Stdlib::Absolutepath            $log_dir         = $munin::params::node::log_dir,
+  String                          $log_file,
+  Array                           $masterconfig,
+  Optional[String]                $mastergroup,
+  Optional[Stdlib::Host]          $mastername,
+  Array                           $nodeconfig,
+  String                          $package_name    = $munin::params::node::package_name, # TODO: Array?
+  Hash                            $plugins,
+  Boolean                         $purge_configs   = $munin::params::node::purge_configs,
+  Enum['running','stopped']       $service_ensure,
+  String                          $service_name    = $munin::params::node::service_name,
+  Enum['enabled','disabled']      $export_node,
+  String                          $file_group      = $munin::params::node::file_group,
+  Enum['file','syslog']           $log_destination,
+  Optional[
+    Variant[
+      Integer[0,23],
+      Enum[
+        'kern','user','mail','daemon','auth','syslog','lpr','news','uucp',
+        'authpriv','ftp','cron','local0','local1','local2','local3','local4',
+        'local5','local6','local7'
+      ]]] $syslog_facility,
+  Optional[Integer[0]] $timeout         = $munin::params::node::timeout, # Integer?
+) {
 
   case $log_destination {
     'file': {
@@ -133,11 +120,6 @@ class munin::node (
     }
     'syslog': {
       $_log_file = 'Sys::Syslog'
-      if $syslog_facility {
-        validate_string($syslog_facility)
-        validate_re($syslog_facility,
-                    '^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$')
-      }
     }
     default: {
       fail('log_destination is not set')
@@ -181,7 +163,7 @@ class munin::node (
   # Export a node definition to be collected by the munin master.
   # (Separated into its own class to prevent warnings about "missing
   # storeconfigs", even if $export_node is not enabled)
-  if $export_node == 'enabled' {
+  if ($settings::storeconfigs == 'true' and $export_node == 'enabled') {
     class { '::munin::node::export':
       address      => $address,
       fqn          => $fqn,

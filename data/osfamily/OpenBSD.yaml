@@ -1,0 +1,7 @@
+---
+munin::node::config_root: "/etc/munin"
+munin::node::log_dir: "/var/log/munin"
+munin::node::service_name: "munin_node"
+munin::node::package_name: "munin-node"
+munin::node::plugin_share_dir: "/usr/local/libexec/munin/plugins"
+munin::node::file_group: "wheel"

@@ -27,10 +27,7 @@ describe 'munin::plugin', type: 'define' do
       plugin_share_dir = "#{t_share_dir[facts[:osfamily]]}/plugins"
 
       context 'with no parameters' do
-        it do
-          expect { is_expected.to contain_file("#{conf_dir}/plugins/testplugin") }
-            .to raise_error("expected that the catalogue would contain File[#{conf_dir}/plugins/testplugin]")
-        end
+        it { is_expected.not_to contain_file("#{conf_dir}/plugins/testplugin") }
         it do
           is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
             .with_ensure('absent')

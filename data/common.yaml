@@ -1,4 +1,5 @@
 ---
+# - munin::master
 # Controlling puppet
 munin::master::collect_nodes: "enabled"
 munin::master::node_definitions: {}
@@ -23,3 +24,29 @@ munin::master::config_root: "/etc/munin"
 
 munin::master::file_group: "root"
 munin::master::package_name: "munin"
+
+# - munin::node
+# for puppet
+munin::node::purge_configs: false
+munin::node::plugins: {}
+
+# for the exported master config
+munin::node::export_node: 'enabled'
+munin::node::address: "%{trusted.certname}"
+munin::node::mastername: :undef
+munin::node::mastergroup: :undef
+munin::node::masterconfig: []
+
+# service
+munin::node::service_ensure: 'running'
+
+# for munin-node configuration
+munin::node::host_name: "%{trusted.certname}"
+munin::node::bind_address: '*'
+munin::node::bind_port: 4949
+munin::node::allow: []
+munin::node::nodeconfig: []
+munin::node::log_file: 'munin-node.log'
+munin::node::log_destination: 'file'
+munin::node::syslog_facility: :undef
+munin::node::timeout: :undef

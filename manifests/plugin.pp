@@ -43,25 +43,26 @@
 #
 # @param config_label [String] Label for munin plugin config
 define munin::plugin (
-    $ensure='',
-    $source=undef,
-    $target='',
-    $config=undef,
-    $config_label=undef,
+    Enum['','present','absent','link'] $ensure = '',
+    Optional[String] $source=undef,
+    String $target='',
+    Optional[Array[String]] $config = undef,
+    String $config_label = $title,
 )
 {
 
-    include ::munin::node
+    include munin::node
 
-    $plugin_share_dir=$munin::node::plugin_share_dir
-    validate_absolute_path($plugin_share_dir)
+    $plugin_share_dir = lookup('munin::node::plugin_share_dir', Stdlib::Absolutepath)
+    $node_config_root = lookup('munin::node::config_root', Stdlib::Absolutepath)
+    $node_package_name = lookup('munin::node::package_name', String)
+    $node_service_name = lookup('munin::node::service_name', String)
 
     File {
-        require => Package[$munin::node::package_name],
-        notify  => Service[$munin::node::service_name],
+        require => Package[$node_package_name],
+        notify  => Service[$node_service_name],
     }
 
-    validate_re($ensure, '^(|link|present|absent)$')
     case $ensure {
         'present', 'absent': {
             $handle_plugin = true
@@ -73,13 +74,13 @@ define munin::plugin (
             $plugin_ensure = 'link'
             case $target {
                 '': {
-                    $plugin_target = "${munin::node::plugin_share_dir}/${title}"
+                    $plugin_target = "${plugin_share_dir}/${title}"
                 }
                 /^\//: {
                     $plugin_target = $target
                 }
                 default: {
-                    $plugin_target = "${munin::node::plugin_share_dir}/${target}"
+                    $plugin_target = "${plugin_share_dir}/${target}"
                 }
             }
             validate_absolute_path($plugin_target)
@@ -102,7 +103,7 @@ define munin::plugin (
 
     if $handle_plugin {
         # Install the plugin
-        file {"${munin::node::config_root}/plugins/${name}":
+        file {"${node_config_root}/plugins/${name}":
             ensure => $plugin_ensure,
             source => $source,
             target => $plugin_target,
@@ -112,9 +113,8 @@ define munin::plugin (
 
     # Config
 
-    file{ "${munin::node::config_root}/plugin-conf.d/${name}.conf":
+    file{ "${node_config_root}/plugin-conf.d/${name}.conf":
       ensure  => $config_ensure,
       content => template('munin/plugin_conf.erb'),
     }
-
 }

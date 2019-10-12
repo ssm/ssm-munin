@@ -2,3 +2,10 @@
 munin::master::config_root: '/opt/local/etc/munin'
 munin::master::file_group: 'root'
 munin::master::package_name: 'munin'
+
+munin::node::config_root: "/opt/local/etc/munin"
+munin::node::file_group: "root"
+munin::node::log_dir: "/var/opt/log/munin"
+munin::node::package_name: "munin-node"
+munin::node::plugin_share_dir: "/opt/local/share/munin/plugins"
+munin::node::service_name: "smf:/munin-node"
