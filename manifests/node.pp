@@ -83,24 +83,24 @@
 #   munin-node use its default of 10 seconds.
 class munin::node (
   String                          $address,
-  Array                           $allow           = $munin::params::node::allow,
-  Variant[Enum['*'],Stdlib::Host] $bind_address    = $munin::params::node::bind_address,
+  Array                           $allow,
+  Variant[Enum['*'],Stdlib::Host] $bind_address,
   Stdlib::Port                    $bind_port,
-  Stdlib::Absolutepath            $config_root     = $munin::params::node::config_root,
+  Stdlib::Absolutepath            $config_root,
   Stdlib::Host                    $host_name,
-  Stdlib::Absolutepath            $log_dir         = $munin::params::node::log_dir,
+  Stdlib::Absolutepath            $log_dir,
   String                          $log_file,
   Array                           $masterconfig,
   Optional[String]                $mastergroup,
   Optional[Stdlib::Host]          $mastername,
   Array                           $nodeconfig,
-  String                          $package_name    = $munin::params::node::package_name, # TODO: Array?
+  String                          $package_name,
   Hash                            $plugins,
-  Boolean                         $purge_configs   = $munin::params::node::purge_configs,
+  Boolean                         $purge_configs,
   Enum['running','stopped']       $service_ensure,
-  String                          $service_name    = $munin::params::node::service_name,
+  String                          $service_name,
   Enum['enabled','disabled']      $export_node,
-  String                          $file_group      = $munin::params::node::file_group,
+  String                          $file_group,
   Enum['file','syslog']           $log_destination,
   Optional[
     Variant[
