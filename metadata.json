@@ -97,7 +97,7 @@
     "performance",
     "trending"
   ],
-  "pdk-version": "1.9.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates",
-  "template-ref": "1.9.1-0-g6945d31"
+  "pdk-version": "1.14.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#master",
+  "template-ref": "1.14.0-0-g1bf3a4e"
 }
