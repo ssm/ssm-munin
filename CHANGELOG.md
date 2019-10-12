@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- Replaced params classes with module hieradata.
+- Replaced function based parameter validation with Puppet Types.
+- Export and collect will now only be enabled if
+  `$settings::storeconfigs` is `true` on the Puppet master.
+- Update version dependency for Puppet to allow up to version 7.
+- Update version dependency for module `puppetlabs-stdlib` to allow up
+  to version 7.
+- Changed parameter `munin::plugin::config` default value from `undef`
+  to `[]`.
+- Converted some templates from `erb` to `epp`.
+
+### Added
+- New parameter `munin::master::node_definition::fqn`. This is the
+  namevar for the defined type, and will default to the value of the
+  title.
+- Added support for osfamily RedHat version 8
+- Added Puppet Strings documentation
+
+### Removed
+- Removed support for osfamily RedHat version 5
+- Removed support for osfamily RedHat version 6
+- Removed support for Ubuntu 14.04
+
 ## [0.2.0] - 2019-03-03
 ### Added
 - Support for DragonFly BSD ([#46](https://github.com/ssm/ssm-munin/issues/46))
