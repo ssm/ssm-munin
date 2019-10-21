@@ -1,0 +1,4 @@
+---
+default:
+ provisioner: docker
+ images: ['ubuntu:18.04', 'centos:7']
