@@ -3,6 +3,12 @@ require 'spec_helper_acceptance'
 describe 'munin::master' do
   let(:pp) do
     <<-MANIFEST
+    if $facts['os']['family'] == 'RedHat' {
+      package { 'epel-release':
+        ensure => present,
+        before => Class['munin::master'],
+      }
+    }
     include munin::master
     munin::master::node_definition { 'localhost':
       address => 'munin://localhost',

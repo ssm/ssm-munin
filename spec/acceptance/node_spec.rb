@@ -3,6 +3,12 @@ require 'spec_helper_acceptance'
 describe 'munin::node' do
   let(:pp) do
     <<-MANIFEST
+    if $facts['os']['family'] == 'RedHat' {
+      package { 'epel-release':
+        ensure => present,
+        before => Class['munin::node'],
+      }
+    }
     include munin::node
     munin::plugin { 'test_link':
       ensure => link
