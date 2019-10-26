@@ -42,12 +42,19 @@ describe 'munin::node' do
 
       context 'with no parameters' do
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('munin::node::export') }
         it { is_expected.to contain_service(munin_node_service) }
         it do
           is_expected.to contain_file(munin_node_conf)
             .with_content(%r{host_name\s+\S+$})
             .with_content(%r{log_file\s+#{log_dir}/munin-node.log})
         end
+      end
+
+      context 'with export_node => disabled' do
+        let(:params) { { export_node: 'disabled' } }
+
+        it { is_expected.not_to contain_class('munin::node::export') }
       end
 
       context 'with parameter allow' do

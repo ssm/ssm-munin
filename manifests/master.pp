@@ -119,7 +119,7 @@ class munin::master (
     force   => true,
   }
 
-  if ($settings::storeconfigs == 'true' and $collect_nodes == 'enabled') {
+  if ($collect_nodes == 'enabled') {
     class { '::munin::master::collect':
       collect_nodes => $collect_nodes,
       host_name     => $host_name,

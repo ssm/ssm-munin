@@ -8,8 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Replaced params classes with module hieradata.
 - Replaced function based parameter validation with Puppet Types.
-- Export and collect will now only be enabled if
-  `$settings::storeconfigs` is `true` on the Puppet master.
 - Require `puppetlabs/stdlib` version `4.25.0` to support the types used.
 - Allow `puppetlabs/stdlib` `< 7.0.0`.
 - Allow Puppet version `< 7.0.0`.

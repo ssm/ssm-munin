@@ -163,7 +163,7 @@ class munin::node (
   # Export a node definition to be collected by the munin master.
   # (Separated into its own class to prevent warnings about "missing
   # storeconfigs", even if $export_node is not enabled)
-  if ($settings::storeconfigs == 'true' and $export_node == 'enabled') {
+  if ($export_node == 'enabled') {
     class { '::munin::node::export':
       address      => $address,
       fqn          => $fqn,

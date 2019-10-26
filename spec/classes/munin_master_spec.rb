@@ -27,6 +27,7 @@ describe 'munin::master' do
       it { is_expected.to contain_package(package) }
 
       context 'with default params' do
+        it { is_expected.to contain_class('munin::master::collect') }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
             .with_content(%r{graph_strategy\s+cgi})
@@ -37,6 +38,12 @@ describe 'munin::master' do
           is_expected.to contain_file("#{conf_dir}/munin-conf.d")
             .with_ensure('directory')
         end
+      end
+
+      context 'with collect_nodes => disabled' do
+        let(:params) { { collect_nodes: 'disabled' } }
+
+        it { is_expected.not_to contain_class('munin::master::collect') }
       end
 
       context 'with html_strategy => cron' do
