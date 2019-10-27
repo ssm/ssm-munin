@@ -6,7 +6,7 @@
 <title>
   Puppet Class: munin::master::collect
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -94,7 +94,7 @@ storeconfigs.</p>
         <span class='name'>collect_nodes</span>
       
       
-        <span class='type'>(<tt>Enum['enabled','mine', 'unclaimed','disabled']</tt>)</span>
+        <span class='type'>(<tt>Enum['enabled', 'disabled', 'mine', 'unclaimed']</tt>)</span>
       
       
       
@@ -105,7 +105,7 @@ storeconfigs.</p>
         <span class='name'>host_name</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Stdlib::Host</tt>)</span>
       
       
       
@@ -155,8 +155,8 @@ storeconfigs.</p>
         <pre class="code"><span class="info file"># File 'manifests/master/collect.pp', line 12</span>
 
 class munin::master::collect (
-  $collect_nodes,
-  $host_name,
+  Enum[&#39;enabled&#39;, &#39;disabled&#39;, &#39;mine&#39;, &#39;unclaimed&#39;] $collect_nodes,
+  Stdlib::Host $host_name,
 )
 {
   case $collect_nodes {

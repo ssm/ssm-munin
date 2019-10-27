@@ -6,7 +6,7 @@
 <title>
   Defined Type: munin::plugin
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -143,7 +143,7 @@
         <span class='name'>ensure</span>
       
       
-        <span class='type'>(<tt>Enum['link','present','absent','']</tt>)</span>
+        <span class='type'>(<tt>Enum['','present','absent','link']</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
@@ -161,7 +161,7 @@
         <span class='name'>source</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
@@ -199,10 +199,10 @@ $munin::node::plugin_share_dir is prepended.</p>
         <span class='name'>config</span>
       
       
-        <span class='type'>(<tt>Array[String]</tt>)</span>
+        <span class='type'>(<tt>Optional[Array[String]]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
         &mdash;
@@ -220,7 +220,7 @@ $munin::node::plugin_share_dir is prepended.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
+        <em class="default">(defaults to: <tt>$title</tt>)</em>
       
       
         &mdash;
@@ -321,25 +321,26 @@ $munin::node::plugin_share_dir is prepended.</p>
         <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 45</span>
 
 define munin::plugin (
-    $ensure=&#39;&#39;,
-    $source=undef,
-    $target=&#39;&#39;,
-    $config=undef,
-    $config_label=undef,
+    Enum[&#39;&#39;,&#39;present&#39;,&#39;absent&#39;,&#39;link&#39;] $ensure = &#39;&#39;,
+    Optional[String] $source=undef,
+    String $target=&#39;&#39;,
+    Optional[Array[String]] $config = [],
+    String $config_label = $title,
 )
 {
 
-    include ::munin::node
+    include munin::node
 
-    $plugin_share_dir=$munin::node::plugin_share_dir
-    validate_absolute_path($plugin_share_dir)
+    $plugin_share_dir = lookup(&#39;munin::node::plugin_share_dir&#39;, Stdlib::Absolutepath)
+    $node_config_root = lookup(&#39;munin::node::config_root&#39;, Stdlib::Absolutepath)
+    $node_package_name = lookup(&#39;munin::node::package_name&#39;, String)
+    $node_service_name = lookup(&#39;munin::node::service_name&#39;, String)
 
     File {
-        require =&gt; Package[$munin::node::package_name],
-        notify  =&gt; Service[$munin::node::service_name],
+        require =&gt; Package[$node_package_name],
+        notify  =&gt; Service[$node_service_name],
     }
 
-    validate_re($ensure, &#39;^(|link|present|absent)$&#39;)
     case $ensure {
         &#39;present&#39;, &#39;absent&#39;: {
             $handle_plugin = true
@@ -351,13 +352,13 @@ define munin::plugin (
             $plugin_ensure = &#39;link&#39;
             case $target {
                 &#39;&#39;: {
-                    $plugin_target = &quot;${munin::node::plugin_share_dir}/${title}&quot;
+                    $plugin_target = &quot;${plugin_share_dir}/${title}&quot;
                 }
                 /^\//: {
                     $plugin_target = $target
                 }
                 default: {
-                    $plugin_target = &quot;${munin::node::plugin_share_dir}/${target}&quot;
+                    $plugin_target = &quot;${plugin_share_dir}/${target}&quot;
                 }
             }
             validate_absolute_path($plugin_target)
@@ -367,7 +368,7 @@ define munin::plugin (
         }
     }
 
-    if $config {
+    if ! $config.empty {
         $config_ensure = $ensure ? {
             &#39;absent&#39;=&gt; absent,
             default =&gt; present,
@@ -380,7 +381,7 @@ define munin::plugin (
 
     if $handle_plugin {
         # Install the plugin
-        file {&quot;${munin::node::config_root}/plugins/${name}&quot;:
+        file {&quot;${node_config_root}/plugins/${name}&quot;:
             ensure =&gt; $plugin_ensure,
             source =&gt; $source,
             target =&gt; $plugin_target,
@@ -390,11 +391,10 @@ define munin::plugin (
 
     # Config
 
-    file{ &quot;${munin::node::config_root}/plugin-conf.d/${name}.conf&quot;:
+    file{ &quot;${node_config_root}/plugin-conf.d/${name}.conf&quot;:
       ensure  =&gt; $config_ensure,
-      content =&gt; template(&#39;munin/plugin_conf.erb&#39;),
+      content =&gt; epp(&#39;munin/plugin_conf.epp&#39;, { &#39;label&#39; =&gt; $config_label, &#39;config&#39; =&gt; $config }),
     }
-
 }</pre>
       </td>
     </tr>

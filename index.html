@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -323,7 +323,8 @@ default. Required if tls is enabled.</p>
 <pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;fqn&#39;:
     address =&gt; $address,
     config  =&gt; [&#39;additional&#39;, &#39;configuration&#39; &#39;lines&#39;],
-}</code></pre>
+}
+</code></pre>
 
 <p>This will add configuration for the munin master to connect to a munin
 node, and ask for data from its munin plugins.</p>
@@ -360,7 +361,8 @@ master&#39;s fully qualified domain name on the node&#39;s definition:</p>
 <pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;fqn&#39;:
     address    =&gt; $address,
     mastername =&gt; &#39;munin.example.com&#39;,
-}</code></pre>
+}
+</code></pre>
 
 <h2 id="label-munin-3A-3Aplugin">munin::plugin</h2>
 
@@ -371,7 +373,8 @@ a munin node.</p>
 
 <pre class="code ruby"><code class="ruby">munin::plugin { &#39;cpu&#39;:
   ensure =&gt; link,
-}</code></pre>
+}
+</code></pre>
 
 <p>Parameters:</p>
 <ul><li>
@@ -423,7 +426,8 @@ munin::master::node_definition { &#39;bar.example.com&#39;:
   config  =&gt; [ &#39;load.graph_future 30&#39;,
                &#39;load.load.trend yes&#39;,
                &#39;load.load.predict 86400,12&#39; ],
-}</code></pre>
+}
+</code></pre>
 
 <p>See also <strong>munin::node::export::node_definitions</strong> for extra
 nodes declared on the clients.</p>
@@ -437,7 +441,8 @@ the puppet External Node Classifier, you can use a class parameter:</p>
 
 class { &#39;puppet::master&#39;:
   node_definitions =&gt; $nodes,
-}</code></pre>
+}
+</code></pre>
 
 <h3 id="label-node+definitions+with+hiera">node definitions with hiera</h3>
 
@@ -457,7 +462,8 @@ class { &#39;puppet::master&#39;:
       ]
     }
   }
-}</code></pre>
+}
+</code></pre>
 
 <p>A YAML definition</p>
 
@@ -470,7 +476,8 @@ munin::master::node_definitions:
     config:
     - load.graph_future 30
     - load.load.trend yes
-    - load.load.predict 86400,12</code></pre>
+    - load.load.predict 86400,12
+</code></pre>
 
 <h2 id="label-munin-3A-3Anode">munin::node</h2>
 
@@ -481,14 +488,16 @@ By default, the munin node only permits connections from localhost.</p>
 
 <pre class="code ruby"><code class="ruby">class { &#39;munin::node&#39;:
     allow =&gt; [ &#39;192.0.2.0/24&#39;, &#39;2001:db8::/64&#39; ]
-}</code></pre>
+}
+</code></pre>
 
 <p>or in hiera:</p>
 
 <pre class="code ruby"><code class="ruby">---
 munin::node::allow:
   - 192.0.2.0/24
-  - 2001:db8::/64</code></pre>
+  - 2001:db8::/64
+</code></pre>
 
 <p>Installs munin-node, and exports a munin::master::node_definition which
 munin::master will collect, and allows munin masters on specified networks
@@ -516,7 +525,8 @@ $munin::params::node::plugin_share_dir is prepended to the path.</p>
   &#39;ip_eth0&#39;:
     ensure =&gt; link,
     target =&gt; &#39;ip_&#39;; # becomes $munin::params::node::plugin_share_dir/ip_
-}</code></pre>
+}
+</code></pre>
 
 <h3 id="label-Install+and+activate+a+plugin">Install and activate a plugin</h3>
 
@@ -525,7 +535,8 @@ $munin::params::node::plugin_share_dir is prepended to the path.</p>
 <pre class="code ruby"><code class="ruby">munin::plugin { &#39;somedaemon&#39;:
     ensure =&gt; present,
     source =&gt; &#39;puppet:///modules/munin/plugins/somedaemon&#39;,
-}</code></pre>
+}
+</code></pre>
 
 <h3 id="label-Activate+wildcard+plugin">Activate wildcard plugin</h3>
 
@@ -541,7 +552,8 @@ $munin::params::node::plugin_share_dir is prepended to the path.</p>
     ensure =&gt; present,
     target =&gt; &#39;foo_&#39;,
     source =&gt; &#39;puppet:///modules/munin/plugins/foo_&#39;;
-}</code></pre>
+}
+</code></pre>
 
 <h3 id="label-Plugin+with+configuration">Plugin with configuration</h3>
 
@@ -555,7 +567,8 @@ $munin::params::node::plugin_share_dir is prepended to the path.</p>
     ensure =&gt; present,
     source =&gt; &#39;puppet:///modules/munin/plugins/thud&#39;,
     config =&gt; [&#39;env.database zotto&#39;, &#39;user root&#39;];
-}</code></pre>
+}
+</code></pre>
 
 <h3 id="label-A+plugin+configuration+file">A plugin configuration file</h3>
 
@@ -564,7 +577,8 @@ $munin::params::node::plugin_share_dir is prepended to the path.</p>
 <pre class="code ruby"><code class="ruby">munin::plugin { &#39;slapd&#39;:
   config       =&gt; [&#39;env.rootdn cn=admin,dc=example,dc=org&#39;],
   config_label =&gt; &#39;slapd_*&#39;,
-}</code></pre>
+}
+</code></pre>
 </div></div>
 
       <div id="footer">

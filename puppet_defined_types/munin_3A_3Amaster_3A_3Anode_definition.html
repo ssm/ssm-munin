@@ -6,7 +6,7 @@
 <title>
   Defined Type: munin::master::node_definition
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -77,10 +77,8 @@ master
 <div class="docstring">
   <div class="discussion">
     
-<p>The title of the defined resource should be a munin FQN,
-(&#39;hostname&#39;, &#39;group;hostname&#39;,
-&#39;group;subgroup;hostname&#39;). If a group is not set, munin will by
-default use the domain of the node as a group.</p>
+<p>The title of the defined resource should be a munin FQN. See the “fqn”
+parameter</p>
 
   </div>
 </div>
@@ -112,7 +110,7 @@ for munin-async node.</p>
         <span class='name'>mastername</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
@@ -143,6 +141,29 @@ for munin-async node.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>fqn</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$title</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(titlevar) The Munin FQN (Fully Qualified Name) of the node. This should be
+&#39;hostname&#39;, &#39;group;hostname&#39;,
+&#39;group;subgroup;hostname&#39;).</p>
+
+<p>If a group is not set, munin will by default use the domain of the node as
+a group, if the node name is a fully qualified host name.</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -153,11 +174,6 @@ for munin-async node.</p>
         <pre class="lines">
 
 
-18
-19
-20
-21
-22
 23
 24
 25
@@ -175,32 +191,39 @@ for munin-async node.</p>
 37
 38
 39
-40</pre>
+40
+41
+42
+43
+44
+45
+46</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/master/node_definition.pp', line 18</span>
+        <pre class="code"><span class="info file"># File 'manifests/master/node_definition.pp', line 23</span>
 
 define munin::master::node_definition (
-  $address,
-  $mastername=&#39;&#39;,
-  $config=[],
+  String $address,
+  Optional[String] $mastername=&#39;&#39;,
+  Array[String] $config=[],
+  String $fqn = $title,
 )
 {
 
-  include ::munin::params::master
-
-  $config_root = $munin::params::master::config_root
-
-  validate_string($address)
-  validate_array($config)
-  validate_string($config_root)
+  $config_root = lookup(&#39;munin::master::config_root&#39;, Stdlib::Absolutepath)
 
   $filename=sprintf(&#39;%s/munin-conf.d/node.%s.conf&#39;,
                     $config_root,
                     regsubst($name, &#39;[^[:alnum:]\.]&#39;, &#39;_&#39;, &#39;IG&#39;))
 
+  $template_vars = {
+    &#39;fqn&#39;     =&gt; $fqn,
+    &#39;address&#39; =&gt; $address,
+    &#39;config&#39;  =&gt; $config
+  }
+
   file { $filename:
-    content =&gt; template(&#39;munin/master/node.definition.conf.erb&#39;),
+    content =&gt; epp(&#39;munin/master/node.definition.conf.epp&#39;, $template_vars ),
   }
 }</pre>
       </td>

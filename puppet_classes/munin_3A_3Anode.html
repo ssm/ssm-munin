@@ -6,7 +6,7 @@
 <title>
   Puppet Class: munin::node
   
-    &mdash; Documentation by YARD 0.9.18
+    &mdash; Documentation by YARD 0.9.20
   
 </title>
 
@@ -62,11 +62,6 @@
       <div id="content"><h1>Puppet Class: munin::node</h1>
 <div class="box_info">
   
-  <dl>
-    <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="munin_3A_3Aparams_3A_3Anode.html" title="puppet_classes::munin::params::node (puppet_class)">munin::params::node</a></span></dd>
-  </dl>
-  
   
   <dl>
     <dt>Defined in:</dt>
@@ -114,8 +109,6 @@ collect.</p>
         <span class='type'>(<tt>Array</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::allow</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -129,10 +122,8 @@ collect.</p>
         <span class='name'>config_root</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::config_root</tt>)</em>
       
       
         &mdash;
@@ -147,10 +138,8 @@ collect.</p>
         <span class='name'>nodeconfig</span>
       
       
-        <span class='type'>(<tt>Array[String]</tt>)</span>
+        <span class='type'>(<tt>Array</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::nodeconfig</tt>)</em>
       
       
         &mdash;
@@ -165,10 +154,8 @@ collect.</p>
         <span class='name'>host_name</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Stdlib::Host</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::host_name</tt>)</em>
       
       
         &mdash;
@@ -183,10 +170,8 @@ collect.</p>
         <span class='name'>log_dir</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::log_dir</tt>)</em>
       
       
         &mdash;
@@ -205,8 +190,6 @@ osfamily, see munin::params::node for details.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::log_file</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -223,8 +206,6 @@ osfamily, see munin::params::node for details.</p>
       
         <span class='type'>(<tt>Enum['file','syslog']</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::log_destination</tt>)</em>
       
       
         &mdash;
@@ -244,8 +225,6 @@ parameters are used if set.</p>
         <span class='type'>(<tt>Boolean</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::purge_configs</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -260,10 +239,15 @@ Boolean, defaults to false.</p>
         <span class='name'>syslog_facility</span>
       
       
-        <span class='type'>(<tt>Optional[String]</tt>)</span>
+        <span class='type'>(<tt>Optional[
+    Variant[
+      Integer[0,23],
+      Enum[
+        'kern','user','mail','daemon','auth','syslog','lpr','news','uucp',
+        'authpriv','ftp','cron','local0','local1','local2','local3','local4',
+        'local5','local6','local7'
+      ]]]</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::syslog_facility</tt>)</em>
       
       
         &mdash;
@@ -280,10 +264,8 @@ lowercase name.</p>
         <span class='name'>masterconfig</span>
       
       
-        <span class='type'>(<tt>Array[String]</tt>)</span>
+        <span class='type'>(<tt>Array</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::masterconfig</tt>)</em>
       
       
         &mdash;
@@ -298,10 +280,8 @@ lowercase name.</p>
         <span class='name'>mastername</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[Stdlib::Host]</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::mastername</tt>)</em>
       
       
         &mdash;
@@ -316,10 +296,8 @@ lowercase name.</p>
         <span class='name'>mastergroup</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::mastergroup</tt>)</em>
       
       
         &mdash;
@@ -340,8 +318,6 @@ history will be lost.</p>
         <span class='type'>(<tt>Hash</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::plugins</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -358,8 +334,6 @@ history will be lost.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::address</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -373,10 +347,8 @@ history will be lost.</p>
         <span class='name'>bind_address</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Variant[Enum['*'],Stdlib::Host]</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::bind_address</tt>)</em>
       
       
         &mdash;
@@ -391,10 +363,8 @@ history will be lost.</p>
         <span class='name'>bind_port</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Stdlib::Port</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::bind_port</tt>)</em>
       
       
         &mdash;
@@ -412,8 +382,6 @@ history will be lost.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::package_name</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -430,8 +398,6 @@ history will be lost.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::service_name</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -445,16 +411,13 @@ history will be lost.</p>
         <span class='name'>service_ensure</span>
       
       
-        <span class='type'>(<tt>Enum['','running','stopped']</tt>)</span>
+        <span class='type'>(<tt>Enum['running','stopped']</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::service_ensure</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>Defaults to “”. If set to “running” or “stopped”, it is used as parameter
-“ensure” for the munin node service.</p>
+<p>Used as parameter “ensure” for the munin node service.</p>
 </div>
       
     </li>
@@ -466,8 +429,6 @@ history will be lost.</p>
       
         <span class='type'>(<tt>Enum['enabled','disabled']</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>$munin::params::node::export_node</tt>)</em>
       
       
         &mdash;
@@ -486,8 +447,6 @@ be exported to puppetmaster.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>$munin::params::node::file_group</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -501,7 +460,7 @@ be exported to puppetmaster.</p>
         <span class='name'>timeout</span>
       
       
-        <span class='type'>(<tt>Optional[Integer]</tt>)</span>
+        <span class='type'>(<tt>Optional[Integer[0]]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>$munin::params::node::timeout</tt>)</em>
@@ -532,6 +491,7 @@ undef, which lets munin-node use its default of 10 seconds.</p>
         <pre class="lines">
 
 
+84
 85
 86
 87
@@ -636,72 +596,42 @@ undef, which lets munin-node use its default of 10 seconds.</p>
 186
 187
 188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+189</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/node.pp', line 85</span>
+        <pre class="code"><span class="info file"># File 'manifests/node.pp', line 84</span>
 
 class munin::node (
-  $address         = $munin::params::node::address,
-  $allow           = $munin::params::node::allow,
-  $bind_address    = $munin::params::node::bind_address,
-  $bind_port       = $munin::params::node::bind_port,
-  $config_root     = $munin::params::node::config_root,
-  $host_name       = $munin::params::node::host_name,
-  $log_dir         = $munin::params::node::log_dir,
-  $log_file        = $munin::params::node::log_file,
-  $masterconfig    = $munin::params::node::masterconfig,
-  $mastergroup     = $munin::params::node::mastergroup,
-  $mastername      = $munin::params::node::mastername,
-  $nodeconfig      = $munin::params::node::nodeconfig,
-  $package_name    = $munin::params::node::package_name,
-  $plugins         = $munin::params::node::plugins,
-  $purge_configs   = $munin::params::node::purge_configs,
-  $service_ensure  = $munin::params::node::service_ensure,
-  $service_name    = $munin::params::node::service_name,
-  $export_node     = $munin::params::node::export_node,
-  $file_group      = $munin::params::node::file_group,
-  $log_destination = $munin::params::node::log_destination,
-  $syslog_facility = $munin::params::node::syslog_facility,
-  $timeout         = $munin::params::node::timeout,
-) inherits munin::params::node {
-
-  validate_array($allow)
-  validate_array($nodeconfig)
-  validate_array($masterconfig)
-  if $mastergroup { validate_string($mastergroup) }
-  if $mastername { validate_string($mastername) }
-  validate_hash($plugins)
-  validate_string($address)
-  validate_absolute_path($config_root)
-  validate_string($package_name)
-  validate_string($service_name)
-  if $service_ensure { validate_re($service_ensure, &#39;^(running|stopped)$&#39;) }
-  validate_re($export_node, &#39;^(enabled|disabled)$&#39;)
-  validate_absolute_path($log_dir)
-  validate_re($log_destination, &#39;^(?:file|syslog)$&#39;)
-  validate_string($log_file)
-  validate_string($file_group)
-  validate_bool($purge_configs)
-  if $timeout { validate_integer($timeout) }
+  String                          $address,
+  Array                           $allow,
+  Variant[Enum[&#39;*&#39;],Stdlib::Host] $bind_address,
+  Stdlib::Port                    $bind_port,
+  Stdlib::Absolutepath            $config_root,
+  Stdlib::Host                    $host_name,
+  Stdlib::Absolutepath            $log_dir,
+  String                          $log_file,
+  Array                           $masterconfig,
+  Optional[String]                $mastergroup,
+  Optional[Stdlib::Host]          $mastername,
+  Array                           $nodeconfig,
+  String                          $package_name,
+  Hash                            $plugins,
+  Boolean                         $purge_configs,
+  Enum[&#39;running&#39;,&#39;stopped&#39;]       $service_ensure,
+  String                          $service_name,
+  Enum[&#39;enabled&#39;,&#39;disabled&#39;]      $export_node,
+  String                          $file_group,
+  Enum[&#39;file&#39;,&#39;syslog&#39;]           $log_destination,
+  Optional[
+    Variant[
+      Integer[0,23],
+      Enum[
+        &#39;kern&#39;,&#39;user&#39;,&#39;mail&#39;,&#39;daemon&#39;,&#39;auth&#39;,&#39;syslog&#39;,&#39;lpr&#39;,&#39;news&#39;,&#39;uucp&#39;,
+        &#39;authpriv&#39;,&#39;ftp&#39;,&#39;cron&#39;,&#39;local0&#39;,&#39;local1&#39;,&#39;local2&#39;,&#39;local3&#39;,&#39;local4&#39;,
+        &#39;local5&#39;,&#39;local6&#39;,&#39;local7&#39;
+      ]]] $syslog_facility,
+  Optional[Integer[0]] $timeout         = $munin::params::node::timeout, # Integer?
+) {
 
   case $log_destination {
     &#39;file&#39;: {
@@ -710,11 +640,6 @@ class munin::node (
     }
     &#39;syslog&#39;: {
       $_log_file = &#39;Sys::Syslog&#39;
-      if $syslog_facility {
-        validate_string($syslog_facility)
-        validate_re($syslog_facility,
-                    &#39;^(?:\d+|(?:kern|user|mail|daemon|auth|syslog|lpr|news|uucp|authpriv|ftp|cron|local[0-7]))$&#39;)
-      }
     }
     default: {
       fail(&#39;log_destination is not set&#39;)
@@ -758,7 +683,7 @@ class munin::node (
   # Export a node definition to be collected by the munin master.
   # (Separated into its own class to prevent warnings about &quot;missing
   # storeconfigs&quot;, even if $export_node is not enabled)
-  if $export_node == &#39;enabled&#39; {
+  if ($export_node == &#39;enabled&#39;) {
     class { &#39;::munin::node::export&#39;:
       address      =&gt; $address,
       fqn          =&gt; $fqn,
