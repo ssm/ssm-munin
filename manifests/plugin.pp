@@ -29,19 +29,50 @@
 #     config_label => 'slapd_*',
 #   }
 #
-# @param ensure [Enum['link','present','absent','']] The ensure
-#    parameter is mandatory for installing a plugin.
+# @param ensure
 #
-# @param source [String] when ensure => present, path to a source file
+#   The ensure parameter is mandatory for installing a plugin.
 #
-# @param target [String] when ensure => link, link target.  If target
-#   is an absolute path (starts with "/") it is used directly.  If
-#   target is a relative path, $munin::node::plugin_share_dir is
+#   With "ensure => link", a symlink is created in the munin plugin
+#   directory to where the plugin file is installed.
+#
+#   With "ensure => present", the plugin is installed in the munin
+#   plugin directory, and the "source" parameter is required to
+#   provide a source for the plugin.
+#
+#   With "ensure => absent", remove the munin plugin.
+#
+#   When **ensure** is not set, a plugin will not be installed, but
+#   extra plugin configuration can be managed with the **config** and
+#   **config_label** parameters.
+#
+# @param source
+#
+#   When ensure => present, path to a source file
+#
+# @param target
+#
+#   When "ensure => link", Add a link in the plugin directory to the
+#   link target.
+#
+#   If target is an absolute path (starts with "/") it is used
+#   directly.
+#
+#   If target is a relative path, $munin::node::plugin_share_dir is
 #   prepended.
 #
-# @param config [Array[String]] Lines for the munin plugin config.
+#   If target is unset, a link is created to a plugin with the same
+#   name in the packaged $munin::node:: plugin_share_dir directory.
+#   (In other words, activate a plugin that is already installed)
 #
-# @param config_label [String] Label for munin plugin config
+# @param config
+#
+#   Lines for the munin plugin config.
+#
+# @param config_label
+#
+#   Label for munin plugin config
+#
 define munin::plugin (
     Enum['','present','absent','link'] $ensure = '',
     Optional[String] $source=undef,

@@ -8,79 +8,122 @@
 # @example Basic usage
 #  include munin::node
 #
-# @param allow [Array] List of IPv4 and IPv6 addresses and networks to
-#   allow to connect.
+# @param allow
 #
-# @param config_root [String] Root directory for munin configuration.
+#   List of IPv4 and IPv6 addresses and networks to allow to connect.
 #
-# @param nodeconfig [Array[String]] List of lines to append to the
-#   munin node configuration.
+# @param config_root
 #
-# @param host_name [String] The host name munin node identifies
-#   as. Defaults to the $::fqdn fact.
+#   Root directory for munin configuration.
 #
-# @param log_dir [String] The log directory for the munin node
-#   process. Defaults change according to osfamily, see
-#   munin::params::node for details.
+# @param nodeconfig
 #
-# @param log_file [String] File name for the log file, this is
-#   appended to "log_dir". Defaults to "munin-node.log".
+#   List of lines to append to the munin node configuration.
 #
-# @param log_destination [Enum['file','syslog']]: "file" or "syslog".
-#   Defaults to "file".  If log_destination is "syslog", the
-#   "log_file" and "log_dir" parameters are ignored, and the
-#   "syslog_*" parameters are used if set.
+# @param host_name
 #
-# @param purge_configs [Boolean] Removes all other munin plugins and
-#   munin plugin configuration files.  Boolean, defaults to false.
+#   The host name munin node identifies as. Defaults to the $::fqdn
+#   fact.
 #
-# @param syslog_facility [Optional[String]]: Defaults to undef, which
-#   makes munin-node use the perl Net::Server module default of
-#   "daemon". Possible values are any syslog facility by number, or
-#   lowercase name.
+# @param log_dir
 #
-# @param masterconfig [Array[String]] List of configuration lines to
-#   append to the munin master node definitinon
+#   The log directory for the munin node process. Defaults change
+#   according to osfamily, see munin::params::node for details.
 #
-# @param mastername [String] The name of the munin master server which
-#   will collect the node definition.
+# @param log_file
 #
-# @param mastergroup [String] The group used on the master to
-#   construct a FQN for this node. Defaults to "", which in turn makes
-#   munin master use the domain. Note: changing this for a node also
-#   means you need to move rrd files on the master, or graph history
-#   will be lost.
+#   File name for the log file, this is appended to "log_dir".
+#   Defaults to "munin-node.log".
 #
-# @param plugins [Hash] A hash used by create_resources to create
-#   munin::plugin instances.
+# @param log_destination
 #
-# @param address [String] The address used in the munin master node
+#   Configures the log destination. Defaults to "file". If set to
+#   "syslog", the "log_file" and "log_dir" parameters are ignored, and
+#   the "syslog_*" parameters are used if set.
+#
+# @param purge_configs
+#
+#   Removes all munin plugins and munin plugin configuration files not
+#   managed by Puppet. Defaults to false.
+#
+# @param syslog_facility
+#
+#   Defaults to undef, which makes munin-node use the perl Net::Server
+#   module default of "daemon". Possible values are any syslog
+#   facility by number, or lowercase name.
+#
+# @param export_node
+#
+#   Causes the node config to be exported to puppetmaster. Defaults to
+#   "enabled".
+#
+#   This is used for exporting a **munin::master::node_definition**,
+#   to be collected by a node with **munin::master**.
+#
+# @param masterconfig
+#
+#   List of configuration lines to append to the munin master node
 #   definition.
 #
-# @param bind_address [String] The IP address the munin-node process
-#   listens on. Defaults: *.
+#   This is used for exporting a **munin::master::node_definition**,
+#   to be collected by a node with **munin::master**.
 #
-# @param bind_port [String] The port number the munin-node process
-#   listens on.
+# @param mastername
 #
-# @param package_name [String] The name of the munin node package to
-#   install.
+#   The name of the munin master server which will collect the node
+#   definition.
 #
-# @param service_name [String] The name of the munin node service.
+#   This is used for exporting a **munin::master::node_definition**,
+#   to be collected by a node with **munin::master**.
 #
-# @param service_ensure Used as parameter "ensure" for the munin node
-#   service.
+# @param mastergroup
 #
-# @param export_node [Enum['enabled','disabled']]: "enabled" or
-#   "disabled". Defaults to "enabled".  Causes the node config to be
-#   exported to puppetmaster.
+#   The group used on the master to construct a FQN for this node.
+#   Defaults to "", which in turn makes munin master use the domain.
+#   Note: changing this for a node also means you need to move rrd
+#   files on the master, or graph history will be lost.
 #
-# @param file_group [String] The UNIX group name owning the
-#   configuration files, log files, etc.
+#   This is used for exporting a **munin::master::node_definition**,
+#   to be collected by a node with **munin::master**.
 #
-# @param timeout [Optional[Integer]] Used to set the global plugin
-#   runtime timeout for this node. Defaults to undef, which lets
-#   munin-node use its default of 10 seconds.
+# @param plugins
+#
+#   A hash used by create_resources to create munin::plugin instances.
+#
+# @param address
+#
+#   The address used in the munin master node definition.
+#
+# @param bind_address
+#
+#   The IP address the munin-node process listens on. Defaults: *.
+#
+# @param bind_port
+#
+#   The port number the munin-node process listens on.
+#
+# @param package_name
+#
+#   The name of the munin node package to install.
+#
+# @param service_name
+#
+#   The name of the munin node service.
+#
+# @param service_ensure
+#
+#   Used as parameter "ensure" for the munin node service.
+#
+# @param file_group
+#
+#   The UNIX group name owning the configuration files, log files,
+#   etc.
+#
+# @param timeout
+#
+#   Set the global plugin runtime timeout for this node. Defaults to
+#   undef, which lets munin-node use its default of 10 seconds.
+#
 class munin::node (
   String                          $address,
   Array                           $allow,

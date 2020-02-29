@@ -5,10 +5,15 @@
 #
 # @api private
 #
-# @param collect_nodes[Enum['enabled','mine', 'unclaimed','disabled']]
+# @param collect_nodes
 #
-# @param host_name [Stdlib::Host] Host named used for selecting exported
-#   resources to collect.
+#   Configures which nodes to collect. See
+#   **$munin::master::collect_nodes**.
+#
+# @param host_name
+#
+#   Configures which nodes to collect, if $collect_nodes is 'mine'.
+#
 class munin::master::collect (
   Enum['enabled', 'disabled', 'mine', 'unclaimed'] $collect_nodes,
   Stdlib::Host $host_name,
