@@ -29,6 +29,10 @@ group :development do
   gem "puppet-module-win-default-r#{minor_version}", '~> 0.4',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 0.4',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
 end
+group :system_tests do
+  gem "ed25519", '~> 1.2',      require: false
+  gem "bcrypt_pbkdf", '~> 1.0', require: false
+end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
 facter_version = ENV['FACTER_GEM_VERSION']
