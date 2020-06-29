@@ -9,29 +9,24 @@ assignees: ''
 
 <!-- Please use this template while reporting a bug. If you are able
 to provide the relevant information, this will make it easier for me
-to reproduce the problem and address it properly. Thank you :) -->
+to reproduce the problem and address it properly.
 
-**Expected Behavior**
+If any of the sections are irrelevant, feel free to delete them, or
+file a blank issue.
+
+Thank you for taking the time to report a bug. -->
+
+**Expected behavior**
 
 Please describe the behavior you are expecting.
 
-**Current Behavior**
+**Current behavior**
 
-What is the current behavior?
+What happens instead of the expected behavior?
 
-**Failure Information (for bugs)**
+**Steps to reproduce**
 
-Please help provide information about the failure if this is a bug.
-
-* Use verbose outputs to capture any debug information.
-
-```
-Paste output into a code block.
-```
-
-**Steps to Reproduce**
-
-Please provide detailed steps for reproducing the issue.
+Please provide steps for reproducing the issue.
 
 Example:
 
@@ -44,23 +39,9 @@ class { 'munin::master': }
 class { 'munin::node': }
 ```
 
-1. Watch X happen
+**Failure logs**
 
-**Context**
-
-Please provide any relevant information about your setup. This is
-important in case the issue is not reproducible except for under
-certain conditions.
-
-* Version of project.
-* Version of dependencies.
-* Version of operating system.
-
-**Failure Logs**
-
-Please include any relevant log snippets or files here.
-
-* Use verbose outputs to capture any debug information.
+If you can, please include any relevant log snippets or files here.
 
 ```
 Paste logs into a code block.
