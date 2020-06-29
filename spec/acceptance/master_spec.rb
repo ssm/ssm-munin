@@ -4,6 +4,16 @@ describe 'munin::master' do
   let(:pp) do
     <<-MANIFEST
     if $facts['os']['family'] == 'RedHat' {
+      if $facts['os']['release']['major'] == '8' {
+        yumrepo { 'PowerTools':
+          enabled => '1',
+          before  => Class['munin::master'],
+        }
+        yumrepo { 'AppStream':
+          enabled => '1',
+          before  => Class['munin::master'],
+        }
+      }
       package { 'epel-release':
         ensure => present,
         before => Class['munin::master'],
@@ -25,5 +35,10 @@ describe 'munin::master' do
 
   describe package('munin') do
     it { is_expected.to be_installed }
+  end
+
+  describe file ('/etc/munin/munin-conf.d/node.localhost.conf') do
+    it { should exist }
+    its(:content) { should match %r{munin://localhost} }
   end
 end
