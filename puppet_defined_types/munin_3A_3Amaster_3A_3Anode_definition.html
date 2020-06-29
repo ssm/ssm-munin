@@ -6,15 +6,15 @@
 <title>
   Defined Type: munin::master::node_definition
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_defined_types::munin::master::node_definition";
   relpath = '../';
 </script>
@@ -77,15 +77,50 @@ master
 <div class="docstring">
   <div class="discussion">
     
-<p>The title of the defined resource should be a munin FQN. See the “fqn”
-parameter</p>
+<p>This will add configuration for the munin master to connect to a munin
+node, and ask for data from its munin plugins.</p>
+
+<p>The resource title is used as the munin FQN, or “fully qualified name”.
+This defines the node name and group. It is common to use the host&#39;s
+fully qualified domain name, where the domain name will be implicitly used
+as the node group.</p>
+
+<p>Note: By default, using <strong>munin::node</strong> on a node will create
+a export a <strong>munin::master::node_definition</strong> to PuppetDB. The
+node classified with <strong>munin::master</strong> will collect all these
+exported instances.</p>
 
   </div>
 </div>
 
 
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Typical usage</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::master::node_definition { &#39;host.example.com&#39;:
+    address =&gt; $address,
+    config  =&gt; [&#39;additional&#39;, &#39;configuration&#39; &#39;lines&#39;],
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Using a group in the FQN</p>
+</div></p>
+      
+      <pre class="example code"><code>munin::master::node_definition { &#39;webservers;web01.example.com&#39;:
+    address =&gt; $address,
+    config  =&gt; [&#39;additional&#39;, &#39;configuration&#39; &#39;lines&#39;],
+}</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -118,7 +153,9 @@ for munin-async node.</p>
       
         &mdash;
         <div class='inline'>
-<p>The name of the munin master server which will collect the node definition.</p>
+<p>The name of the munin master server which will collect the node definition.
+This is used when exporting and collecting
+<strong>munin::master::node_definition</strong> resources between hosts.</p>
 </div>
       
     </li>
@@ -154,17 +191,21 @@ for munin-async node.</p>
       
         &mdash;
         <div class='inline'>
-<p>(titlevar) The Munin FQN (Fully Qualified Name) of the node. This should be
+<p>The Munin FQN (Fully Qualified Name) of the node. This should be
 &#39;hostname&#39;, &#39;group;hostname&#39;,
 &#39;group;subgroup;hostname&#39;).</p>
 
 <p>If a group is not set, munin will by default use the domain of the node as
 a group, if the node name is a fully qualified host name.</p>
+
+<p>The title of the defined resource should be a munin FQN. See the “fqn”
+parameter</p>
 </div>
       
     </li>
   
 </ul>
+
 
 
 </div><div class="method_details_list">
@@ -174,33 +215,33 @@ a group, if the node name is a fully qualified host name.</p>
         <pre class="lines">
 
 
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46</pre>
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/master/node_definition.pp', line 23</span>
+        <pre class="code"><span class="info file"># File 'manifests/master/node_definition.pp', line 56</span>
 
 define munin::master::node_definition (
   String $address,

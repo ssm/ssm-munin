@@ -6,15 +6,15 @@
 <title>
   Puppet Class: munin::master::collect
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_classes::munin::master::collect";
   relpath = '../';
 </script>
@@ -98,6 +98,12 @@ storeconfigs.</p>
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Configures which nodes to collect. See
+<strong>$munin::master::collect_nodes</strong>.</p>
+</div>
+      
     </li>
   
     <li>
@@ -111,12 +117,13 @@ storeconfigs.</p>
       
         &mdash;
         <div class='inline'>
-<p>Host named used for selecting exported resources to collect.</p>
+<p>Configures which nodes to collect, if $collect_nodes is &#39;mine&#39;.</p>
 </div>
       
     </li>
   
 </ul>
+
 
 
 </div><div class="method_details_list">
@@ -126,11 +133,6 @@ storeconfigs.</p>
         <pre class="lines">
 
 
-12
-13
-14
-15
-16
 17
 18
 19
@@ -149,10 +151,15 @@ storeconfigs.</p>
 32
 33
 34
-35</pre>
+35
+36
+37
+38
+39
+40</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/master/collect.pp', line 12</span>
+        <pre class="code"><span class="info file"># File 'manifests/master/collect.pp', line 17</span>
 
 class munin::master::collect (
   Enum[&#39;enabled&#39;, &#39;disabled&#39;, &#39;mine&#39;, &#39;unclaimed&#39;] $collect_nodes,

@@ -6,15 +6,15 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "";
   relpath = '';
 </script>
@@ -153,6 +153,8 @@ configuration. The munin package installed might add some.</p>
 
 <h1 id="label-Usage">Usage</h1>
 
+<p>For detailed usage, see the reference.</p>
+
 <h2 id="label-munin-3A-3Anode">munin::node</h2>
 
 <p>Typical usage</p>
@@ -165,81 +167,6 @@ configuration. The munin package installed might add some.</p>
 <p>By default, <strong>munin::node</strong> exports a munin node definition so
 a node classified with the <strong>munin::master</strong> class can collect
 it.</p>
-
-<p>Parameters for exporting a munin node definition</p>
-<ul><li>
-<p><strong>address</strong>: The address used in the munin master node
-definition.  Defaults to the $::fqdn fact.</p>
-</li><li>
-<p><strong>export_node</strong>: “enabled” or “disabled”. Defaults to
-“enabled”.  Causes the node config to be exported to puppetmaster.</p>
-</li><li>
-<p><strong>masterconfig</strong>: List of configuration lines to append to the
-munin  master node definitinon</p>
-</li><li>
-<p><strong>mastername</strong>: The name of the munin master server which will
-collect the node definition.</p>
-</li><li>
-<p><strong>mastergroup</strong>: The group used on the master to construct a
-FQN for  this node. Defaults to “”, which in turn makes munin master use
-the  domain. Note: changing this for a node also means you need to move 
-rrd files on the master, or graph history will be lost.</p>
-</li></ul>
-
-<p>Parameters for the munin node service and configuration</p>
-<ul><li>
-<p><strong>allow</strong>: List of IPv4 and IPv6 addresses and networks to
-allow to  connect.</p>
-</li><li>
-<p><strong>bind_address</strong>: The IP address the munin-node process
-listens  on. Defaults: *.</p>
-</li><li>
-<p><strong>bind_port</strong>: The port number the munin-node process listens
-on.</p>
-</li><li>
-<p><strong>config_root</strong>: Root directory for munin configuration.</p>
-</li><li>
-<p><strong>host_name</strong>: The host name munin node identifies as.
-Defaults to  the $::fqdn fact.</p>
-</li><li>
-<p><strong>log_dir</strong>: The log directory for the munin node process.
-Defaults  change according to osfamily, see munin::params::node for
-details.</p>
-</li><li>
-<p><strong>log_file</strong>: Appended to “log_dir”. Defaults to
-“munin-node.log”.</p>
-</li><li>
-<p><strong>log_destination</strong>: “file” or “syslog”. Defaults to “file”.
-If  log_destination is “syslog”, the “log_file” and “log_dir” parameters 
-are ignored, and the “syslog_*” parameters are used if set.</p>
-</li><li>
-<p><strong>purge_configs</strong>: Removes all other munin plugins and munin
-plugin  configuration files. Boolean, defaults to false.</p>
-</li><li>
-<p><strong>syslog_facility</strong>: Defaults to undef, which makes munin-node
-use  the perl Net::Server module default of “daemon”. Possible values are 
-any syslog facility by number, or lowercase name.</p>
-</li><li>
-<p><strong>plugins</strong>: A hash used by create_resources to create
-munin::plugin  instances.</p>
-</li><li>
-<p><strong>package_name</strong>: The name of the munin node package to
-install.</p>
-</li><li>
-<p><strong>service_name</strong>: The name of the munin node service.</p>
-</li><li>
-<p><strong>service_ensure</strong>: Defaults to “”. If set to “running” or 
-“stopped”, it is used as parameter “ensure” for the munin node  service.</p>
-</li><li>
-<p><strong>file_group</strong>: The UNIX group name owning the configuration
-files,  log files, etc.</p>
-</li><li>
-<p><strong>timeout</strong>: Used to set the global plugin runtime timeout for
-this  node. Integer. (optional, no default)</p>
-</li><li>
-<p><strong>nodeconfig</strong>: Array of extra configuration lines to append
-to the  munin node configuration. (optional, no default)</p>
-</li></ul>
 
 <h3 id="label-Export+extra+nodes">Export extra nodes</h3>
 
@@ -259,72 +186,9 @@ will be associated with the same mastername as the node itself.</p>
 <p>Installs a munin master.</p>
 
 <p>By default, <strong>munin::master</strong> collects all munin node
-definitions exported by nodes classified with <strong>munin::node</strong>/</p>
-
-<p>Parameters for collecting and defining munin nodes</p>
-<ul><li>
-<p><strong>collect_nodes</strong>: &#39;enabled&#39; (default),
-&#39;disabled&#39;, &#39;mine&#39; or &#39;unclaimed&#39;.
-&#39;enabled&#39; makes the munin master collect all exported
-node_definitions. &#39;disabled&#39; disables it. &#39;mine&#39; makes the
-munin master collect nodes matching
-<strong>$munin::master::host_name</strong>, while &#39;unclaimed&#39; makes
-the munin master collect nodes not tagged with a host name.</p>
-</li><li>
-<p><strong>host_name</strong>: A host name for this munin master, matched with
-munin::node::mastername for collecting nodes. Defaults to $::fqdn</p>
-</li><li>
-<p><strong>node_definitions</strong>: A hash of node definitions used by
-create_resources (optional, default: {})</p>
-</li></ul>
-
-<p>Parameters for the munin master configuration</p>
-<ul><li>
-<p><strong>config_root</strong>: the root directory of the munin master
-configuration. (Default is “/etc/munin” on most platforms).</p>
-</li><li>
-<p><strong>dbdir</strong>: Path to the munin dbdir, where munin stores
-everything</p>
-</li><li>
-<p><strong>graph_strategy</strong>: &#39;cgi&#39; (default) or &#39;cron&#39;
-Controls if munin-graph graphs all services (&#39;cron&#39;) or if graphing
-is done by munin-cgi-graph (which must configured seperatly)</p>
-</li><li>
-<p><strong>htmldir</strong>: Path to where munin will generate HTML documents
-and graphs, used if graph_strategy is cron.</p>
-</li><li>
-<p><strong>html_strategy</strong>: &#39;cgi&#39; (default) or &#39;cron&#39;
-Controls if munin-html will recreate all html pages every run interval
-(&#39;cron&#39;) or if html pages are generated by munin-cgi-graph (which
-must configured seperatly)</p>
-</li><li>
-<p><strong>rundir</strong>: Path to directory munin uses for pid and lock
-files.</p>
-</li><li>
-<p><strong>tls</strong>: &#39;enabled&#39; or &#39;disabled&#39; (default).
-Controls the use of TLS globally for master to node communications.</p>
-</li><li>
-<p><strong>tls_certificate</strong>: Path to a file containing a TLS
-certificate. No default. Required if tls is enabled.</p>
-</li><li>
-<p><strong>tls_private_key</strong>: Path to a file containing a TLS key. No
-default. Required if tls is enabled.</p>
-</li><li>
-<p><strong>tls_verify_certificate</strong>: &#39;yes&#39; (default) or
-&#39;no&#39;.</p>
-</li><li>
-<p><strong>extra_config</strong>: Extra lines of config to put in munin.conf.</p>
-</li></ul>
+definitions exported by nodes classified with <strong>munin::node</strong>.</p>
 
 <h2 id="label-munin-3A-3Amaster-3A-3Anode_definition">munin::master::node_definition</h2>
-
-<p>Typical usage:</p>
-
-<pre class="code ruby"><code class="ruby">munin::master::node_definition { &#39;fqn&#39;:
-    address =&gt; $address,
-    config  =&gt; [&#39;additional&#39;, &#39;configuration&#39; &#39;lines&#39;],
-}
-</code></pre>
 
 <p>This will add configuration for the munin master to connect to a munin
 node, and ask for data from its munin plugins.</p>
@@ -338,19 +202,6 @@ This defines the node name and group. It is common to use the host&#39;s
 fully qualified domain name, where the domain name will be implicitly used
 as the node group.</p>
 
-<p>Parameters</p>
-<ul><li>
-<p><strong>address</strong>: The address of the munin node. A hostname, an
-IPv4 address, an IPv6 address in brackets, or a ssh:// uri for munin-async
-node. (<strong>required</strong>, no default)</p>
-</li><li>
-<p><strong>mastername</strong>: The name of the munin master server which will
-collect the node definition. (<strong>optional</strong>, no default)</p>
-</li><li>
-<p><strong>config</strong>: An array of configuration lines to be added to the
-node definition. (<strong>optional</strong>, no default)</p>
-</li></ul>
-
 <p>For more information about configuring a munin node definition, see <a
 href="https://munin.readthedocs.io/en/latest/reference/munin.conf.html#node-definitions">munin.readthedocs.io/en/latest/reference/munin.conf.html#node-definitions</a></p>
 
@@ -363,48 +214,6 @@ master&#39;s fully qualified domain name on the node&#39;s definition:</p>
     mastername =&gt; &#39;munin.example.com&#39;,
 }
 </code></pre>
-
-<h2 id="label-munin-3A-3Aplugin">munin::plugin</h2>
-
-<p>The defined type munin::plugin is used to control the munin plugins used on
-a munin node.</p>
-
-<p>Typical usage:</p>
-
-<pre class="code ruby"><code class="ruby">munin::plugin { &#39;cpu&#39;:
-  ensure =&gt; link,
-}
-</code></pre>
-
-<p>Parameters:</p>
-<ul><li>
-<p><strong>ensure</strong>: “link”, “present”, “absent” or “”. (optional,
-default is “”). The ensure parameter is mandatory for installing a plugin,
-and interacts with the <strong>source</strong> and <strong>target</strong>
-parameters (see below).</p>
-</li><li>
-<p><strong>source</strong>: when ensure =&gt; present, source file. (optional)</p>
-</li><li>
-<p><strong>target</strong>: when ensure =&gt; link, link target. If target is
-an absolute path (starts with “/”) it is used directly. If target is a
-relative path, $munin::node::plugin_share_dir is prepended. (optional)</p>
-</li><li>
-<p><strong>config</strong>: array of lines for munin plugin config</p>
-</li><li>
-<p><strong>config_label</strong>: label for munin plugin config</p>
-</li></ul>
-
-<p>When using “<strong>ensure</strong> =&gt; link”, a symlink is created from
-/etc/munin/plugins/$title to what the optional <strong>target</strong>
-parameter contains, or to /usr/share/munin/plugins/$title if that is not
-set.</p>
-
-<p>When using “<strong>ensure</strong> =&gt; present”, you need to provide the
-<strong>source</strong> parameter as well.</p>
-
-<p>When <strong>ensure</strong> is not set, a plugin will not be installed,
-but extra plugin configuration can be managed with the
-<strong>config</strong> and <strong>config_label</strong> parameters.</p>
 
 <h1 id="label-Examples">Examples</h1>
 

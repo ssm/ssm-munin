@@ -6,15 +6,15 @@
 <title>
   Defined Type: munin::plugin
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "puppet_defined_types::munin::plugin";
   relpath = '../';
 </script>
@@ -152,6 +152,19 @@
         &mdash;
         <div class='inline'>
 <p>The ensure parameter is mandatory for installing a plugin.</p>
+
+<p>With “ensure =&gt; link”, a symlink is created in the munin plugin
+directory to where the plugin file is installed.</p>
+
+<p>With “ensure =&gt; present”, the plugin is installed in the munin plugin
+directory, and the “source” parameter is required to provide a source for
+the plugin.</p>
+
+<p>With “ensure =&gt; absent”, remove the munin plugin.</p>
+
+<p>When <strong>ensure</strong> is not set, a plugin will not be installed,
+but extra plugin configuration can be managed with the
+<strong>config</strong> and <strong>config_label</strong> parameters.</p>
 </div>
       
     </li>
@@ -169,7 +182,7 @@
       
         &mdash;
         <div class='inline'>
-<p>when ensure =&gt; present, path to a source file</p>
+<p>When ensure =&gt; present, path to a source file</p>
 </div>
       
     </li>
@@ -187,9 +200,16 @@
       
         &mdash;
         <div class='inline'>
-<p>when ensure =&gt; link, link target. If target is an absolute path (starts
-with “/”) it is used directly. If target is a relative path,
-$munin::node::plugin_share_dir is prepended.</p>
+<p>When “ensure =&gt; link”, Add a link in the plugin directory to the link
+target.</p>
+
+<p>If target is an absolute path (starts with “/”) it is used directly.</p>
+
+<p>If target is a relative path, $munin::node::plugin_share_dir is prepended.</p>
+
+<p>If target is unset, a link is created to a plugin with the same name in the
+packaged $munin::node:: plugin_share_dir directory. (In other words,
+activate a plugin that is already installed)</p>
 </div>
       
     </li>
@@ -233,6 +253,7 @@ $munin::node::plugin_share_dir is prepended.</p>
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -240,37 +261,6 @@ $munin::node::plugin_share_dir is prepended.</p>
         <pre class="lines">
 
 
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
 76
 77
 78
@@ -315,10 +305,41 @@ $munin::node::plugin_share_dir is prepended.</p>
 117
 118
 119
-120</pre>
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 45</span>
+        <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 76</span>
 
 define munin::plugin (
     Enum[&#39;&#39;,&#39;present&#39;,&#39;absent&#39;,&#39;link&#39;] $ensure = &#39;&#39;,
@@ -361,7 +382,7 @@ define munin::plugin (
                     $plugin_target = &quot;${plugin_share_dir}/${target}&quot;
                 }
             }
-            validate_absolute_path($plugin_target)
+            assert_type(Stdlib::Absolutepath, $plugin_target)
         }
         default: {
             $handle_plugin = false
