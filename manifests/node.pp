@@ -159,7 +159,7 @@ class munin::node (
   case $log_destination {
     'file': {
       $_log_file = "${log_dir}/${log_file}"
-      validate_absolute_path($_log_file)
+      assert_type(Stdlib::Absolutepath, $_log_file)
     }
     'syslog': {
       $_log_file = 'Sys::Syslog'
