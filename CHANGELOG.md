@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Puppet Strings documentation
 
 ### Deprecated
+- Module is no longer supported on Puppet versions before 4.10.0
 - Module is no longer supported on osfamily RedHat version 5
 - Module is no longer supported on osfamily RedHat version 6
 - Module is no longer supported on Ubuntu 14.04
