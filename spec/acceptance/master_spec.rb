@@ -37,8 +37,8 @@ describe 'munin::master' do
     it { is_expected.to be_installed }
   end
 
-  describe file ('/etc/munin/munin-conf.d/node.localhost.conf') do
-    it { should exist }
-    its(:content) { should match %r{munin://localhost} }
+  describe file '/etc/munin/munin-conf.d/node.localhost.conf' do
+    it { is_expected.to exist }
+    its(:content) { is_expected.to match %r{munin://localhost} }
   end
 end
