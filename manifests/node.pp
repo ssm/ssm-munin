@@ -187,9 +187,7 @@ class munin::node (
     mode   => '0444',
   }
 
-  package { $package_name:
-    ensure => installed,
-  }
+  include munin::package
 
   service { $service_name:
     ensure  => $_service_ensure,
