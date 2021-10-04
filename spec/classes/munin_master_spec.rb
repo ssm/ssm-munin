@@ -12,7 +12,7 @@ t_package['FreeBSD'] = 'munin-master'
 describe 'munin::master' do
   on_supported_os.each do |os, facts|
     # Avoid testing on distributions similar to RedHat and Debian
-    next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
+    next if %r{^(ubuntu|centos|scientific|oraclelinux)-}.match?(os)
 
     context "on #{os}" do
       let(:facts) do

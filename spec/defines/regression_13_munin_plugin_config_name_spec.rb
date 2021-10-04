@@ -10,7 +10,7 @@ describe 'munin::plugin' do
 
   on_supported_os.each do |os, facts|
     # Avoid testing on distributions similar to RedHat and Debian
-    next if os =~ %r{^(ubuntu|centos|scientific|oraclelinux)-}
+    next if %r{^(ubuntu|centos|scientific|oraclelinux)-}.match?(os)
 
     context "on #{os}" do
       let(:facts) { facts }
