@@ -74,78 +74,78 @@
 #   Label for munin plugin config
 #
 define munin::plugin (
-    Enum['','present','absent','link'] $ensure = '',
-    Optional[String] $source=undef,
-    String $target='',
-    Optional[Array[String]] $config = [],
-    String $config_label = $title,
-)
-{
+  Enum['','present','absent','link'] $ensure = '',
+  Optional[String] $source = undef,
+  String $target = '',
+  Optional[Array[String]] $config = [],
+  String $config_label = $title,
+) {
+  include munin::node
 
-    include munin::node
+  $plugin_share_dir = lookup('munin::node::plugin_share_dir', Stdlib::Absolutepath)
+  $node_config_root = lookup('munin::node::config_root', Stdlib::Absolutepath)
+  $node_package_name = lookup('munin::node::package_name', String)
+  $node_service_name = lookup('munin::node::service_name', String)
 
-    $plugin_share_dir = lookup('munin::node::plugin_share_dir', Stdlib::Absolutepath)
-    $node_config_root = lookup('munin::node::config_root', Stdlib::Absolutepath)
-    $node_package_name = lookup('munin::node::package_name', String)
-    $node_service_name = lookup('munin::node::service_name', String)
+  File {
+    require => Package[$node_package_name],
+    notify  => Service[$node_service_name],
+  }
 
-    File {
-        require => Package[$node_package_name],
-        notify  => Service[$node_service_name],
+  case $ensure {
+    'present', 'absent': {
+      $handle_plugin = true
+      $plugin_ensure = $ensure
+      $plugin_target = undef
     }
-
-    case $ensure {
-        'present', 'absent': {
-            $handle_plugin = true
-            $plugin_ensure = $ensure
-            $plugin_target = undef
+    'link': {
+      $handle_plugin = true
+      $plugin_ensure = 'link'
+      case $target {
+        '': {
+          $plugin_target = "${plugin_share_dir}/${title}"
         }
-        'link': {
-            $handle_plugin = true
-            $plugin_ensure = 'link'
-            case $target {
-                '': {
-                    $plugin_target = "${plugin_share_dir}/${title}"
-                }
-                /^\//: {
-                    $plugin_target = $target
-                }
-                default: {
-                    $plugin_target = "${plugin_share_dir}/${target}"
-                }
-            }
-            assert_type(Stdlib::Absolutepath, $plugin_target)
+        /^\//: {
+          $plugin_target = $target
         }
         default: {
-            $handle_plugin = false
+          $plugin_target = "${plugin_share_dir}/${target}"
         }
+      }
+      assert_type(Stdlib::Absolutepath, $plugin_target)
     }
-
-    if ! $config.empty {
-        $config_ensure = $ensure ? {
-            'absent'=> absent,
-            default => present,
-        }
+    default: {
+      $handle_plugin = false
     }
-    else {
-        $config_ensure = absent
+  }
+
+  if ! $config.empty {
+    $config_ensure = $ensure ? {
+      'absent'=> absent,
+      default => present,
     }
+  } else {
+    $config_ensure = absent
+  }
 
-
-    if $handle_plugin {
-        # Install the plugin
-        file {"${node_config_root}/plugins/${name}":
-            ensure => $plugin_ensure,
-            source => $source,
-            target => $plugin_target,
-            mode   => '0755',
-        }
+  if $handle_plugin {
+    # Install the plugin
+    file { "${node_config_root}/plugins/${name}":
+      ensure => $plugin_ensure,
+      source => $source,
+      target => $plugin_target,
+      mode   => '0755',
     }
+  }
 
-    # Config
-
-    file{ "${node_config_root}/plugin-conf.d/${name}.conf":
-      ensure  => $config_ensure,
-      content => epp('munin/plugin_conf.epp', { 'label' => $config_label, 'config' => $config }),
-    }
+  # Config
+  file { "${node_config_root}/plugin-conf.d/${name}.conf":
+    ensure  => $config_ensure,
+    content => epp("${module_name}/plugin_conf.epp",
+      {
+        'label'  => $config_label,
+        'config' => $config,
+      },
+    ),
+  }
 }
