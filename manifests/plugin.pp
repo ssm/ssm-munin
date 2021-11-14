@@ -50,6 +50,14 @@
 #
 #   When ensure => present, path to a source file
 #
+# @param checksum
+#
+#   Checksum type for the plugin file.
+#
+# @param checksum_value
+#
+#   Checksum value for the plugin file.
+#
 # @param target
 #
 #   When "ensure => link", Add a link in the plugin directory to the
@@ -76,6 +84,8 @@
 define munin::plugin (
   Enum['','present','absent','link'] $ensure = '',
   Optional[String] $source = undef,
+  Optional[String[1]] $checksum = undef,
+  Optional[String[1]] $checksum_value = undef,
   String $target = '',
   Optional[Array[String]] $config = [],
   String $config_label = $title,
@@ -131,10 +141,12 @@ define munin::plugin (
   if $handle_plugin {
     # Install the plugin
     file { "${node_config_root}/plugins/${name}":
-      ensure => $plugin_ensure,
-      source => $source,
-      target => $plugin_target,
-      mode   => '0755',
+      ensure         => $plugin_ensure,
+      source         => $source,
+      target         => $plugin_target,
+      mode           => '0755',
+      checksum       => $checksum,
+      checksum_value => $checksum_value,
     }
   }
 
