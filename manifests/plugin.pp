@@ -37,7 +37,7 @@
 #   directory to where the plugin file is installed.
 #
 #   With "ensure => present", the plugin is installed in the munin
-#   plugin directory, and the "source" parameter is required to
+#   plugin directory, and the "source" or "content" parameter is required to
 #   provide a source for the plugin.
 #
 #   With "ensure => absent", remove the munin plugin.
@@ -49,6 +49,10 @@
 # @param source
 #
 #   When ensure => present, path to a source file
+#
+# @param content
+#
+#   When ensure => present, content of the plugin.
 #
 # @param checksum
 #
@@ -84,6 +88,7 @@
 define munin::plugin (
   Enum['','present','absent','link'] $ensure = '',
   Optional[String] $source = undef,
+  Optional[String[1]] $content = undef,
   Optional[String[1]] $checksum = undef,
   Optional[String[1]] $checksum_value = undef,
   String $target = '',
@@ -143,6 +148,7 @@ define munin::plugin (
     file { "${node_config_root}/plugins/${name}":
       ensure         => $plugin_ensure,
       source         => $source,
+      content        => $content,
       target         => $plugin_target,
       mode           => '0755',
       checksum       => $checksum,

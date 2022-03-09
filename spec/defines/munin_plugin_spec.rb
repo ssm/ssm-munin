@@ -83,6 +83,25 @@ describe 'munin::plugin', type: 'define' do
         end
       end
 
+      context 'with ensure=present and content parameters' do
+        let(:params) do
+          {
+            ensure: 'present',
+            content: 'test',
+          }
+        end
+
+        it do
+          is_expected.to contain_file("#{conf_dir}/plugins/testplugin")
+            .with_ensure('present')
+            .with_content('test')
+        end
+        it do
+          is_expected.to contain_file("#{conf_dir}/plugin-conf.d/testplugin.conf")
+            .with_ensure('absent')
+        end
+      end
+
       context 'with ensure=present, source, checksum, checksum_value, and config parameters' do
         let(:params) do
           {
