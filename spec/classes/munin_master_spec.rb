@@ -119,10 +119,10 @@ describe 'munin::master' do
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file("#{conf_dir}/munin.conf")
-            .with_content(%r{tls = enabled})
-            .with_content(%r{tls_certificate = /path/to/certificate\.pem})
-            .with_content(%r{tls_private_key = /path/to/key\.pem})
-            .with_content(%r{tls_verify_certificate = yes})
+            .with_content(%r{tls enabled})
+            .with_content(%r{tls_certificate /path/to/certificate\.pem})
+            .with_content(%r{tls_private_key /path/to/key\.pem})
+            .with_content(%r{tls_verify_certificate yes})
         end
       end
 
