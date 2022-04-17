@@ -560,6 +560,9 @@ The following parameters are available in the `munin::plugin` defined type:
 
 * [`ensure`](#ensure)
 * [`source`](#source)
+* [`content`](#content)
+* [`checksum`](#checksum)
+* [`checksum_value`](#checksum_value)
 * [`target`](#target)
 * [`config`](#config)
 * [`config_label`](#config_label)
@@ -574,7 +577,7 @@ With "ensure => link", a symlink is created in the munin plugin
 directory to where the plugin file is installed.
 
 With "ensure => present", the plugin is installed in the munin
-plugin directory, and the "source" parameter is required to
+plugin directory, and the "source" or "content" parameter is required to
 provide a source for the plugin.
 
 With "ensure => absent", remove the munin plugin.
@@ -590,6 +593,30 @@ Default value: `''`
 Data type: `Optional[String]`
 
 When ensure => present, path to a source file
+
+Default value: ``undef``
+
+##### <a name="content"></a>`content`
+
+Data type: `Optional[String[1]]`
+
+When ensure => present, content of the plugin.
+
+Default value: ``undef``
+
+##### <a name="checksum"></a>`checksum`
+
+Data type: `Optional[String[1]]`
+
+Checksum type for the plugin file.
+
+Default value: ``undef``
+
+##### <a name="checksum_value"></a>`checksum_value`
+
+Data type: `Optional[String[1]]`
+
+Checksum value for the plugin file.
 
 Default value: ``undef``
 
