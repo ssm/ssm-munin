@@ -10,8 +10,8 @@ munin::master::graph_strategy: "cgi"
 munin::master::html_strategy: "cgi"
 munin::master::extra_config: []
 munin::master::tls: "disabled"
-munin::master::tls_certificate: "%{lookup(munin::master::config_root)}/cert.pem"
-munin::master::tls_private_key: "%{lookup(munin::master::config_root)}/key.pem"
+munin::master::tls_certificate: "%{lookup('munin::master::config_root')}/cert.pem"
+munin::master::tls_private_key: "%{lookup('munin::master::config_root')}/key.pem"
 munin::master::tls_verify_certificate: "yes"
 
 munin::master::dbdir: :undef
