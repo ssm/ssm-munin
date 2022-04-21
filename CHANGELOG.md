@@ -5,17 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## [0.4.0] - 2022-04-21
 
 ### Fixed
 
-- Fix hiera lookup invocation syntax [pr/75]
-- Fix TLS configuration [pr/74]
-- Fix Archlinux hiera data file name [pr/72]
+- Fix hiera lookup invocation syntax ([#75](https://github.com/ssm/ssm-munin/issues/75))
+- Fix TLS configuration ([#74](https://github.com/ssm/ssm-munin/issues/74))
+- Fix Archlinux hiera data file name ([#72](https://github.com/ssm/ssm-munin/issues/72))
 
 ### Added
 
-- Add parameters `content`, `checksum` and `checksum_value` [pr/73]
+- Add parameters `content`, `checksum` and `checksum_value` to the
+  `munin::plugin` define. ([#73](https://github.com/ssm/ssm-munin/issues/73))
 
 ## [0.3.0] - 2020-06-29
 
@@ -261,7 +262,8 @@ A few pull requests
 
 Initial release
 
-[unreleased]: https://github.com/ssm/ssm-munin/compare/0.3.0...main
+[unreleased]: https://github.com/ssm/ssm-munin/compare/0.4.0...main
+[0.4.0]: https://github.com/ssm/ssm-munin/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/ssm/ssm-munin/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/ssm/ssm-munin/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/ssm/ssm-munin/compare/0.0.10...0.1.0
@@ -275,8 +277,3 @@ Initial release
 [0.0.3]: https://github.com/ssm/ssm-munin/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/ssm/ssm-munin/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/ssm/ssm-munin/commits/0.0.1
-
-[pr/72]: https://github.com/ssm/ssm-munin/pull/72
-[pr/73]: https://github.com/ssm/ssm-munin/pull/73
-[pr/74]: https://github.com/ssm/ssm-munin/pull/74
-[pr/75]: https://github.com/ssm/ssm-munin/pull/75
