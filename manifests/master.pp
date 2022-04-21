@@ -15,8 +15,6 @@
 # The munin master will install munin, and collect all exported munin
 # node definitions as files into /etc/munin/munin-conf.d/.
 #
-# Parameters:
-#
 # @param node_definitions
 #
 #   A hash of node definitions used by create_resources to make static
@@ -64,7 +62,7 @@
 #   'mine' makes the munin master collect nodes matching the
 #   $host_name parameter.
 #
-#  'unclaimed' makes the munin master collect nodes not tagged with a
+#   'unclaimed' makes the munin master collect nodes not tagged with a
 #   host name.
 #
 #   This is used for collecting **munin::master::node_definition**
