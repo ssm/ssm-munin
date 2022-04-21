@@ -210,6 +210,10 @@ Extra lines of config to put in munin.conf.
 Configure a munin node, and export configuration a munin master can
 collect.
 
+List of IPv4 and IPv6 addresses and networks to allow remote munin masters
+to connect. By default, the munin node only permits connections from
+the local host.
+
 * **See also**
   * http://guide.munin-monitoring.org/en/latest/
 
@@ -219,6 +223,14 @@ collect.
 
 ```puppet
 include munin::node
+```
+
+##### Permitting a remote munin server to connect
+
+```puppet
+class {'munin::node':
+  allow => ['192.0.2.1', '2001:db8::1'],
+}
 ```
 
 #### Parameters
@@ -252,7 +264,7 @@ The following parameters are available in the `munin::node` class:
 
 Data type: `Array`
 
-List of IPv4 and IPv6 addresses and networks to allow to connect.
+
 
 ##### <a name="config_root"></a>`config_root`
 
@@ -436,12 +448,22 @@ instances.
 
 #### Examples
 
-##### Typical usage
+##### A minimal, static node definition
 
 ```puppet
-munin::master::node_definition { 'host.example.com':
-    address => $address,
-    config  => ['additional', 'configuration' 'lines'],
+munin::master::node_definition { 'foo.example.com':
+  address => '192.0.2.1',
+}
+```
+
+##### A node definition with configuration
+
+```puppet
+munin::master::node_definition { 'bar.example.com':
+  address => '192.0.2.2',
+  config  => [ 'load.graph_future 30',
+               'load.load.trend yes',
+               'load.load.predict 86400,12' ],
 }
 ```
 
@@ -449,8 +471,7 @@ munin::master::node_definition { 'host.example.com':
 
 ```puppet
 munin::master::node_definition { 'webservers;web01.example.com':
-    address => $address,
-    config  => ['additional', 'configuration' 'lines'],
+    address => '192.0.2.3',
 }
 ```
 

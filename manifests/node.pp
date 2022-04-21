@@ -6,11 +6,18 @@
 # @see http://guide.munin-monitoring.org/en/latest/
 #
 # @example Basic usage
-#  include munin::node
+#     include munin::node
+#
+# @example Permitting a remote munin server to connect
+#     class {'munin::node':
+#       allow => ['192.0.2.1', '2001:db8::1'],
+#     }
 #
 # @param allow
 #
-#   List of IPv4 and IPv6 addresses and networks to allow to connect.
+# List of IPv4 and IPv6 addresses and networks to allow remote munin masters
+# to connect. By default, the munin node only permits connections from
+# the local host.
 #
 # @param config_root
 #

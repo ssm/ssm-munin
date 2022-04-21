@@ -41,16 +41,22 @@
 #   The title of the defined resource should be a munin FQN. See the
 #   "fqn" parameter
 #
-# @example Typical usage
-#    munin::master::node_definition { 'host.example.com':
-#        address => $address,
-#        config  => ['additional', 'configuration' 'lines'],
+# @example A minimal, static node definition
+#     munin::master::node_definition { 'foo.example.com':
+#       address => '192.0.2.1',
+#     }
+#
+# @example A node definition with configuration
+#    munin::master::node_definition { 'bar.example.com':
+#      address => '192.0.2.2',
+#      config  => [ 'load.graph_future 30',
+#                   'load.load.trend yes',
+#                   'load.load.predict 86400,12' ],
 #    }
 #
 # @example Using a group in the FQN
 #    munin::master::node_definition { 'webservers;web01.example.com':
-#        address => $address,
-#        config  => ['additional', 'configuration' 'lines'],
+#        address => '192.0.2.3',
 #    }
 #
 define munin::master::node_definition (

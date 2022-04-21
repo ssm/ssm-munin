@@ -8,7 +8,7 @@
 # @param collect_nodes
 #
 #   Configures which nodes to collect. See
-#   **$munin::master::collect_nodes**.
+#   `$munin::master::collect_nodes`.
 #
 # @param host_name
 #
