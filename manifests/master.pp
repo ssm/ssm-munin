@@ -132,9 +132,7 @@ class munin::master (
   Array[String]                                    $extra_config,
 ) {
 
-  package { $package_name:
-    ensure => installed,
-  }
+  include munin::package
 
   File {
     owner   => 'root',
