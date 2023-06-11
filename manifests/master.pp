@@ -131,7 +131,6 @@ class munin::master (
   Variant[String,Array[String]]                    $package_name,
   Array[String]                                    $extra_config,
 ) {
-
   package { $package_name:
     ensure => installed,
   }
@@ -155,7 +154,7 @@ class munin::master (
   }
 
   if ($collect_nodes == 'enabled') {
-    class { '::munin::master::collect':
+    class { 'munin::master::collect':
       collect_nodes => $collect_nodes,
       host_name     => $host_name,
     }

@@ -27,13 +27,12 @@ class munin::node::export (
   $masterconfig,
   $mastername,
   $node_definitions = {},
-)
-{
+) {
   Munin::Master::Node_definition {
     mastername => $mastername,
     tag        => "munin::master::${mastername}",
   }
-  @@munin::master::node_definition{ $fqn:
+  @@munin::master::node_definition { $fqn:
     address => $address,
     config  => $masterconfig,
   }

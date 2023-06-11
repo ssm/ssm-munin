@@ -62,21 +62,19 @@
 define munin::master::node_definition (
   String $address,
   Optional[String] $mastername='',
-  Array[String] $config=[],
+  Array[String] $config= [],
   String $fqn = $title,
-)
-{
-
+) {
   $config_root = lookup('munin::master::config_root', Stdlib::Absolutepath)
 
   $filename=sprintf('%s/munin-conf.d/node.%s.conf',
-                    $config_root,
-                    regsubst($name, '[^[:alnum:]\.]', '_', 'IG'))
+    $config_root,
+  regsubst($name, '[^[:alnum:]\.]', '_', 'IG'))
 
   $template_vars = {
     'fqn'     => $fqn,
     'address' => $address,
-    'config'  => $config
+    'config'  => $config,
   }
 
   file { $filename:

@@ -17,8 +17,7 @@
 class munin::master::collect (
   Enum['enabled', 'disabled', 'mine', 'unclaimed'] $collect_nodes,
   Stdlib::Host $host_name,
-)
-{
+) {
   case $collect_nodes {
     'enabled': {
       Munin::Master::Node_definition <<| |>>

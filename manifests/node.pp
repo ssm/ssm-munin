@@ -159,10 +159,9 @@ class munin::node (
         'kern','user','mail','daemon','auth','syslog','lpr','news','uucp',
         'authpriv','ftp','cron','local0','local1','local2','local3','local4',
         'local5','local6','local7'
-      ]]] $syslog_facility,
+  ]]] $syslog_facility,
   Optional[Integer[0]] $timeout         = $munin::params::node::timeout, # Integer?
 ) {
-
   case $log_destination {
     'file': {
       $_log_file = "${log_dir}/${log_file}"
@@ -214,7 +213,7 @@ class munin::node (
   # (Separated into its own class to prevent warnings about "missing
   # storeconfigs", even if $export_node is not enabled)
   if ($export_node == 'enabled') {
-    class { '::munin::node::export':
+    class { 'munin::node::export':
       address      => $address,
       fqn          => $fqn,
       mastername   => $mastername,
@@ -227,7 +226,7 @@ class munin::node (
 
   # Purge unmanaged plugins and plugin configuration files.
   if $purge_configs {
-    file { ["${config_root}/plugins", "${config_root}/plugin-conf.d" ]:
+    file { ["${config_root}/plugins", "${config_root}/plugin-conf.d"]:
       ensure  => directory,
       recurse => true,
       purge   => true,
@@ -235,5 +234,4 @@ class munin::node (
       notify  => Service[$service_name],
     }
   }
-
 }
