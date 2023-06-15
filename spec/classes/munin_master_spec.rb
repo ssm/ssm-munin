@@ -8,6 +8,7 @@ t_conf_dir['FreeBSD'] = '/usr/local/etc/munin'
 t_package = {}
 t_package.default = 'munin'
 t_package['FreeBSD'] = 'munin-master'
+t_package['OpenBSD'] = 'munin-server'
 
 describe 'munin::master' do
   on_supported_os.each do |os, facts|
