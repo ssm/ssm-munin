@@ -1,4 +1,8 @@
 ---
+munin::master::config_root: '/etc/munin'
+munin::master::file_group: 'wheel'
+munin::master::package_name: 'munin-server'
+
 munin::node::config_root: "/etc/munin"
 munin::node::log_dir: "/var/log/munin"
 munin::node::service_name: "munin_node"
