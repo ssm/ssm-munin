@@ -146,6 +146,7 @@ class munin::node (
   Array                           $nodeconfig,
   String                          $package_name,
   Hash                            $plugins,
+  Stdlib::Absolutepath            $plugin_share_dir,
   Boolean                         $purge_configs,
   Enum['running','stopped']       $service_ensure,
   String                          $service_name,
