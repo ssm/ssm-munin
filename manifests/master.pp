@@ -153,7 +153,7 @@ class munin::master (
     force   => true,
   }
 
-  if ($collect_nodes == 'enabled') {
+  unless ($collect_nodes == 'disabled') {
     class { 'munin::master::collect':
       collect_nodes => $collect_nodes,
       host_name     => $host_name,
