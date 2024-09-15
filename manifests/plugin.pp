@@ -97,10 +97,10 @@ define munin::plugin (
 ) {
   include munin::node
 
-  $plugin_share_dir = lookup('munin::node::plugin_share_dir', Stdlib::Absolutepath)
-  $node_config_root = lookup('munin::node::config_root', Stdlib::Absolutepath)
-  $node_package_name = lookup('munin::node::package_name', String)
-  $node_service_name = lookup('munin::node::service_name', String)
+  $plugin_share_dir = $munin::node::plugin_share_dir
+  $node_config_root = $munin::node::config_root
+  $node_package_name = $munin::node::package_name
+  $node_service_name = $munin::node::service_name
 
   File {
     require => Package[$node_package_name],
