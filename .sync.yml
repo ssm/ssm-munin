@@ -3,13 +3,3 @@
   branches:
     - main
     - master
-spec/spec_helper.rb:
-  mock_with: ':rspec'
-  strict_level: ':error'
-Gemfile:
-  required:
-    ':system_tests':
-      - gem: ed25519
-        version: '~> 1.2'
-      - gem: bcrypt_pbkdf
-        version: '~> 1.0'
