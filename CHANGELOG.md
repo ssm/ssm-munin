@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2024-09-16
+
+### Added
+- Support Munin master on OpenBSD using 'munin-server'
+  (Pull request [#76](https://github.com/ssm/ssm-munin/issues/76))
+
+### Fixed
+- Fix collect_nodes=mine and collect_nodes=unclaimed
+  (Bug [#70](https://github.com/ssm/ssm-munin/issues/70))
+  (Pull request [#78](https://github.com/ssm/ssm-munin/issues/78))
+- Fix variable lookup method
+  (Pull request [#77](https://github.com/ssm/ssm-munin/issues/77))
+
 ## [0.4.0] - 2022-04-21
 
 ### Fixed
